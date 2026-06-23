@@ -1,12 +1,13 @@
 
   
+```html
 <!doctype html>
 <html lang="de">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Stefan Schulz – GALVANY Expert</title>
-  <meta name="description" content="Wärmepumpen zum Festpreis – Beratung durch Stefan Schulz, GALVANY Expert.">
+  <meta name="description" content="Wärmepumpe zum Festpreis – Beratung durch Stefan Schulz, GALVANY Expert.">
   <style>
     :root{
       --blue:#005ab4;
@@ -24,7 +25,13 @@
       background:linear-gradient(180deg,#eaf5fb,#ffffff);
       color:var(--dark);
     }
-    .wrap{max-width:680px;margin:0 auto;background:var(--card);min-height:100vh;box-shadow:0 18px 55px rgba(0,0,0,.10)}
+    .wrap{
+      max-width:680px;
+      margin:0 auto;
+      background:var(--card);
+      min-height:100vh;
+      box-shadow:0 18px 55px rgba(0,0,0,.10);
+    }
     .hero{
       background:radial-gradient(circle at 20% 15%,#25c2e5 0,#0b7fc1 38%,#004b8d 100%);
       color:white;
@@ -33,22 +40,65 @@
       border-bottom-left-radius:30px;
       border-bottom-right-radius:30px;
     }
-    .logo{width:112px;height:112px;object-fit:contain;background:white;border-radius:28px;padding:13px;margin-bottom:18px;box-shadow:0 10px 25px rgba(0,0,0,.18)}
+    .logo{
+      width:112px;
+      height:112px;
+      object-fit:contain;
+      background:white;
+      border-radius:28px;
+      padding:13px;
+      margin-bottom:18px;
+      box-shadow:0 10px 25px rgba(0,0,0,.18);
+    }
     h1{font-size:34px;margin:0;font-weight:900}
     .role{font-size:19px;margin-top:7px;opacity:.96}
     .claim{font-size:30px;font-weight:900;margin-top:24px;line-height:1.1}
     .sub{font-size:17px;line-height:1.45;margin:14px auto 0;max-width:520px;opacity:.96}
     section{padding:26px 24px}
-    .box{background:var(--bg);border-radius:20px;padding:20px;font-size:18px;line-height:1.5;border:1px solid #dcecf5}
-    .buttons{display:grid;grid-template-columns:1fr;gap:12px;margin-top:20px}
-    .btn{display:block;text-align:center;text-decoration:none;color:white;background:var(--blue);padding:16px 18px;border-radius:16px;font-weight:900;font-size:17px;box-shadow:0 8px 18px rgba(0,90,180,.18)}
+    .box{
+      background:var(--bg);
+      border-radius:20px;
+      padding:20px;
+      font-size:18px;
+      line-height:1.5;
+      border:1px solid #dcecf5;
+    }
+    .buttons{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:12px;
+      margin-top:20px;
+    }
+    .btn{
+      display:block;
+      text-align:center;
+      text-decoration:none;
+      color:white;
+      background:var(--blue);
+      padding:16px 18px;
+      border-radius:16px;
+      font-weight:900;
+      font-size:17px;
+      box-shadow:0 8px 18px rgba(0,90,180,.18);
+    }
     .btn.green{background:var(--green)}
     .btn.dark{background:var(--dark)}
-    .btn.light{background:#eaf3f9;color:var(--blue);box-shadow:none;border:1px solid #d7e8f2}
     h2{font-size:24px;margin:0 0 14px}
-    .benefits{display:grid;gap:12px;margin-top:16px}
-    .benefit{background:white;border:1px solid #e1edf4;border-radius:16px;padding:14px 15px;font-size:17px;line-height:1.4}
-    .benefit b{color:var(--blue)}
+    h3{font-size:22px;margin:0 0 12px}
+    .benefits,.reviews,.links,.faq{
+      display:grid;
+      gap:12px;
+      margin-top:16px;
+    }
+    .benefit,.review,.faq-item{
+      background:white;
+      border:1px solid #e1edf4;
+      border-radius:16px;
+      padding:14px 15px;
+      font-size:17px;
+      line-height:1.45;
+    }
+    .benefit b,.faq-item b{color:var(--blue)}
     .video{
       aspect-ratio:16/9;
       width:100%;
@@ -56,96 +106,158 @@
       border-radius:18px;
       background:#dcecf5;
     }
-    .placeholder{
-      background:#edf6fb;
-      border:1px dashed #8bb9d6;
-      color:#31566e;
-      border-radius:18px;
-      padding:18px;
-      line-height:1.45;
-      font-size:16px;
+    .links a{
+      display:block;
+      text-decoration:none;
+      color:var(--blue);
+      font-weight:900;
+      background:#f5fafc;
+      border:1px solid #e1edf4;
+      padding:15px;
+      border-radius:14px;
     }
-    .links{display:grid;gap:12px}
-    .links a{display:block;text-decoration:none;color:var(--blue);font-weight:900;background:#f5fafc;border:1px solid #e1edf4;padding:15px;border-radius:14px}
-    .reviews{display:grid;gap:12px}
-    .review{background:#fbfdff;border:1px solid #e1edf4;border-radius:16px;padding:15px;line-height:1.45}
-    .stars{color:#f2a900;font-size:19px;letter-spacing:1px}
-    .small{font-size:13px;color:var(--muted);text-align:center;padding:0 24px 30px;line-height:1.45}
-    @media(min-width:560px){.buttons{grid-template-columns:1fr 1fr}.btn.dark{grid-column:1 / -1}}
+    .stars{
+      color:#f2a900;
+      font-size:19px;
+      letter-spacing:1px;
+      margin-bottom:6px;
+    }
+    .cta{
+      text-align:center;
+      background:linear-gradient(180deg,#f3f8fc,#ffffff);
+      border:1px solid #dcecf5;
+      border-radius:22px;
+      padding:22px;
+    }
+    .small{
+      font-size:13px;
+      color:var(--muted);
+      text-align:center;
+      padding:0 24px 30px;
+      line-height:1.45;
+    }
+    @media(min-width:560px){
+      .buttons{grid-template-columns:1fr 1fr}
+      .btn.dark{grid-column:1 / -1}
+    }
   </style>
 </head>
+
 <body>
   <main class="wrap">
+
     <header class="hero">
       <img class="logo" src="galvany-logo.jpg" alt="GALVANY Logo">
       <h1>Stefan Schulz</h1>
       <div class="role">GALVANY Expert</div>
-      <div class="claim">Wärmepumpen zum Festpreis</div>
-      <div class="sub">Persönliche Beratung für moderne Wärmepumpen-Lösungen – transparent, planbar und effizient.</div>
+      <div class="claim">Wärmepumpe zum Festpreis – inklusive Fördermittelservice</div>
+      <div class="sub">
+        Persönliche Beratung für moderne Wärmepumpen-Lösungen – transparent, planbar und effizient.
+      </div>
     </header>
 
     <section>
       <div class="box">
-        <b>Ihr Vorteil:</b> Sie erhalten eine klare Lösung mit Festpreis, schneller Umsetzung und Unterstützung beim Förderantrag.
-      
-<<div class="buttons">
-  <a class="btn green" href="tel:+4917657669107">📞 Jetzt anrufen</a>
-  <a class="btn green" href="https://calendly.com/stefanschulzgalvany" target="_blank">📅 Beratung buchen</a>
-  <a class="btn" href="mailto:stefan.schulz@galvany-expert.de">✉️ E-Mail schreiben</a>
-  <a class="btn dark" href="stefan-schulz.vcf">💾 Kontakt speichern</a>
-</div>
+        <b>Ihr Vorteil:</b><br>
+        Sie erhalten eine klare Lösung mit Festpreis, schneller Umsetzung und Unterstützung beim Förderantrag.
+      </div>
+
+      <div class="buttons">
+        <a class="btn green" href="tel:+4917657669107">📞 Jetzt anrufen</a>
+        <a class="btn green" href="https://calendly.com/stefanschulzgalvany" target="_blank">📅 Beratung buchen</a>
+        <a class="btn" href="mailto:stefan.schulz@galvany-expert.de">✉️ E-Mail schreiben</a>
+        <a class="btn dark" href="stefan-schulz.vcf">💾 Kontakt speichern</a>
       </div>
     </section>
 
     <section>
-      <h2>Ihre Vorteile</h2>
+      <h2>Warum GALVANY?</h2>
       <div class="benefits">
-        <div class="benefit">✅ <b>Energieeffizientes Heizen</b> mit niedrigen Betriebskosten</div>
         <div class="benefit">✅ <b>Transparenter Festpreis</b> – ohne versteckte Kosten</div>
-        <div class="benefit">✅ <b>Sehr schnelle Umsetzung</b> durch regionale Fachpartner</div>
-        <div class="benefit">✅ <b>Ultra kompakte Bauweise</b> – ideal auch bei wenig Platz</div>
-        <div class="benefit">✅ <b>Förderantrag & Fördermittelservice</b> durch uns</div>
+        <div class="benefit">✅ <b>Fördermittelservice</b> – Unterstützung beim Förderantrag</div>
+        <div class="benefit">✅ <b>Schnelle Umsetzung</b> durch regionale Fachpartner</div>
+        <div class="benefit">✅ <b>Energieeffizientes Heizen</b> mit moderner Technik</div>
+        <div class="benefit">✅ <b>Kompakte Bauweise</b> – auch bei wenig Platz geeignet</div>
       </div>
     </section>
 
     <section>
+      <div class="box">
+        🏠 <b>Persönlich statt anonym:</b><br>
+        Sie sprechen direkt mit Stefan Schulz – keine anonyme Hotline, kein Callcenter, sondern klare Beratung für Ihre Situation.
+      </div>
+    </section>
+
+    <section>
+      <h2>Video ansehen</h2>
       <iframe
-    class="video"
-    src="https://www.youtube.com/embed/2ALIkaJ5seY"
-    allowfullscreen>
-</iframe>
-    
-     
+        class="video"
+        src="https://www.youtube.com/embed/2ALIkaJ5seY"
+        title="GALVANY Wärmepumpen Video"
+        allowfullscreen>
+      </iframe>
+    </section>
 
-<section>
-  <h2>Links</h2>
-<div class="links">
-    <a href="https://galvany.de/ueber-uns" target="_blank">🌐 GALVANY Webseite</a>
-    <a href="https://www.youtube.com/watch?v=2ALIkaJ5seY" target="_blank">▶️ Wärmepumpen-Erklärvideo ansehen</a>
-    <a href="https://www.instagram.com/galvany.energy/" target="_blank">📸 GALVANY auf Instagram</a>
-    <a href="https://wa.me/4917657669107" target="_blank">💬 WhatsApp schreiben</a>
-    <a href="https://calendly.com/stefanschulzgalvany" target="_blank">📅 Kostenlose Wärmepumpen-Beratung buchen</a>
-  </div>
-</section>
-```
+    <section>
+      <h2>Häufige Fragen</h2>
+      <div class="faq">
+        <div class="faq-item">
+          <b>Wie hoch ist die Förderung?</b><br>
+          Je nach Voraussetzungen sind Förderungen möglich. Ihre Möglichkeiten werden im Beratungsgespräch geprüft.
+        </div>
+        <div class="faq-item">
+          <b>Ist mein Haus für eine Wärmepumpe geeignet?</b><br>
+          Das lässt sich nach wenigen Angaben einschätzen und anschließend genauer prüfen.
+        </div>
+        <div class="faq-item">
+          <b>Was kostet mich die Beratung?</b><br>
+          Die Erstberatung ist kostenlos und unverbindlich.
+        </div>
+      </div>
+    </section>
 
-```
-
+    <section>
+      <h2>Links</h2>
+      <div class="links">
+        <a href="https://galvany.de/ueber-uns" target="_blank">🌐 GALVANY Webseite</a>
+        <a href="https://www.youtube.com/watch?v=2ALIkaJ5seY" target="_blank">▶️ Wärmepumpen-Erklärvideo ansehen</a>
+        <a href="https://www.instagram.com/galvany.energy/" target="_blank">📸 GALVANY auf Instagram</a>
+        <a href="https://wa.me/4917657669107" target="_blank">💬 WhatsApp schreiben</a>
+        <a href="https://calendly.com/stefanschulzgalvany" target="_blank">📅 Kostenlose Beratung buchen</a>
       </div>
     </section>
 
     <section>
       <h2>Kundenstimmen</h2>
       <div class="reviews">
-        <div class="review"><div class="stars">★★★★★</div>„Sehr klare Beratung und gute Erklärung der nächsten Schritte.“</div>
-        <div class="review"><div class="stars">★★★★★</div>„Festpreis, Förderthema und Umsetzung wurden verständlich erklärt.“</div>
+        <div class="review">
+          <div class="stars">★★★★★</div>
+          „Herr Schulz hat uns die Fördermöglichkeiten verständlich erklärt. Die nächsten Schritte waren klar und nachvollziehbar.“
+        </div>
+        <div class="review">
+          <div class="stars">★★★★★</div>
+          „Von der Beratung bis zum Angebot lief alles schnell, freundlich und professionell.“
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="cta">
+        <h3>Kostenlose Erstberatung</h3>
+        <p>Sie möchten wissen, ob sich eine Wärmepumpe für Ihr Haus lohnt?</p>
+        <a class="btn green" href="https://calendly.com/stefanschulzgalvany" target="_blank">📅 Jetzt Beratungstermin buchen</a>
+        <br>
+        <a class="btn" href="tel:+4917657669107">📞 Direkt anrufen</a>
       </div>
     </section>
 
     <div class="small">
       © Stefan Schulz · GALVANY Expert<br>
-      Hinweis: Die tatsächlichen Betriebskosten hängen vom Gebäude, Nutzerverhalten und Stromtarif ab.
+      Hinweis: Die tatsächlichen Kosten und Einsparungen hängen vom Gebäude, Nutzerverhalten, Stromtarif und den technischen Voraussetzungen ab.
     </div>
+
   </main>
 </body>
 </html>
+```
+
