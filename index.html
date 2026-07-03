@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Stefan Schulz – GALVANY Expert | Wärmepumpen zum Festpreis</title>
   <meta name="description" content="Wärmepumpe zum Festpreis mit Stefan Schulz: GALVANY Cube, Panasonic-Technik, Fördermittel-Komplettservice, Finanzierung ab 150 €/Monat und persönliche Beratung.">
-  <link rel="icon" type="image/x-icon" href="/favicon.ico?v=3">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=3">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
   <meta property="og:title" content="Wärmepumpe zum Festpreis – Stefan Schulz GALVANY Expert">
   <meta property="og:description" content="Persönliche Beratung, Fördermittel-Komplettservice, GALVANY Cube und Panasonic-Technik. Jetzt kostenlosen Beratungstermin sichern.">
@@ -37,7 +37,27 @@
     .nav{position:fixed;left:0;right:0;top:0;z-index:50;padding:14px 22px;background:rgba(255,255,255,.78);backdrop-filter:blur(16px);border-bottom:1px solid rgba(229,237,245,.85)}
     .nav-inner{max-width:1180px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:18px}
     .brand{display:flex;align-items:center;gap:12px;font-weight:900;color:var(--blue);letter-spacing:.3px}
-    .brand-mark{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--blue),var(--green));display:grid;place-items:center;color:#fff;font-weight:900}
+    .brand-mark{width:46px;height:46px;display:grid;place-items:center;flex:0 0 46px}
+    .brand-logo-svg{width:46px;height:46px;display:block;filter:drop-shadow(0 7px 12px rgba(2,8,23,.10))}
+    .brand-logo-svg .line{fill:none;stroke:#111827;stroke-width:5.6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:180;stroke-dashoffset:180;animation:drawLogo 1.45s ease forwards, settleLogo .55s ease 1.45s forwards}
+    .brand-logo-svg .line:nth-child(2){animation-delay:.07s,.0s}.brand-logo-svg .line:nth-child(3){animation-delay:.14s,.0s}.brand-logo-svg .line:nth-child(4){animation-delay:.21s,.0s}.brand-logo-svg .line:nth-child(5){animation-delay:.28s,.0s}.brand-logo-svg .line:nth-child(6){animation-delay:.35s,.0s}.brand-logo-svg .line:nth-child(7){animation-delay:.42s,.0s}.brand-logo-svg .line:nth-child(8){animation-delay:.49s,.0s}.brand-logo-svg .line:nth-child(9){animation-delay:.56s,.0s}.brand-logo-svg .line:nth-child(10){animation-delay:.63s,.0s}.brand-logo-svg .line:nth-child(11){animation-delay:.70s,.0s}.brand-logo-svg .line:nth-child(12){animation-delay:.77s,.0s}
+    .brand-logo-svg .spark{stroke:#ff6b2b;stroke-width:4.8;stroke-linecap:round;opacity:0;filter:drop-shadow(0 0 8px rgba(255,107,43,.9));animation:sparkLogo 2.25s ease .55s both}
+    .brand-logo-svg .spark.s2{animation-delay:.82s}.brand-logo-svg .spark.s3{animation-delay:1.05s}.brand-logo-svg .spark.s4{animation-delay:1.26s}
+    @keyframes drawLogo{0%{stroke-dashoffset:180;stroke:#d9dee7}60%{stroke:#111827}100%{stroke-dashoffset:0;stroke:#111827}}
+    @keyframes settleLogo{to{filter:none}}
+    @keyframes sparkLogo{0%,100%{opacity:0;transform:scale(.85)}35%,65%{opacity:1;transform:scale(1)}}
+
+
+    /* CI-konforme Logo-Animation: nutzt das originale GALVANY-Logo als Bild, keine Nachzeichnung */
+    .brand-mark{width:46px;height:46px;display:grid;place-items:center;flex:0 0 46px;overflow:hidden;border-radius:12px;position:relative;background:transparent}
+    .logo-anim{position:relative;width:46px;height:46px;display:block;overflow:hidden;border-radius:12px}
+    .logo-anim img{width:100%;height:100%;object-fit:contain;display:block;animation:logoReveal .95s ease both}
+    .logo-anim::before{content:"";position:absolute;inset:-35%;background:linear-gradient(115deg,transparent 0%,transparent 35%,rgba(255,255,255,.0) 43%,rgba(255,120,32,.95) 50%,rgba(255,255,255,.85) 54%,rgba(134,196,64,.0) 62%,transparent 100%);transform:translateX(-130%) rotate(8deg);animation:logoSweep 1.55s ease .25s both;mix-blend-mode:screen;pointer-events:none}
+    .logo-anim::after{content:"";position:absolute;inset:0;border-radius:12px;box-shadow:0 0 0 rgba(134,196,64,0);animation:logoGlow 1.75s ease .25s both;pointer-events:none}
+    @keyframes logoReveal{0%{opacity:0;filter:grayscale(1) brightness(2.4);transform:scale(.94)}55%{opacity:1;filter:grayscale(1) brightness(1.6);transform:scale(1.02)}100%{opacity:1;filter:none;transform:scale(1)}}
+    @keyframes logoSweep{0%{transform:translateX(-130%) rotate(8deg);opacity:0}20%{opacity:1}70%{opacity:1}100%{transform:translateX(130%) rotate(8deg);opacity:0}}
+    @keyframes logoGlow{0%,100%{box-shadow:0 0 0 rgba(134,196,64,0)}45%{box-shadow:0 0 18px rgba(255,110,32,.35),0 0 28px rgba(134,196,64,.22)}}
+    @media (prefers-reduced-motion:reduce){.brand-logo-svg .line{animation:none;stroke-dashoffset:0}.brand-logo-svg .spark{animation:none;display:none}.logo-anim img{animation:none}.logo-anim::before,.logo-anim::after{animation:none;display:none}}
     .nav-links{display:flex;gap:18px;font-size:14px;color:#334155;align-items:center}
     .nav .mini-cta{background:var(--blue);color:white;padding:10px 15px;border-radius:999px;font-weight:800}
     .hero{min-height:100vh;padding:104px 22px 60px;position:relative;display:grid;align-items:center;overflow:hidden;background:#061426}
@@ -150,7 +170,7 @@
 <body>
   <nav class="nav">
     <div class="nav-inner">
-      <a href="#top" class="brand"><span class="brand-mark">G</span><span>Stefan Schulz<br><small>GALVANY Expert</small></span></a>
+      <a href="#top" class="brand"><span class="brand-mark" aria-label="GALVANY Logo"><span class="logo-anim"><img src="galvany-logo.jpg" alt="GALVANY Logo"></span></span><span>Stefan Schulz<br><small>GALVANY Expert</small></span></a>
       <div class="nav-links">
         <a href="#warum">Vorteile</a>
         <a href="#video">5 Gründe</a>
