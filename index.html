@@ -165,6 +165,16 @@
       section{padding:64px 18px}
       .contact-strip a,.contact-strip button{font-size:14px}
     }
+
+    .contact-modal{position:fixed;inset:0;background:rgba(7,21,37,.72);display:none;align-items:center;justify-content:center;padding:20px;z-index:9999;backdrop-filter:blur(8px)}
+    .contact-modal.open{display:flex}
+    .contact-modal-card{width:min(460px,100%);background:#fff;border-radius:24px;padding:28px;box-shadow:0 28px 80px rgba(0,0,0,.32);position:relative;color:#132033}
+    .contact-modal-card h3{margin:0 0 8px;font-size:1.6rem}
+    .contact-modal-card p{margin:0 0 18px;color:#637083}
+    .contact-modal-list{display:grid;gap:10px;margin:18px 0 22px}
+    .contact-modal-list div{padding:12px 14px;border:1px solid #dfe7ef;border-radius:14px;background:#f7fafc}
+    .contact-modal-actions{display:flex;gap:10px;flex-wrap:wrap}
+    .contact-modal-close{position:absolute;right:16px;top:14px;border:0;background:transparent;font-size:1.7rem;cursor:pointer;color:#637083}
   </style>
 </head>
 <body>
@@ -446,6 +456,25 @@
     </div>
   </section>
 
+
+  <div class="contact-modal" id="contactModal" role="dialog" aria-modal="true" aria-labelledby="contactModalTitle">
+    <div class="contact-modal-card">
+      <button class="contact-modal-close" type="button" onclick="closeContactModal()" aria-label="Fenster schließen">×</button>
+      <h3 id="contactModalTitle">Kontakt speichern</h3>
+      <p>Speichern Sie Stefan Schulz direkt mit allen aktuellen Kontaktdaten.</p>
+      <div class="contact-modal-list">
+        <div>📞 0176 57669107</div>
+        <div>✉️ stefan.schulz@galvany-expert.de</div>
+        <div>🌐 www.waermepumpe-mit-stefan.de</div>
+        <div>📍 Steindamm 19, 31311 Uetze / Hänigsen</div>
+      </div>
+      <div class="contact-modal-actions">
+        <a class="btn btn-primary" href="stefan-schulz.vcf" download>👤 Kontakt herunterladen</a>
+        <button class="btn btn-ghost" type="button" onclick="closeContactModal()">Abbrechen</button>
+      </div>
+    </div>
+  </div>
+
   <footer>
     <div class="wrap">
       <div><b>10K-Vertrieb Stefan Schulz</b><br>GALVANY Expert · Wärmepumpen zum Festpreis</div>
@@ -462,26 +491,19 @@
     document.querySelectorAll('.fade').forEach(el=>io.observe(el));
 
     function downloadVcard(){
-      const vcard = `BEGIN:VCARD
-VERSION:3.0
-N:Schulz;Stefan;;;
-FN:Stefan Schulz
-ORG:GALVANY Expert
-TEL;TYPE=CELL:+4917657669107
-EMAIL:Stefan.schulz@galvany-expert.de
-URL:https://calendly.com/stefanschulzgalvany
-END:VCARD
-`;
-      const blob = new Blob([vcard], {type:'text/vcard'});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'stefan-schulz.vcf';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
+      document.getElementById('contactModal').classList.add('open');
+      document.body.style.overflow = 'hidden';
     }
+    function closeContactModal(){
+      document.getElementById('contactModal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    document.getElementById('contactModal').addEventListener('click', (event)=>{
+      if(event.target.id === 'contactModal') closeContactModal();
+    });
+    document.addEventListener('keydown', (event)=>{
+      if(event.key === 'Escape') closeContactModal();
+    });
   </script>
 </body>
 </html>
