@@ -1,8 +1,12 @@
 BEGIN:VCARD
 VERSION:3.0
+N:Schulz;Stefan;;;
 FN:Stefan Schulz
 ORG:10K-Vertrieb Stefan Schulz
-TEL:+4917657669107
-EMAIL:stefan.schulz@galvany-expert.de
+TITLE:GALVANY Expert
+TEL;TYPE=CELL,VOICE:+4917657669107
+EMAIL;TYPE=INTERNET,WORK:stefan.schulz@galvany-expert.de
 URL:https://www.waermepumpe-mit-stefan.de
+ADR;TYPE=WORK:;;Steindamm 19;Uetze/Hänigsen;;31311;Deutschland
+NOTE:Persönliche Beratung für Wärmepumpen, Fördermittel und Festpreisangebote.
 END:VCARD
