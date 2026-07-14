@@ -1,13 +1,12 @@
-# GALVANY Landingpage – GitHub Pages
+GALVANY V4 Vorschau
 
-Dateien:
-- index.html
-- galvany-logo.jpg
-- stefan-schulz.vcf
+1. Entpacken.
+2. Alle Dateien gemeinsam in das Hauptverzeichnis des GitHub-Repositories hochladen.
+3. Die bestehende index.html NICHT ersetzen.
+4. index-v4.html anschließend direkt aufrufen:
+   https://www.waermepumpe-mit-stefan.de/index-v4.html
 
-Veröffentlichung:
-1. GitHub öffnen
-2. Neues Repository erstellen, z. B. stefan-schulz-galvany
-3. Diese drei Dateien hochladen
-4. Settings → Pages → Deploy from branch → main / root → Save
-5. Nach 1–2 Minuten ist die Seite online
+Hinweis:
+- Das vorhandene Foto stefan-schulz.jpg ist in dieser Vorschau bewusst nur als Platzhalter erwähnt.
+- Sobald die Vorschau gefällt, wird es in die finale Version eingesetzt.
+- Die Logoanimation ist ein dezenter Lichtlauf über 30 Sekunden und verändert das Original-Logo nicht.
