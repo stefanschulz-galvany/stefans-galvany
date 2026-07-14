@@ -1,12 +1,12 @@
-GALVANY V4 Vorschau
+GALVANY V4.1 Vorschau
 
-1. Entpacken.
-2. Alle Dateien gemeinsam in das Hauptverzeichnis des GitHub-Repositories hochladen.
-3. Die bestehende index.html NICHT ersetzen.
-4. index-v4.html anschließend direkt aufrufen:
-   https://www.waermepumpe-mit-stefan.de/index-v4.html
+Logo-Sequenz über ca. 30 Sekunden:
+1. GALVANY-Blau
+2. GALVANY-Grün
+3. metallischer Lichtschein
+4. schwarz-weißes Endbild
 
-Hinweis:
-- Das vorhandene Foto stefan-schulz.jpg ist in dieser Vorschau bewusst nur als Platzhalter erwähnt.
-- Sobald die Vorschau gefällt, wird es in die finale Version eingesetzt.
-- Die Logoanimation ist ein dezenter Lichtlauf über 30 Sekunden und verändert das Original-Logo nicht.
+Beim Überfahren mit dem Cursor, beim Fokussieren oder Anklicken startet die Animation neu.
+
+Testadresse nach Upload:
+https://www.waermepumpe-mit-stefan.de/index-v4-1.html
