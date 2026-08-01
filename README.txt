@@ -1,21 +1,12 @@
-GALVANY V5.5 – Testversion mit Erklärungen (?)
+GALVANY V5.6 – sichtbarere Erklärzeichen
 
-Neu:
-- kleine (?) direkt an Fachbegriffen im Rechner
-- Klick öffnet eine kurze Erklärung
-- Klick außerhalb oder ESC schließt die Erklärung
-- geeignet für Desktop und Handy
-
-Enthaltene Erklärungen:
-- Jahresarbeitszahl
-- Wirkungsgrad der alten Gasheizung
-- Förderfähige Kosten
-- Eigenanteil
-- Fördersatz
-- Klimageschwindigkeitsbonus
-- Effizienzbonus
+Geändert:
+- alle (?) sind jetzt in GALVANY-Grün
+- dünner grüner Rand
+- dezenter grüner Schatten
+- beim Hover/Klick werden sie vollflächig grün mit weißem Fragezeichen
 
 Test:
-https://www.waermepumpe-mit-stefan.de/index-v5-5.html
+https://www.waermepumpe-mit-stefan.de/index-v5-6.html
 
 Die bestehende index.html noch nicht ersetzen.
