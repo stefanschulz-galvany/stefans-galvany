@@ -1,14 +1,21 @@
-GALVANY V5.4 – Rechner korrigiert
+GALVANY V5.5 – Testversion mit Erklärungen (?)
 
-Geändert:
-- Popup deutlich höher (92 % der Bildschirmhöhe)
-- Inhalt innerhalb des Popups scrollbar
-- Reiter bleiben oben sichtbar
-- Förderrechner und Heizkostenvergleich haben getrennte Berechnungsfunktionen
-- Änderungen an Gasverbrauch, Preisen, Jahresarbeitszahl oder Wirkungsgrad aktualisieren die Ergebnisse sofort
-- Ersparnis gegenüber Gas wird klar ausgewiesen
+Neu:
+- kleine (?) direkt an Fachbegriffen im Rechner
+- Klick öffnet eine kurze Erklärung
+- Klick außerhalb oder ESC schließt die Erklärung
+- geeignet für Desktop und Handy
+
+Enthaltene Erklärungen:
+- Jahresarbeitszahl
+- Wirkungsgrad der alten Gasheizung
+- Förderfähige Kosten
+- Eigenanteil
+- Fördersatz
+- Klimageschwindigkeitsbonus
+- Effizienzbonus
 
 Test:
-https://www.waermepumpe-mit-stefan.de/index-v5-4.html
+https://www.waermepumpe-mit-stefan.de/index-v5-5.html
 
 Die bestehende index.html noch nicht ersetzen.
