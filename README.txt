@@ -1,23 +1,12 @@
-GALVANY V5.2 – bereinigte Testversion
+GALVANY V5.3 – eindeutige Testversion
 
-Wichtig:
-In diesem Paket gibt es nur EINE HTML-Testdatei:
-index-v5-2.html
+Der Rechner hat jetzt oben zwei große sichtbare Register:
+1. Förderung & Finanzierung
+2. Heizkostenvergleich
 
-Der Button auf der Seite heißt jetzt:
-„Förderung & Heizkosten berechnen“
+Der Heizkostenvergleich ist nicht mehr unterhalb der Fördereingaben versteckt.
 
-Im geöffneten Dialog steht unter den Fördereingaben sichtbar:
-„Heizkostenvergleich (optional)“
-
-Dort können eingegeben werden:
-- Gasverbrauch pro Jahr
-- Gaspreis
-- Wärmepumpenstrompreis
-- Jahresarbeitszahl
-- Wirkungsgrad der alten Gasheizung
-
-Testadresse nach Upload:
-https://www.waermepumpe-mit-stefan.de/index-v5-2.html
+Bitte genau diese Datei testen:
+https://www.waermepumpe-mit-stefan.de/index-v5-3.html
 
 Die bestehende index.html noch nicht ersetzen.
