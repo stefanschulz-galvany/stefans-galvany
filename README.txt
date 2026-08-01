@@ -1,12 +1,14 @@
-GALVANY V5.3 – eindeutige Testversion
+GALVANY V5.4 – Rechner korrigiert
 
-Der Rechner hat jetzt oben zwei große sichtbare Register:
-1. Förderung & Finanzierung
-2. Heizkostenvergleich
+Geändert:
+- Popup deutlich höher (92 % der Bildschirmhöhe)
+- Inhalt innerhalb des Popups scrollbar
+- Reiter bleiben oben sichtbar
+- Förderrechner und Heizkostenvergleich haben getrennte Berechnungsfunktionen
+- Änderungen an Gasverbrauch, Preisen, Jahresarbeitszahl oder Wirkungsgrad aktualisieren die Ergebnisse sofort
+- Ersparnis gegenüber Gas wird klar ausgewiesen
 
-Der Heizkostenvergleich ist nicht mehr unterhalb der Fördereingaben versteckt.
-
-Bitte genau diese Datei testen:
-https://www.waermepumpe-mit-stefan.de/index-v5-3.html
+Test:
+https://www.waermepumpe-mit-stefan.de/index-v5-4.html
 
 Die bestehende index.html noch nicht ersetzen.
