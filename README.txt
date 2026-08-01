@@ -1,12 +1,23 @@
-GALVANY V4.1 Vorschau
+GALVANY V5 – Testversion
 
-Logo-Sequenz über ca. 30 Sekunden:
-1. GALVANY-Blau
-2. GALVANY-Grün
-3. metallischer Lichtschein
-4. schwarz-weißes Endbild
+Neu:
+- Förder- und Finanzierungsrechner als Dialogfenster
+- Laufzeit 10 oder 15 Jahre wählbar
+- Finanzierung mit 6 % Sollzins
+- neue Förderregeln mit Stand 21.07.2026:
+  Grundförderung 30 %, Klimageschwindigkeitsbonus 16 %,
+  gestaffelter Einkommensbonus und Familienzuschlag,
+  maximal 28.000 € förderfähige Kosten für die erste Wohneinheit
+- Original-GALVANY-Logo ohne Hintergrundfläche:
+  fließend Blau → Grün → Metallreflex → Schwarz/Weiß
+- Name im Header etwas kleiner
+- echtes Foto von Stefan Schulz
+- echter Cube im Cube-Bereich
+- App-Bilder und Bedienbild passend zugeordnet
+- Galerietext korrigiert
 
-Beim Überfahren mit dem Cursor, beim Fokussieren oder Anklicken startet die Animation neu.
-
-Testadresse nach Upload:
-https://www.waermepumpe-mit-stefan.de/index-v4-1.html
+Test:
+1. Alle Dateien gemeinsam in das Hauptverzeichnis bei GitHub hochladen.
+2. Die bestehende index.html noch NICHT ersetzen.
+3. Öffnen:
+   https://www.waermepumpe-mit-stefan.de/index-v5.html
