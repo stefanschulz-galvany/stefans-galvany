@@ -1,23 +1,22 @@
-GALVANY V5 – Testversion
+GALVANY V5.1 – Testversion
 
-Neu:
-- Förder- und Finanzierungsrechner als Dialogfenster
-- Laufzeit 10 oder 15 Jahre wählbar
-- Finanzierung mit 6 % Sollzins
-- neue Förderregeln mit Stand 21.07.2026:
-  Grundförderung 30 %, Klimageschwindigkeitsbonus 16 %,
-  gestaffelter Einkommensbonus und Familienzuschlag,
-  maximal 28.000 € förderfähige Kosten für die erste Wohneinheit
-- Original-GALVANY-Logo ohne Hintergrundfläche:
-  fließend Blau → Grün → Metallreflex → Schwarz/Weiß
-- Name im Header etwas kleiner
-- echtes Foto von Stefan Schulz
-- echter Cube im Cube-Bereich
-- App-Bilder und Bedienbild passend zugeordnet
-- Galerietext korrigiert
+Neu gegenüber V5:
+- optionaler Heizkostenvergleich für bestehende Gasheizung
+- Eingaben:
+  jährlicher Gasverbrauch, Gaspreis, Wärmepumpenstrompreis,
+  angenommene Jahresarbeitszahl und Wirkungsgrad der alten Heizung
+- Ausgaben:
+  bisherige Gaskosten, geschätzter WP-Strombedarf,
+  neue Stromkosten und mögliche jährliche Ersparnis
+- Der Heizkostenvergleich erscheint nur, wenn „Gas-Zentralheizung“ ausgewählt ist.
+
+Wichtig:
+Die Berechnung ist ein unverbindlicher Richtwert. Sie ersetzt keine Heizlastberechnung
+und berücksichtigt unter anderem keine Grundpreise, Wartung, PV-Eigenverbrauch oder
+individuelle Gebäudeeinflüsse.
 
 Test:
-1. Alle Dateien gemeinsam in das Hauptverzeichnis bei GitHub hochladen.
-2. Die bestehende index.html noch NICHT ersetzen.
+1. Alle Dateien gemeinsam in das GitHub-Hauptverzeichnis hochladen.
+2. Bestehende index.html noch nicht ersetzen.
 3. Öffnen:
-   https://www.waermepumpe-mit-stefan.de/index-v5.html
+   https://www.waermepumpe-mit-stefan.de/index-v5-1.html

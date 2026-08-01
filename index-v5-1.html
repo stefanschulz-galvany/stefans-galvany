@@ -1,0 +1,917 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Stefan Schulz | GALVANY Expert – Förderung, Finanzierung & Heizkosten</title>
+  <meta name="description" content="Persönliche Beratung zu GALVANY Wärmepumpen mit Panasonic-Technik, Fördermittelservice, Festpreis und kompakter Cube-Heizzentrale.">
+  <meta name="theme-color" content="#071a2c">
+  <meta property="og:title" content="Stefan Schulz | Ihr regionaler GALVANY Expert">
+  <meta property="og:description" content="Persönlich, transparent und ohne Verkaufsdruck zur passenden Wärmepumpe.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.waermepumpe-mit-stefan.de">
+  <meta property="og:image" content="https://www.waermepumpe-mit-stefan.de/hero-winter.jpg">
+
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
+
+  <style>
+    :root{
+      --navy:#071a2c;
+      --navy2:#0d2944;
+      --green:#5ba646;
+      --green2:#7abc61;
+      --ink:#142334;
+      --muted:#627080;
+      --soft:#f3f7f8;
+      --line:#dfe8ea;
+      --white:#fff;
+      --shadow:0 20px 60px rgba(4,24,43,.13);
+      --radius:26px;
+      --max:1180px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;color:var(--ink);background:#fff;line-height:1.55}
+    img{display:block;max-width:100%}
+    a{text-decoration:none;color:inherit}
+    button{font:inherit}
+    .container{width:min(var(--max),calc(100% - 40px));margin:auto}
+    .eyebrow{display:inline-flex;align-items:center;gap:.55rem;font-size:.78rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--green)}
+    .eyebrow:before{content:"";width:30px;height:2px;background:currentColor}
+    h1,h2,h3{line-height:1.08;margin:0}
+    h1{font-size:clamp(2.8rem,7vw,6.4rem);letter-spacing:-.055em}
+    h2{font-size:clamp(2rem,4.3vw,4.1rem);letter-spacing:-.045em}
+    h3{font-size:clamp(1.25rem,2vw,1.75rem);letter-spacing:-.025em}
+    p{margin:0}
+    .lead{font-size:clamp(1.05rem,1.7vw,1.28rem);color:var(--muted)}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:.65rem;padding:.95rem 1.25rem;border-radius:999px;font-weight:800;border:1px solid transparent;transition:.25s ease;cursor:pointer}
+    .btn-primary{background:var(--green);color:#fff;box-shadow:0 12px 28px rgba(91,166,70,.25)}
+    .btn-primary:hover{transform:translateY(-2px);background:#4d963a}
+    .btn-ghost{border-color:rgba(255,255,255,.38);color:#fff;background:rgba(255,255,255,.08);backdrop-filter:blur(14px)}
+    .btn-light{background:#fff;color:var(--navy)}
+    .btn-outline{border-color:var(--line);background:#fff}
+    .section{padding:110px 0}
+    .section-soft{background:var(--soft)}
+    .section-dark{background:var(--navy);color:#fff}
+    .section-head{display:grid;grid-template-columns:1.1fr .9fr;gap:50px;align-items:end;margin-bottom:52px}
+    .section-head p{max-width:580px}
+
+    /* Header */
+    .topbar{background:#03111e;color:#dbe7ed;font-size:.82rem}
+    .topbar .container{display:flex;justify-content:flex-end;gap:24px;padding:8px 0}
+    .site-header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(18px);border-bottom:1px solid rgba(13,41,68,.08)}
+    .nav{height:76px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+    .brand{display:flex;align-items:center;gap:12px;min-width:0}
+    .brand-mark{
+      position:relative;width:50px;height:50px;overflow:hidden;
+      background:transparent;isolation:isolate;flex:0 0 auto
+    }
+    .logo-lines,.brand-mark:after{
+      position:absolute;inset:0;
+      -webkit-mask:url("galvany-logo-transparent.png") center/contain no-repeat;
+      mask:url("galvany-logo-transparent.png") center/contain no-repeat;
+    }
+    .logo-lines{
+      background:#0b3f83;
+      animation:logoLineColor 30s linear infinite;
+    }
+    .brand-mark:after{
+      content:"";
+      background:linear-gradient(110deg,
+        transparent 30%,
+        rgba(255,255,255,0) 39%,
+        #9aa4ad 46%,
+        #ffffff 50%,
+        #6e7882 54%,
+        rgba(255,255,255,0) 61%,
+        transparent 70%);
+      transform:translateX(-130%);
+      opacity:0;
+      animation:logoMetalSweep 30s linear infinite;
+    }
+    @keyframes logoLineColor{
+      0%{background:#0b3f83}
+      25%{background:#167d77}
+      43%{background:#5ba646}
+      57%{background:#5ba646}
+      72%{background:#111820}
+      100%{background:#111820}
+    }
+    @keyframes logoMetalSweep{
+      0%,48%{transform:translateX(-130%);opacity:0}
+      50%{opacity:1}
+      66%{transform:translateX(130%);opacity:1}
+      68%,100%{transform:translateX(130%);opacity:0}
+    }
+    .brand-mark.restart .logo-lines,
+    .brand-mark.restart:after{animation:none!important}
+    .brand-text strong{display:block;font-size:.96rem;letter-spacing:.015em}
+    .brand-text span{display:block;font-size:.75rem;color:var(--muted)}
+    .nav-links{display:flex;align-items:center;gap:24px;font-size:.92rem;font-weight:700}
+    .nav-links a:hover{color:var(--green)}
+    .menu-btn{display:none;border:0;background:#eef4f5;width:46px;height:46px;border-radius:14px;font-size:1.35rem}
+    .mobile-menu{display:none}
+
+    /* Hero */
+    .hero{position:relative;min-height:calc(100vh - 112px);display:flex;align-items:center;color:#fff;overflow:hidden;background:var(--navy)}
+    .hero:before{content:"";position:absolute;inset:0;background:url("hero-winter.jpg") center/cover no-repeat;transform:scale(1.03)}
+    .hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(3,17,30,.94) 0%,rgba(3,17,30,.72) 43%,rgba(3,17,30,.18) 75%,rgba(3,17,30,.04) 100%)}
+    .hero .container{position:relative;z-index:2;padding:86px 0}
+    .hero-copy{max-width:760px}
+    .hero .eyebrow{color:#a6db8d;margin-bottom:24px}
+    .hero h1 span{color:#a6db8d}
+    .hero-copy>p{font-size:clamp(1.08rem,1.9vw,1.35rem);max-width:650px;color:#e5eef2;margin-top:24px}
+    .hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+    .quick-trust{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}
+    .quick-trust span{padding:.62rem .82rem;border:1px solid rgba(255,255,255,.2);border-radius:999px;background:rgba(255,255,255,.09);font-size:.86rem}
+    .hero-note{margin-top:24px;font-size:.82rem;color:#c8d5dc}
+
+    /* Intro */
+    .intro-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:70px;align-items:center}
+    .portrait-card{min-height:520px;border-radius:var(--radius);background:#e8eef0;overflow:hidden;box-shadow:var(--shadow)}
+    .portrait-card img{width:100%;height:100%;min-height:520px;object-fit:cover;object-position:center 22%}
+    .intro-copy h2{margin:16px 0 24px}
+    .signature{margin-top:28px;font-weight:800;color:var(--navy)}
+    .signature small{display:block;font-weight:500;color:var(--muted)}
+
+    /* Story cards */
+    .story-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    .story-card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:28px;transition:.25s ease}
+    .story-card:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
+    .story-icon{width:48px;height:48px;border-radius:15px;background:#eaf5e6;color:var(--green);display:grid;place-items:center;font-size:1.35rem;margin-bottom:20px}
+    .story-card h3{margin-bottom:10px}
+    .story-card p{color:var(--muted)}
+
+    /* Cube */
+    .cube-layout{display:grid;grid-template-columns:1.05fr .95fr;gap:24px;align-items:stretch}
+    .media-card{position:relative;border-radius:var(--radius);overflow:hidden;min-height:600px;background:#0d2235;box-shadow:var(--shadow)}
+    .media-card img{width:100%;height:100%;object-fit:cover}
+    .cube-copy{border-radius:var(--radius);background:#fff;color:var(--ink);padding:54px;display:flex;flex-direction:column;justify-content:center}
+    .cube-copy h2{margin:16px 0 24px}
+    .checks{display:grid;gap:16px;margin:30px 0}
+    .check{display:flex;gap:12px;align-items:flex-start}
+    .check i{font-style:normal;width:28px;height:28px;border-radius:50%;background:#eaf5e6;color:var(--green);display:grid;place-items:center;font-weight:900;flex:0 0 auto}
+
+    /* Gallery */
+    .gallery{display:grid;grid-template-columns:1.1fr .9fr .9fr;grid-template-rows:260px 260px;gap:16px}
+    .gallery figure{margin:0;border-radius:22px;overflow:hidden;position:relative;background:#dbe6e8}
+    .gallery figure:first-child{grid-row:1/3}
+    .gallery img{width:100%;height:100%;object-fit:cover;transition:.4s ease}
+    .gallery figure:hover img{transform:scale(1.035)}
+    .gallery figcaption{position:absolute;left:16px;right:16px;bottom:16px;background:rgba(3,17,30,.78);color:#fff;padding:12px 14px;border-radius:14px;backdrop-filter:blur(10px);font-weight:700}
+
+    /* Smart */
+    .smart-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+    .smart-card{border-radius:var(--radius);overflow:hidden;background:#fff;border:1px solid var(--line);box-shadow:0 14px 42px rgba(4,24,43,.08)}
+    .smart-card img{width:100%;height:360px;object-fit:cover}
+    .smart-card .copy{padding:30px}
+    .smart-card p{color:var(--muted);margin-top:10px}
+
+
+    .app-showcase{display:grid;grid-template-columns:1.15fr .85fr;gap:24px;align-items:stretch}
+    .app-main{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:34px;box-shadow:0 14px 42px rgba(4,24,43,.08)}
+    .phone-pair{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center;justify-items:center;min-height:430px;background:linear-gradient(145deg,#edf3f4,#fff);border-radius:22px;padding:28px}
+    .phone-pair img{height:390px;width:auto;max-width:46%;object-fit:contain;filter:drop-shadow(0 18px 26px rgba(4,24,43,.18))}
+    .app-main h3{margin-top:26px}
+    .app-main p{color:var(--muted);margin-top:10px}
+    .control-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:0 14px 42px rgba(4,24,43,.08);display:flex;flex-direction:column}
+    .control-card img{width:100%;height:430px;object-fit:cover}
+    .control-card .copy{padding:30px}
+    .control-card p{color:var(--muted);margin-top:10px}
+
+    /* Videos */
+    .video-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+    .video-card{border-radius:var(--radius);overflow:hidden;background:#fff;border:1px solid var(--line);box-shadow:0 14px 42px rgba(4,24,43,.08)}
+    .video-shell{aspect-ratio:16/9;background:#071a2c;position:relative;display:grid;place-items:center}
+    .video-shell img{width:100%;height:100%;object-fit:cover;opacity:.65}
+    .play{position:absolute;width:78px;height:78px;border-radius:50%;border:0;background:var(--green);color:#fff;font-size:1.8rem;cursor:pointer;box-shadow:0 14px 30px rgba(0,0,0,.25)}
+    .video-card .copy{padding:28px}
+    .video-card p{color:var(--muted);margin-top:10px}
+    .video-shell iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+
+    /* Process */
+    .process{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:44px}
+    .step{padding:26px 18px;border-radius:20px;background:#fff;border:1px solid var(--line);position:relative}
+    .step b{display:block;color:var(--green);font-size:1.65rem;margin-bottom:12px}
+    .step p{font-size:.91rem;color:var(--muted)}
+    .step:not(:last-child):after{content:"→";position:absolute;right:-12px;top:50%;transform:translateY(-50%);z-index:2;color:var(--green);font-weight:900}
+
+    /* Personal quote */
+    .quote-wrap{display:grid;grid-template-columns:.7fr 1.3fr;gap:60px;align-items:start}
+    .quote-side{position:sticky;top:120px}
+    .quote{font-size:clamp(1.45rem,2.6vw,2.5rem);line-height:1.35;letter-spacing:-.03em}
+    .quote strong{color:var(--green)}
+    .quote-body{display:grid;gap:20px;color:#dce7ec;font-size:1.08rem}
+    .quote-sign{margin-top:10px;color:#a6db8d;font-weight:800}
+
+    /* FAQ */
+    .faq{max-width:900px;margin:48px auto 0}
+    details{border-top:1px solid var(--line);padding:20px 0}
+    details:last-child{border-bottom:1px solid var(--line)}
+    summary{cursor:pointer;font-weight:800;font-size:1.05rem}
+    details p{margin-top:12px;color:var(--muted)}
+
+    /* Contact */
+    .contact-card{border-radius:32px;background:linear-gradient(135deg,var(--navy),var(--navy2));padding:60px;color:#fff;display:grid;grid-template-columns:1.2fr .8fr;gap:50px;align-items:center;box-shadow:var(--shadow)}
+    .contact-card h2{margin:14px 0 18px}
+    .contact-actions{display:grid;gap:12px}
+    .contact-actions a{display:flex;justify-content:space-between;align-items:center;padding:16px 18px;border-radius:16px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16)}
+    .contact-actions a:hover{background:rgba(255,255,255,.14)}
+    footer{background:#03111e;color:#cbd8df;padding:38px 0 90px}
+    .footer-grid{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap}
+    .footer-links{display:flex;gap:22px;flex-wrap:wrap}
+    .legal{font-size:.84rem;color:#93a7b1;margin-top:18px}
+    .mobile-cta{display:none}
+
+
+    /* Funding calculator */
+    .funding-teaser{padding:72px 0}
+    .funding-card{
+      display:grid;grid-template-columns:1.25fr .75fr;gap:45px;align-items:center;
+      padding:48px;border-radius:30px;background:linear-gradient(135deg,#f1f7ee,#ffffff);
+      border:1px solid #dce9d7;box-shadow:var(--shadow)
+    }
+    .funding-card h2{font-size:clamp(2rem,4vw,3.7rem);margin:14px 0 18px}
+    .funding-action{display:grid;gap:14px;justify-items:start}
+    .funding-action small{color:var(--muted);max-width:330px}
+    .calculator-modal .modal-box{width:min(960px,100%);padding:0;overflow:hidden}
+    .calc-header{padding:30px 34px;background:var(--navy);color:#fff}
+    .calc-header h2{margin:8px 0 6px}
+    .calc-header p{color:#cbd8df}
+    .calc-body{display:grid;grid-template-columns:1.05fr .95fr;gap:0}
+    .calc-inputs{padding:30px 34px;background:#fff}
+    .calc-results{padding:30px 34px;background:var(--soft)}
+    .field-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .field{display:grid;gap:7px;margin-bottom:16px}
+    .field.full{grid-column:1/-1}
+    .field label{font-weight:800;font-size:.88rem}
+    .field input,.field select{
+      width:100%;padding:13px 14px;border:1px solid #cedade;border-radius:12px;
+      background:#fff;color:var(--ink);font:inherit
+    }
+    .check-field{display:flex;gap:10px;align-items:flex-start;padding:12px 0}
+    .check-field input{width:18px;height:18px;margin-top:2px}
+    .term-toggle{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0 22px}
+    .term-toggle button{padding:12px;border:1px solid var(--line);border-radius:12px;background:#fff;font-weight:800;cursor:pointer}
+    .term-toggle button.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+    .result-main{padding:22px;border-radius:20px;background:#fff;border:1px solid var(--line)}
+    .result-label{font-size:.82rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:800}
+    .result-amount{font-size:clamp(2.5rem,5vw,4.5rem);line-height:1;font-weight:900;color:var(--green);margin:8px 0}
+    .result-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+    .result-box{padding:14px;border-radius:14px;background:#fff;border:1px solid var(--line)}
+    .result-box strong{display:block;font-size:1.2rem;margin-top:3px}
+    .bonus-list{display:grid;gap:7px;margin:18px 0;font-size:.9rem;color:var(--muted)}
+    .calc-note{font-size:.78rem;color:var(--muted);margin-top:16px}
+    .cost-compare{
+      margin-top:22px;padding-top:22px;border-top:1px solid var(--line)
+    }
+    .cost-compare h3{font-size:1.2rem;margin-bottom:6px}
+    .cost-compare>p{font-size:.86rem;color:var(--muted);margin-bottom:16px}
+    .cost-input-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .cost-input-grid .field{margin-bottom:0}
+    .cost-result{
+      margin-top:16px;padding:18px;border-radius:18px;background:#fff;border:1px solid var(--line)
+    }
+    .cost-result-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .cost-result-box{padding:12px;border-radius:12px;background:var(--soft)}
+    .cost-result-box strong{display:block;font-size:1.15rem;margin-top:3px}
+    .saving-positive{color:var(--green)}
+    .saving-negative{color:#b34848}
+
+    .calc-cta{margin-top:18px;width:100%}
+    @media(max-width:960px){
+      .funding-card,.calc-body{grid-template-columns:1fr}
+      .funding-card{padding:34px 28px}
+    }
+    @media(max-width:650px){
+      .field-grid,.result-grid,.cost-input-grid,.cost-result-grid{grid-template-columns:1fr}
+      .calc-header,.calc-inputs,.calc-results{padding:24px 20px}
+      .calculator-modal{padding:0}
+      .calculator-modal .modal-box{height:100vh;max-height:100vh;border-radius:0}
+    }
+
+    /* Modal */
+    .modal{position:fixed;inset:0;z-index:100;background:rgba(2,14,25,.72);display:none;align-items:center;justify-content:center;padding:20px}
+    .modal.open{display:flex}
+    .modal-box{width:min(760px,100%);max-height:85vh;overflow:auto;background:#fff;border-radius:24px;padding:32px;position:relative}
+    .modal-close{position:absolute;top:14px;right:14px;border:0;background:#eef3f4;width:40px;height:40px;border-radius:50%;font-size:1.25rem}
+    .modal-box h2{font-size:2rem;margin-bottom:18px}
+    .modal-box h3{font-size:1.15rem;margin:22px 0 8px}
+    .modal-box p,.modal-box li{color:#455564;font-size:.94rem}
+
+    @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}.brand-mark img,.brand-mark:before,.brand-mark:after{animation:none!important}}
+    @media (max-width:960px){
+      .nav-links,.nav>.btn{display:none}
+      .menu-btn{display:block}
+      .mobile-menu{position:fixed;top:76px;left:0;right:0;background:#fff;border-bottom:1px solid var(--line);padding:20px;z-index:49;box-shadow:var(--shadow)}
+      .mobile-menu.open{display:grid;gap:10px}
+      .mobile-menu a{padding:14px;border-radius:12px;background:var(--soft);font-weight:800}
+      .topbar{display:none}
+      .section-head,.intro-grid,.cube-layout,.quote-wrap,.contact-card{grid-template-columns:1fr}
+      .story-grid{grid-template-columns:1fr 1fr}
+      .gallery{grid-template-columns:1fr 1fr;grid-template-rows:280px 220px 220px}
+      .gallery figure:first-child{grid-column:1/3;grid-row:auto}
+      .smart-grid,.app-showcase,.video-grid{grid-template-columns:1fr}
+      .process{grid-template-columns:1fr 1fr}
+      .step:not(:last-child):after{display:none}
+      .quote-side{position:static}
+      .mobile-cta{display:grid;grid-template-columns:repeat(3,1fr);position:fixed;bottom:0;left:0;right:0;z-index:70;background:#fff;border-top:1px solid var(--line);box-shadow:0 -8px 25px rgba(0,0,0,.1)}
+      .mobile-cta a{padding:11px 4px;text-align:center;font-size:.75rem;font-weight:800}
+      .mobile-cta span{display:block;font-size:1.2rem}
+    }
+    @media (max-width:650px){
+      .container{width:min(100% - 28px,var(--max))}
+      .section{padding:76px 0}
+      .hero{min-height:780px}
+      .hero:after{background:linear-gradient(180deg,rgba(3,17,30,.78),rgba(3,17,30,.92))}
+      .hero .container{padding:70px 0 95px}
+      .brand-text span{display:none}
+      .brand-mark{width:48px;height:48px}
+      .story-grid,.process{grid-template-columns:1fr}
+      .gallery{display:grid;grid-template-columns:1fr;grid-template-rows:repeat(4,260px)}
+      .gallery figure:first-child{grid-column:auto}
+      .media-card{min-height:420px}
+      .cube-copy{padding:32px 24px}
+      .smart-card img{height:260px}
+      .phone-pair{min-height:360px;padding:18px;gap:10px}
+      .phone-pair img{height:320px;max-width:48%}
+      .control-card img{height:320px}
+      .contact-card{padding:36px 24px}
+      .hero-actions .btn{width:100%}
+      .quick-trust{display:grid;grid-template-columns:1fr 1fr}
+      .section-head{gap:18px}
+      .quote{font-size:1.55rem}
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="container">
+      <a href="tel:+4917657669107">0176 57669107</a>
+      <a href="mailto:stefan.schulz@galvany-expert.de">stefan.schulz@galvany-expert.de</a>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="#start" aria-label="Startseite">
+        <span class="brand-mark"><img src="galvany-logo-transparent.png" alt="GALVANY Logo"></span>
+        <span class="brand-text"><strong>Stefan Schulz</strong><span>Ihr regionaler GALVANY Expert</span></span>
+      </a>
+      <nav class="nav-links" aria-label="Hauptnavigation">
+        <a href="#warum">Warum GALVANY</a>
+        <a href="#cube">Der Cube</a>
+        <a href="#anlagen">Echte Anlagen</a>
+        <a href="#videos">Videos</a>
+        <a href="#ueber-mich">Über mich</a>
+        <a href="#kontakt">Kontakt</a>
+      </nav>
+      <a class="btn btn-primary" href="https://calendly.com/stefanschulzgalvany" target="_blank" rel="noopener">Beratung vereinbaren</a>
+      <button class="menu-btn" id="menuBtn" aria-label="Menü öffnen">☰</button>
+    </div>
+    <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile Navigation">
+      <a href="#warum">Warum GALVANY</a>
+      <a href="#cube">Der Cube</a>
+      <a href="#anlagen">Echte Anlagen</a>
+      <a href="#videos">Videos</a>
+      <a href="#ueber-mich">Über mich</a>
+      <a href="#kontakt">Kontakt</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="start">
+      <div class="container">
+        <div class="hero-copy">
+          <span class="eyebrow">Persönliche Wärmepumpenberatung</span>
+          <h1>Moderne Wärmepumpen.<br><span>Persönlich beraten.</span></h1>
+          <p>Ich bin Stefan Schulz, Ihr regionaler GALVANY Expert. Ich begleite Sie persönlich, transparent und ohne Verkaufsdruck auf dem Weg zur passenden Wärmepumpe.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="https://calendly.com/stefanschulzgalvany" target="_blank" rel="noopener">Kostenlose Beratung vereinbaren</a>
+            <a class="btn btn-ghost" href="https://wa.me/4917657669107" target="_blank" rel="noopener">WhatsApp schreiben</a>
+          </div>
+          <div class="quick-trust">
+            <span>✓ Festpreis-Angebot</span>
+            <span>✓ Fördermittel komplett über uns</span>
+            <span>✓ Panasonic-Technik</span>
+            <span>✓ Kompakter GALVANY Cube</span>
+          </div>
+          <p class="hero-note">Regional für Hausbesitzer im Raum Hannover, Celle und Umgebung.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding:54px 0">
+      <div class="container">
+        <div class="story-grid">
+          <article class="story-card"><div class="story-icon">P</div><h3>Panasonic-Technik</h3><p>Bewährte Aquarea-Technik als leistungsstarke Grundlage des GALVANY Systems.</p></article>
+          <article class="story-card"><div class="story-icon">C</div><h3>GALVANY Cube</h3><p>Kompakte, vorkonfektionierte Heizzentrale für eine saubere und schnelle Installation.</p></article>
+          <article class="story-card"><div class="story-icon">S</div><h3>Persönliche Betreuung</h3><p>Ein fester Ansprechpartner von der ersten Einschätzung bis zur Inbetriebnahme.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="warum">
+      <div class="container intro-grid">
+        <div class="portrait-card"><img src="stefan-schulz.jpg" alt="Stefan Schulz, regionaler GALVANY Experte"></div>
+        <div class="intro-copy">
+          <span class="eyebrow">Meine Entscheidung</span>
+          <h2>Warum ich meinen Kunden GALVANY empfehle.</h2>
+          <p class="lead">Ich selbst habe lange überlegt, welche Wärmepumpe ich anbieten möchte. Am Ende gab es für mich keinen Zweifel: Ich habe mich für die insgesamt beste Lösung entschieden – bei weitem. Entscheidend ist für mich das Gesamtpaket aus Panasonic-Technik, GALVANY Cube, schneller Montage, Fernbetreuung und Fördermittelservice.</p>
+          <p class="lead" style="margin-top:18px">Genauso sollen Sie genau prüfen, vergleichen und sich dann entscheiden. Dabei helfe ich Ihnen. Doch zum Schluss steht Ihre Entscheidung – ich unterstütze nur dabei.</p>
+          <p class="signature">Stefan Schulz <small>Ihr regionaler GALVANY Expert</small></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-soft">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">Was Hausbesitzern wichtig ist</span>
+            <h2 style="margin-top:16px">Einfacher zur neuen Heizung.</h2>
+          </div>
+          <p class="lead">Nicht möglichst kompliziert, sondern planbar: von der ersten Einschätzung bis zur Inbetriebnahme.</p>
+        </div>
+        <div class="story-grid">
+          <article class="story-card"><div class="story-icon">€</div><h3>Planbarer Festpreis</h3><p>Eine vorkonfektionierte Lösung reduziert aufwendige Einzelmontage und schafft Kostentransparenz.</p></article>
+          <article class="story-card"><div class="story-icon">📄</div><h3>Förderung begleitet</h3><p>Der Förderantrag wird vom Antrag bis zur Auszahlung gemeinsam mit Ihnen vorbereitet und begleitet.</p></article>
+          <article class="story-card"><div class="story-icon">⚡</div><h3>Kurze Montage</h3><p>Durch das durchdachte System sind häufig nur etwa drei bis vier Tage Arbeiten im Haus nötig.</p></article>
+          <article class="story-card"><div class="story-icon">📱</div><h3>Smart steuerbar</h3><p>Heizung, Warmwasser und Verbrauchsdaten lassen sich bequem über die Panasonic App steuern.</p></article>
+          <article class="story-card"><div class="story-icon">🛡</div><h3>Langfristige Betreuung</h3><p>SmartCare+ verbindet Garantie, Fernüberwachung und proaktive Unterstützung – nach den jeweiligen Vertragsbedingungen.</p></article>
+          <article class="story-card"><div class="story-icon">🏠</div><h3>Auch für viele Altbauten</h3><p>Ob die Lösung ohne größere Umbauten passt, prüfen wir anhand Ihres Hauses und Ihrer vorhandenen Heizung.</p></article>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="section funding-teaser" id="foerderung">
+      <div class="container">
+        <div class="funding-card">
+          <div>
+            <span class="eyebrow">Förderung & Finanzierung</span>
+            <h2>Was könnte Ihre Wärmepumpe monatlich kosten?</h2>
+            <p class="lead">Berechnen Sie unverbindlich die voraussichtliche Förderung und vergleichen Sie eine Finanzierung über 10 oder 15 Jahre.</p>
+          </div>
+          <div class="funding-action">
+            <button class="btn btn-primary" type="button" data-modal="fundingCalculator">Förderung berechnen</button>
+            <small>Richtwert nach den Förderbedingungen ab 21. Juli 2026 · Finanzierung mit 6 % gerechnet</small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-dark" id="cube">
+      <div class="container">
+        <div class="cube-layout">
+          <div class="media-card"><img src="galvany-cube-real.jpeg" alt="GALVANY Cube und Panasonic Inneneinheit im Technikraum"></div>
+          <div class="cube-copy">
+            <span class="eyebrow">Der Unterschied im Technikraum</span>
+            <h2>Der GALVANY Cube.</h2>
+            <p class="lead">Eine kompakte Heizzentrale, die viele Komponenten sauber bündelt – frei stehend und ungefähr in der Größenordnung eines modernen Side-by-Side-Kühlschranks.</p>
+            <div class="checks">
+              <div class="check"><i>✓</i><div><strong>Weniger sichtbare Einzelkomponenten</strong><br><span style="color:var(--muted)">Ein aufgeräumter Technikraum statt großflächiger Wandinstallation.</span></div></div>
+              <div class="check"><i>✓</i><div><strong>Vorkonfektioniert</strong><br><span style="color:var(--muted)">Viele Arbeitsschritte sind vorbereitet und müssen nicht erst vor Ort aufgebaut werden.</span></div></div>
+              <div class="check"><i>✓</i><div><strong>Schnell installiert</strong><br><span style="color:var(--muted)">Das reduziert die Zeit, in der Handwerker im Haus arbeiten.</span></div></div>
+            </div>
+            <a class="btn btn-primary" href="#kontakt">Cube unverbindlich erklären lassen</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="anlagen">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">Echte Systeme</span>
+            <h2 style="margin-top:16px">Echte Anlagen. Echte Einbausituationen.</h2>
+          </div>
+          <p class="lead">Jedes Gebäude ist anders. Deshalb zeigen wir bewusst unterschiedliche Einbausituationen – vom Einfamilienhaus bis zum größeren Projekt.</p>
+        </div>
+        <div class="gallery">
+          <figure><img src="hero-winter.jpg" alt="Panasonic Wärmepumpe im Winter"><figcaption>Leistungsstark auch bei winterlichen Bedingungen</figcaption></figure>
+          <figure><img src="galvany-outdoor-garden.webp" alt="Wärmepumpe im Garten"><figcaption>Dezent in den Außenbereich integriert</figcaption></figure>
+          <figure><img src="galvany-outdoor-home.webp" alt="Wärmepumpe an einem Wohnhaus"><figcaption>Moderne Außeneinheit am Einfamilienhaus</figcaption></figure>
+          <figure><img src="galvany-commercial.webp" alt="Mehrere Wärmepumpen für größeres Projekt"><figcaption>Auch für größere Projekte skalierbar</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-soft">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">Smart & komfortabel</span>
+            <h2 style="margin-top:16px">Alles im Griff – zu Hause und unterwegs.</h2>
+          </div>
+          <p class="lead">Temperatur, Warmwasser und Energieflüsse übersichtlich kontrollieren – direkt am Innengerät oder bequem per App.</p>
+        </div>
+        <div class="app-showcase">
+          <article class="app-main">
+            <div class="phone-pair">
+              <img src="galvany-app-energy.webp" alt="GALVANY App mit Energiefluss und Verbrauchsdaten">
+              <img src="galvany-app-temperature.webp" alt="GALVANY App zur Temperatureinstellung">
+            </div>
+            <h3>Die wichtigsten Werte direkt in der App</h3>
+            <p>Temperatur einstellen, Warmwasser kontrollieren und Energieflüsse nachvollziehen – übersichtlich auf dem Smartphone.</p>
+          </article>
+          <article class="control-card">
+            <img src="galvany-service-display.jpeg" alt="Techniker bedienen das Panasonic Bedienteil am Innengerät">
+            <div class="copy"><h3>Direkt am Innengerät und aus der Ferne</h3><p>Das Panasonic Bedienteil bleibt jederzeit vor Ort nutzbar. Zusätzlich unterstützt die digitale Anbindung bei Bedienung, Kontrolle und Service.</p></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="videos">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">In Ruhe ansehen</span>
+            <h2 style="margin-top:16px">Zwei Videos. Zwei Perspektiven.</h2>
+          </div>
+          <p class="lead">Erfahren Sie, warum jetzt ein guter Zeitpunkt sein kann – und lernen Sie GALVANY direkt von der Messe kennen.</p>
+        </div>
+        <div class="video-grid">
+          <article class="video-card">
+            <div class="video-shell" data-video="Y_BCjFFxS8U">
+              <img src="https://i.ytimg.com/vi/Y_BCjFFxS8U/hqdefault.jpg" alt="Vorschaubild 5 Gründe Video">
+              <button class="play" aria-label="Video abspielen">▶</button>
+            </div>
+            <div class="copy"><h3>5 Gründe, warum jetzt der richtige Zeitpunkt ist</h3><p>Förderung, Energiekosten und Planungssicherheit verständlich zusammengefasst.</p></div>
+          </article>
+          <article class="video-card">
+            <div class="video-shell" data-video="LKBbFc4PbvE">
+              <img src="https://i.ytimg.com/vi/LKBbFc4PbvE/hqdefault.jpg" alt="Vorschaubild GALVANY Messevideo">
+              <button class="play" aria-label="Video abspielen">▶</button>
+            </div>
+            <div class="copy"><h3>GALVANY auf der Messe</h3><p>Ein direkter Einblick in Unternehmen, Produktidee und Wärmepumpenkonzept.</p></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-soft">
+      <div class="container">
+        <span class="eyebrow">Der Ablauf</span>
+        <h2 style="margin-top:16px">Von der ersten Frage bis zur warmen Wohnung.</h2>
+        <div class="process">
+          <div class="step"><b>01</b><h3>Beratung</h3><p>Wir klären Haus, Heizung, Wünsche und offene Fragen.</p></div>
+          <div class="step"><b>02</b><h3>Prüfung</h3><p>Auslegung, Heizlast und Fördermöglichkeiten werden geprüft.</p></div>
+          <div class="step"><b>03</b><h3>Festpreis</h3><p>Sie erhalten ein nachvollziehbares Angebot.</p></div>
+          <div class="step"><b>04</b><h3>Montage</h3><p>Das System wird vorbereitet und vor Ort installiert.</p></div>
+          <div class="step"><b>05</b><h3>Inbetriebnahme</h3><p>Einweisung, App und Betreuung schließen das Projekt ab.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-dark" id="ueber-mich">
+      <div class="container quote-wrap">
+        <div class="quote-side">
+          <span class="eyebrow">Meine Haltung</span>
+          <p class="quote" style="margin-top:18px"><strong>„Ich verkaufe Ihnen keine Wärmepumpe.</strong> Ich helfe Ihnen dabei, die richtige Entscheidung zu treffen.“</p>
+        </div>
+        <div class="quote-body">
+          <p>Ich selbst habe lange überlegt, welche Wärmepumpe ich guten Gewissens empfehlen kann. Am Ende blieb für mich eine Lösung übrig, von der ich wirklich überzeugt bin.</p>
+          <p>Deshalb berate ich heute zu GALVANY und Panasonic.</p>
+          <p>Schauen Sie sich alles in Ruhe an, vergleichen Sie und stellen Sie kritische Fragen. Wenn Sie sich am Ende für eine andere Lösung entscheiden, ist das genauso in Ordnung.</p>
+          <p>Wichtig ist nur, dass Sie eine Entscheidung treffen, hinter der Sie viele Jahre mit einem guten Gefühl stehen.</p>
+          <p class="quote-sign">– Stefan Schulz</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <div><span class="eyebrow">Häufige Fragen</span><h2 style="margin-top:16px">Vor einer Entscheidung darf man kritisch sein.</h2></div>
+          <p class="lead">Im persönlichen Gespräch prüfen wir immer das konkrete Gebäude. Diese Antworten dienen nur als erste Orientierung.</p>
+        </div>
+        <div class="faq">
+          <details><summary>Funktioniert eine Wärmepumpe auch im Altbau?</summary><p>In vielen Bestandsgebäuden ja. Entscheidend sind Heizlast, Vorlauftemperatur, Heizflächen und der Zustand des Hauses. Eine pauschale Zusage ohne Prüfung wäre unseriös.</p></details>
+          <details><summary>Müssen alle Heizkörper ausgetauscht werden?</summary><p>Oft nicht. Ob einzelne Heizkörper angepasst werden sollten, zeigt die Auslegung des konkreten Systems.</p></details>
+          <details><summary>Wie lange dauert die Installation?</summary><p>Das vorkonfektionierte System ermöglicht häufig eine Montage innerhalb von etwa drei bis vier Tagen. Der genaue Aufwand hängt vom Gebäude ab.</p></details>
+          <details><summary>Wer kümmert sich um die Förderung?</summary><p>Die Antragstellung und Begleitung werden gemeinsam mit GALVANY vorbereitet. Wichtig ist, Förderbedingungen und Reihenfolge vor Beauftragung korrekt zu prüfen.</p></details>
+          <details><summary>Was bedeutet SmartCare+?</summary><p>SmartCare+ umfasst je nach vereinbartem Paket langfristige Garantie- und Fernbetreuungsleistungen. Die genauen Bedingungen werden im Angebot transparent ausgewiesen.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="kontakt">
+      <div class="container">
+        <div class="contact-card">
+          <div>
+            <span class="eyebrow">Unverbindlich sprechen</span>
+            <h2>Passt eine Wärmepumpe zu Ihrem Haus?</h2>
+            <p class="lead" style="color:#dce7ec">Lassen Sie uns das gemeinsam und unverbindlich herausfinden. Sie erhalten Klarheit über Eignung, Förderung und die nächsten sinnvollen Schritte.</p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="https://calendly.com/stefanschulzgalvany" target="_blank" rel="noopener">Beratung vereinbaren</a>
+              <a class="btn btn-light" href="stefan-schulz.vcf">Kontakt speichern</a>
+            </div>
+          </div>
+          <div class="contact-actions">
+            <a href="tel:+4917657669107"><span><strong>Anrufen</strong><br><small>0176 57669107</small></span><b>→</b></a>
+            <a href="https://wa.me/4917657669107" target="_blank" rel="noopener"><span><strong>WhatsApp</strong><br><small>Direkt schreiben</small></span><b>→</b></a>
+            <a href="mailto:stefan.schulz@galvany-expert.de"><span><strong>E-Mail</strong><br><small>stefan.schulz@galvany-expert.de</small></span><b>→</b></a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div><strong>Stefan Schulz</strong><br><span>Ihr regionaler GALVANY Expert</span></div>
+        <div class="footer-links">
+          <a href="#" data-modal="impressum">Impressum</a>
+          <a href="#" data-modal="datenschutz">Datenschutz</a>
+        </div>
+      </div>
+      <p class="legal">© 2026 Stefan Schulz · 10K-Vertrieb Stefan Schulz wird ausschließlich in den rechtlich erforderlichen Angaben geführt. GALVANY und Panasonic sind Marken ihrer jeweiligen Inhaber.</p>
+    </div>
+  </footer>
+
+  <div class="mobile-cta">
+    <a href="tel:+4917657669107"><span>📞</span>Anrufen</a>
+    <a href="https://wa.me/4917657669107" target="_blank" rel="noopener"><span>💬</span>WhatsApp</a>
+    <a href="https://calendly.com/stefanschulzgalvany" target="_blank" rel="noopener"><span>📅</span>Beratung</a>
+  </div>
+
+
+  <div class="modal calculator-modal" id="fundingCalculator">
+    <div class="modal-box">
+      <button class="modal-close" aria-label="Rechner schließen">×</button>
+      <div class="calc-header">
+        <span class="eyebrow">Unverbindlicher Richtwert</span>
+        <h2>Förder- & Finanzierungsrechner</h2>
+        <p>Für selbstgenutztes Wohneigentum und eine Wohneinheit. Die tatsächliche Förderung wird im Einzelfall geprüft.</p>
+      </div>
+      <div class="calc-body">
+        <form class="calc-inputs" id="fundingForm" onsubmit="return false">
+          <div class="field-grid">
+            <div class="field full">
+              <label for="purchasePrice">Kaufpreis inklusive Installation</label>
+              <input id="purchasePrice" type="number" min="5000" max="150000" step="500" value="36000">
+            </div>
+            <div class="field">
+              <label for="oldHeating">Vorhandene Heizung</label>
+              <select id="oldHeating">
+                <option value="gas">Gas-Zentralheizung</option>
+                <option value="oil">Ölheizung</option>
+                <option value="gasfloor">Gas-Etagenheizung</option>
+                <option value="coal">Kohleheizung</option>
+                <option value="night">Nachtspeicherheizung</option>
+                <option value="biomass">Biomasseheizung</option>
+                <option value="heatpump">Bestehende Wärmepumpe</option>
+                <option value="other">Sonstige Heizung</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="heatingAge">Alter der Heizung in Jahren</label>
+              <input id="heatingAge" type="number" min="0" max="80" value="21">
+            </div>
+            <div class="field">
+              <label for="income">Zu versteuerndes Haushaltseinkommen</label>
+              <input id="income" type="number" min="0" max="500000" step="1000" value="70000">
+            </div>
+            <div class="field">
+              <label for="children">Minderjährige Kinder im Haushalt</label>
+              <select id="children">
+                <option value="0">Keine</option>
+                <option value="1">Mindestens ein Kind</option>
+              </select>
+            </div>
+          </div>
+          <label class="check-field"><input id="ownerOccupied" type="checkbox" checked><span><strong>Selbstgenutztes Wohneigentum</strong><br><small>Erforderlich für Einkommens- und Klimageschwindigkeitsbonus.</small></span></label>
+          <label class="check-field"><input id="efficiencyBonus" type="checkbox"><span><strong>5 % Effizienzbonus berücksichtigen</strong><br><small>Nur falls die konkrete Wärmepumpe bzw. Wärmequelle die Fördervoraussetzungen erfüllt.</small></span></label>
+
+          <div class="cost-compare" id="gasCostInputs">
+            <h3>Heizkostenvergleich (optional)</h3>
+            <p>Grobe Modellrechnung für eine bestehende Gasheizung. Alle Werte können angepasst werden.</p>
+            <div class="cost-input-grid">
+              <div class="field">
+                <label for="annualGas">Gasverbrauch pro Jahr (kWh)</label>
+                <input id="annualGas" type="number" min="0" max="100000" step="500" value="20000">
+              </div>
+              <div class="field">
+                <label for="gasPrice">Gaspreis (ct/kWh)</label>
+                <input id="gasPrice" type="number" min="0" max="100" step="0.1" value="11">
+              </div>
+              <div class="field">
+                <label for="electricityPrice">Wärmepumpenstrom (ct/kWh)</label>
+                <input id="electricityPrice" type="number" min="0" max="100" step="0.1" value="30">
+              </div>
+              <div class="field">
+                <label for="seasonalPerformance">Angenommene Jahresarbeitszahl</label>
+                <input id="seasonalPerformance" type="number" min="2" max="6" step="0.1" value="4.0">
+              </div>
+              <div class="field">
+                <label for="oldBoilerEfficiency">Wirkungsgrad alte Gasheizung (%)</label>
+                <input id="oldBoilerEfficiency" type="number" min="50" max="100" step="1" value="90">
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="calc-results">
+          <span class="result-label">Gewählte Laufzeit</span>
+          <div class="term-toggle">
+            <button type="button" class="active" data-term="10">10 Jahre</button>
+            <button type="button" data-term="15">15 Jahre</button>
+          </div>
+          <div class="result-main">
+            <div class="result-label">Voraussichtliche Monatsrate</div>
+            <div class="result-amount"><span id="monthlyPayment">–</span> €</div>
+            <div>bei 6,0 % Sollzins und Finanzierung des Eigenanteils</div>
+          </div>
+          <div class="result-grid">
+            <div class="result-box"><span class="result-label">Förderung</span><strong id="subsidyAmount">–</strong></div>
+            <div class="result-box"><span class="result-label">Eigenanteil</span><strong id="ownShare">–</strong></div>
+            <div class="result-box"><span class="result-label">Fördersatz</span><strong id="subsidyRate">–</strong></div>
+            <div class="result-box"><span class="result-label">Förderfähige Kosten</span><strong id="eligibleCosts">–</strong></div>
+          </div>
+          <div class="bonus-list" id="bonusList"></div>
+
+          <div class="cost-result" id="gasCostResult">
+            <div class="result-label">Geschätzter Heizkostenvergleich pro Jahr</div>
+            <div class="cost-result-grid" style="margin-top:12px">
+              <div class="cost-result-box"><span class="result-label">Bisherige Gaskosten</span><strong id="oldHeatingCost">–</strong></div>
+              <div class="cost-result-box"><span class="result-label">WP-Strombedarf</span><strong id="wpElectricityUse">–</strong></div>
+              <div class="cost-result-box"><span class="result-label">Neue Stromkosten</span><strong id="wpHeatingCost">–</strong></div>
+              <div class="cost-result-box"><span class="result-label">Mögliche Ersparnis</span><strong id="annualSaving">–</strong></div>
+            </div>
+            <p class="calc-note">Berechnung: nutzbare Heizwärme aus dem bisherigen Gasverbrauch ÷ eingestellte Jahresarbeitszahl. Nicht enthalten sind Grundpreise, Wartung, Warmwasserabweichungen, PV-Eigenverbrauch und individuelle Gebäudeeinflüsse.</p>
+          </div>
+
+          <a class="btn btn-primary calc-cta" href="https://calendly.com/stefanschulzgalvany" target="_blank" rel="noopener">Ergebnis persönlich prüfen lassen</a>
+          <p class="calc-note">Unverbindliche Modellrechnung nach den KfW-Förderbedingungen mit Stand 21.07.2026. Kein Rechtsanspruch, keine Finanzierungszusage. Berücksichtigt werden maximal 28.000 € förderfähige Kosten für die erste Wohneinheit.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="impressum">
+    <div class="modal-box">
+      <button class="modal-close" aria-label="Schließen">×</button>
+      <h2>Impressum</h2>
+      <h3>Angaben gemäß § 5 DDG</h3>
+      <p><strong>10K-Vertrieb Stefan Schulz</strong><br>Einzelunternehmen<br>Stefan Schulz<br>Steindamm 19<br>31311 Uetze / Hänigsen</p>
+      <p style="margin-top:14px">Telefon: 0176 57669107<br>E-Mail: stefan.schulz@galvany-expert.de<br>Website: www.waermepumpe-mit-stefan.de</p>
+      <h3>Tätigkeit</h3><p>Vermittlung und Beratung zu Wärmepumpen- und Energielösungen. Die Installation erfolgt durch GALVANY Energy GmbH bzw. beauftragte oder autorisierte Fachpartner.</p>
+      <h3>Verantwortlich für journalistisch-redaktionelle Inhalte</h3><p>Stefan Schulz, Anschrift wie oben.</p>
+    </div>
+  </div>
+
+  <div class="modal" id="datenschutz">
+    <div class="modal-box">
+      <button class="modal-close" aria-label="Schließen">×</button>
+      <h2>Datenschutzerklärung</h2>
+      <p><strong>Verantwortlicher:</strong><br>10K-Vertrieb Stefan Schulz, Stefan Schulz, Steindamm 19, 31311 Uetze / Hänigsen, stefan.schulz@galvany-expert.de</p>
+      <h3>Hosting und Server-Logfiles</h3><p>Diese Website wird über GitHub Pages bereitgestellt. Beim Aufruf können technisch erforderliche Daten wie IP-Adresse, Zeitpunkt, Browsertyp und aufgerufene Seite verarbeitet werden.</p>
+      <h3>Kontaktaufnahme</h3><p>Bei Kontakt per Telefon, E-Mail oder WhatsApp werden die von Ihnen übermittelten Daten zur Bearbeitung Ihrer Anfrage verarbeitet. Für WhatsApp gelten zusätzlich die Datenschutzbestimmungen des jeweiligen Anbieters.</p>
+      <h3>Calendly</h3><p>Für Terminbuchungen wird Calendly genutzt. Beim Öffnen des externen Links werden Daten an Calendly übertragen. Die Buchung erfolgt freiwillig auf der externen Plattform.</p>
+      <h3>YouTube</h3><p>YouTube-Videos werden erst nach Ihrem Klick geladen. Erst dann wird eine Verbindung zu YouTube hergestellt und es können Daten sowie Cookies verarbeitet werden.</p>
+      <h3>Rechtsgrundlagen und Rechte</h3><p>Die Verarbeitung erfolgt je nach Vorgang insbesondere auf Grundlage von Art. 6 Abs. 1 lit. a, b oder f DSGVO. Sie haben insbesondere Rechte auf Auskunft, Berichtigung, Löschung, Einschränkung, Widerspruch, Datenübertragbarkeit und Beschwerde bei einer Datenschutzaufsichtsbehörde.</p>
+      <p style="margin-top:18px"><em>Hinweis: Diese Datenschutzerklärung ist eine auf die eingesetzten Dienste abgestimmte Arbeitsfassung und ersetzt keine individuelle Rechtsberatung.</em></p>
+    </div>
+  </div>
+
+  <script>
+    const menuBtn=document.getElementById('menuBtn');
+    const mobileMenu=document.getElementById('mobileMenu');
+    menuBtn.addEventListener('click',()=>mobileMenu.classList.toggle('open'));
+    mobileMenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>mobileMenu.classList.remove('open')));
+
+    document.querySelectorAll('.video-shell').forEach(shell=>{
+      shell.querySelector('.play').addEventListener('click',()=>{
+        const id=shell.dataset.video;
+        shell.innerHTML=`<iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0" title="YouTube-Video" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
+      });
+    });
+
+    document.querySelectorAll('[data-modal]').forEach(link=>{
+      link.addEventListener('click',e=>{
+        e.preventDefault();
+        document.getElementById(link.dataset.modal).classList.add('open');
+      });
+    });
+    document.querySelectorAll('.modal-close').forEach(btn=>btn.addEventListener('click',()=>btn.closest('.modal').classList.remove('open')));
+    document.querySelectorAll('.modal').forEach(modal=>modal.addEventListener('click',e=>{if(e.target===modal) modal.classList.remove('open')}));
+    document.addEventListener('keydown',e=>{if(e.key==='Escape') document.querySelectorAll('.modal.open').forEach(m=>m.classList.remove('open'))});
+
+
+    const euro = new Intl.NumberFormat('de-DE',{style:'currency',currency:'EUR',maximumFractionDigits:0});
+    let financeTerm = 10;
+
+    function incomeBonus(income, hasChild){
+      const offset = hasChild ? 10000 : 0;
+      if(income <= 30000 + offset) return 40;
+      if(income <= 40000 + offset) return 30;
+      if(income <= 50000 + offset) return 10;
+      return 0;
+    }
+
+    function climateBonus(type, age, ownerOccupied){
+      if(!ownerOccupied) return 0;
+      if(['oil','coal','gasfloor','night'].includes(type)) return 16;
+      if(['gas','biomass'].includes(type) && age >= 20) return 16;
+      return 0;
+    }
+
+    function monthlyAnnuity(principal, annualRate, years){
+      if(principal <= 0) return 0;
+      const r = annualRate / 12;
+      const n = years * 12;
+      return principal * r / (1 - Math.pow(1 + r, -n));
+    }
+
+    function calculateFunding(){
+      const price = Math.max(0, Number(document.getElementById('purchasePrice').value) || 0);
+      const type = document.getElementById('oldHeating').value;
+      const age = Math.max(0, Number(document.getElementById('heatingAge').value) || 0);
+      const income = Math.max(0, Number(document.getElementById('income').value) || 0);
+      const hasChild = document.getElementById('children').value === '1';
+      const owner = document.getElementById('ownerOccupied').checked;
+      const efficiency = document.getElementById('efficiencyBonus').checked ? 5 : 0;
+
+      const eligible = Math.min(price, 28000);
+      const basic = 30;
+      const climate = climateBonus(type, age, owner);
+      const incomePct = owner ? incomeBonus(income, hasChild) : 0;
+      const cap = owner && incomePct === 40 ? 80 : 70;
+      const totalRate = Math.min(cap, basic + climate + incomePct + efficiency);
+      const subsidy = eligible * totalRate / 100;
+      const own = Math.max(0, price - subsidy);
+      const monthly = monthlyAnnuity(own, 0.06, financeTerm);
+      const annualGas = Math.max(0, Number(document.getElementById('annualGas').value) || 0);
+      const gasPrice = Math.max(0, Number(document.getElementById('gasPrice').value) || 0) / 100;
+      const electricityPrice = Math.max(0, Number(document.getElementById('electricityPrice').value) || 0) / 100;
+      const seasonalPerformance = Math.max(0.1, Number(document.getElementById('seasonalPerformance').value) || 4);
+      const oldBoilerEfficiency = Math.min(1, Math.max(0.1, (Number(document.getElementById('oldBoilerEfficiency').value) || 90) / 100));
+      const usefulHeat = annualGas * oldBoilerEfficiency;
+      const wpElectricity = usefulHeat / seasonalPerformance;
+      const oldHeatingCost = annualGas * gasPrice;
+      const wpHeatingCost = wpElectricity * electricityPrice;
+      const annualSaving = oldHeatingCost - wpHeatingCost;
+
+
+      document.getElementById('monthlyPayment').textContent = Math.round(monthly).toLocaleString('de-DE');
+      document.getElementById('subsidyAmount').textContent = euro.format(subsidy);
+      document.getElementById('ownShare').textContent = euro.format(own);
+      document.getElementById('subsidyRate').textContent = totalRate.toLocaleString('de-DE') + ' %';
+      document.getElementById('eligibleCosts').textContent = euro.format(eligible);
+      document.getElementById('oldHeatingCost').textContent = euro.format(oldHeatingCost);
+      document.getElementById('wpElectricityUse').textContent = Math.round(wpElectricity).toLocaleString('de-DE') + ' kWh';
+      document.getElementById('wpHeatingCost').textContent = euro.format(wpHeatingCost);
+      const savingEl = document.getElementById('annualSaving');
+      savingEl.textContent = (annualSaving >= 0 ? '' : '−') + euro.format(Math.abs(annualSaving));
+      savingEl.classList.toggle('saving-positive', annualSaving >= 0);
+      savingEl.classList.toggle('saving-negative', annualSaving < 0);
+
+      const gasSectionVisible = type === 'gas';
+      document.getElementById('gasCostInputs').style.display = gasSectionVisible ? '' : 'none';
+      document.getElementById('gasCostResult').style.display = gasSectionVisible ? '' : 'none';
+
+
+      const items = [
+        `Grundförderung: ${basic} %`,
+        climate ? `Klimageschwindigkeitsbonus: ${climate} %` : 'Klimageschwindigkeitsbonus: nicht berücksichtigt',
+        incomePct ? `Einkommensbonus: ${incomePct} %` : 'Einkommensbonus: nicht berücksichtigt',
+        efficiency ? `Effizienzbonus: ${efficiency} %` : 'Effizienzbonus: nicht ausgewählt'
+      ];
+      document.getElementById('bonusList').innerHTML = items.map(x=>`<span>✓ ${x}</span>`).join('');
+    }
+
+    document.querySelectorAll('#fundingForm input,#fundingForm select').forEach(el=>el.addEventListener('input',calculateFunding));
+    document.querySelectorAll('.term-toggle button').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        financeTerm = Number(btn.dataset.term);
+        document.querySelectorAll('.term-toggle button').forEach(b=>b.classList.toggle('active',b===btn));
+        calculateFunding();
+      });
+    });
+    calculateFunding();
+
+    const brandMark=document.querySelector('.brand-mark');
+    if(brandMark){
+      const restartLogoAnimation=()=>{
+        brandMark.classList.add('restart');
+        void brandMark.offsetWidth;
+        brandMark.classList.remove('restart');
+        calculateFunding();
+      };
+      brandMark.addEventListener('mouseenter',restartLogoAnimation);
+      brandMark.addEventListener('focusin',restartLogoAnimation);
+      brandMark.addEventListener('click',restartLogoAnimation);
+    }
+
+  </script>
+
+<!-- GALVANY V5.1 Preview · 01.08.2026 -->
+</body>
+</html>
