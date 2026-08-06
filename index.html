@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Stefan Schulz | Ihr regionaler GALVANY Expert</title>
+  <title>Stefan Schulz | GALVANY Expert – Förderung, Finanzierung & Heizkosten</title>
   <meta name="description" content="Persönliche Beratung zu GALVANY Wärmepumpen mit Panasonic-Technik, Fördermittelservice, Festpreis und kompakter Cube-Heizzentrale.">
   <meta name="theme-color" content="#071a2c">
   <meta property="og:title" content="Stefan Schulz | Ihr regionaler GALVANY Expert">
@@ -67,44 +67,49 @@
     .nav{height:76px;display:flex;align-items:center;justify-content:space-between;gap:24px}
     .brand{display:flex;align-items:center;gap:12px;min-width:0}
     .brand-mark{
-      position:relative;width:54px;height:54px;overflow:hidden;
-      background:transparent;isolation:isolate
+      position:relative;width:50px;height:50px;overflow:hidden;
+      background:transparent;isolation:isolate;flex:0 0 auto
     }
-    .brand-mark img{
-      width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply;
-      animation:logoTone 30s linear infinite
+    .logo-lines,.brand-mark:after{
+      position:absolute;inset:0;
+      -webkit-mask:url("galvany-logo-transparent.png") center/contain no-repeat;
+      mask:url("galvany-logo-transparent.png") center/contain no-repeat;
     }
-    .brand-mark:before{
-      content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
-      background:transparent;opacity:0;animation:none
+    .logo-lines{
+      background:#0b3f83;
+      animation:logoLineColor 30s linear infinite;
     }
     .brand-mark:after{
-      content:"";position:absolute;inset:-40%;z-index:3;pointer-events:none;
-      background:linear-gradient(110deg,transparent 36%,rgba(255,255,255,0) 42%,rgba(255,255,255,.96) 49%,rgba(210,235,255,.74) 52%,transparent 60%);
-      transform:translateX(-125%) rotate(7deg);mix-blend-mode:screen;opacity:0;
-      animation:logoMetalSweep 30s linear infinite
+      content:"";
+      background:linear-gradient(110deg,
+        transparent 30%,
+        rgba(255,255,255,0) 39%,
+        #9aa4ad 46%,
+        #ffffff 50%,
+        #6e7882 54%,
+        rgba(255,255,255,0) 61%,
+        transparent 70%);
+      transform:translateX(-130%);
+      opacity:0;
+      animation:logoMetalSweep 30s linear infinite;
     }
-    @keyframes logoTone{
-      0%,18%{filter:invert(25%) sepia(65%) saturate(1800%) hue-rotate(185deg) brightness(78%) contrast(105%)}
-      22%,40%{filter:invert(58%) sepia(35%) saturate(850%) hue-rotate(58deg) brightness(93%) contrast(88%)}
-      44%,67%{filter:grayscale(.25) brightness(.8) contrast(1.25)}
-      72%,100%{filter:none}
-    }
-    @keyframes logoColorWash{
-      0%,18%{background:#0b3f83;opacity:.28}
-      22%,40%{background:#5ba646;opacity:.22}
-      44%,100%{opacity:0}
+    @keyframes logoLineColor{
+      0%{background:#0b3f83}
+      25%{background:#167d77}
+      43%{background:#5ba646}
+      57%{background:#5ba646}
+      72%{background:#111820}
+      100%{background:#111820}
     }
     @keyframes logoMetalSweep{
-      0%,44%{transform:translateX(-125%) rotate(7deg);opacity:0}
-      46%{opacity:1}
-      62%{transform:translateX(125%) rotate(7deg);opacity:1}
-      65%,100%{transform:translateX(125%) rotate(7deg);opacity:0}
+      0%,48%{transform:translateX(-130%);opacity:0}
+      50%{opacity:1}
+      66%{transform:translateX(130%);opacity:1}
+      68%,100%{transform:translateX(130%);opacity:0}
     }
-    .brand-mark.restart img,
-    .brand-mark.restart:before,
+    .brand-mark.restart .logo-lines,
     .brand-mark.restart:after{animation:none!important}
-    .brand-text strong{display:block;font-size:1.05rem;letter-spacing:.02em}
+    .brand-text strong{display:block;font-size:.96rem;letter-spacing:.015em}
     .brand-text span{display:block;font-size:.75rem;color:var(--muted)}
     .nav-links{display:flex;align-items:center;gap:24px;font-size:.92rem;font-weight:700}
     .nav-links a:hover{color:var(--green)}
@@ -221,6 +226,130 @@
     .footer-links{display:flex;gap:22px;flex-wrap:wrap}
     .legal{font-size:.84rem;color:#93a7b1;margin-top:18px}
     .mobile-cta{display:none}
+
+
+    /* Funding calculator */
+    .funding-teaser{padding:72px 0}
+    .funding-card{
+      display:grid;grid-template-columns:1.25fr .75fr;gap:45px;align-items:center;
+      padding:48px;border-radius:30px;background:linear-gradient(135deg,#f1f7ee,#ffffff);
+      border:1px solid #dce9d7;box-shadow:var(--shadow)
+    }
+    .funding-card h2{font-size:clamp(2rem,4vw,3.7rem);margin:14px 0 18px}
+    .funding-action{display:grid;gap:14px;justify-items:start}
+    .funding-action small{color:var(--muted);max-width:330px}
+    .calculator-modal .modal-box{width:min(980px,100%);height:min(92vh,920px);max-height:92vh;padding:0;overflow:hidden;display:flex;flex-direction:column}
+    .calc-header{padding:26px 34px;background:var(--navy);color:#fff;flex:0 0 auto}
+    .calc-header h2{margin:8px 0 6px}
+    .calc-header p{color:#cbd8df}
+    .calc-tabs{position:sticky;top:0;z-index:4;
+      display:grid;grid-template-columns:1fr 1fr;gap:8px;
+      padding:14px 34px;background:#eaf0f2;border-bottom:1px solid var(--line)
+    }
+    .calc-tab{
+      border:1px solid #cdd9dd;background:#fff;color:var(--navy);
+      border-radius:12px;padding:13px 16px;font-weight:900;cursor:pointer
+    }
+    .calc-tab.active{background:var(--green);color:#fff;border-color:var(--green)}
+    .calc-panel{display:none;overflow:auto;min-height:0}
+    .calc-panel.active{display:block;flex:1 1 auto}
+
+    .calc-body{display:grid;grid-template-columns:1.05fr .95fr;gap:0}
+    .calc-inputs{padding:30px 34px;background:#fff}
+    .calc-results{padding:30px 34px;background:var(--soft)}
+    .field-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .field{display:grid;gap:7px;margin-bottom:16px}
+    .field.full{grid-column:1/-1}
+    .field label,.field-label{font-weight:800;font-size:.88rem}
+    .field input,.field select{
+      width:100%;padding:13px 14px;border:1px solid #cedade;border-radius:12px;
+      background:#fff;color:var(--ink);font:inherit
+    }
+    .check-field{display:flex;gap:10px;align-items:flex-start;padding:12px 0}
+    .check-field input{width:18px;height:18px;margin-top:2px}
+    .term-toggle{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0 22px}
+    .term-toggle button{padding:12px;border:1px solid var(--line);border-radius:12px;background:#fff;font-weight:800;cursor:pointer}
+    .term-toggle button.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+    .energy-toggle{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0 22px}
+    .energy-toggle button{padding:12px;border:1px solid var(--line);border-radius:12px;background:#fff;font-weight:800;cursor:pointer}
+    .energy-toggle button.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+    .result-main{padding:22px;border-radius:20px;background:#fff;border:1px solid var(--line)}
+    .result-label{font-size:.82rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:800}
+    .result-amount{font-size:clamp(2.5rem,5vw,4.5rem);line-height:1;font-weight:900;color:var(--green);margin:8px 0}
+    .result-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+    .result-box{padding:14px;border-radius:14px;background:#fff;border:1px solid var(--line)}
+    .result-box strong{display:block;font-size:1.2rem;margin-top:3px}
+    .bonus-list{display:grid;gap:7px;margin:18px 0;font-size:.9rem;color:var(--muted)}
+    .calc-note{font-size:.78rem;color:var(--muted);margin-top:16px}
+    .rule-status{margin-top:14px;padding:12px 14px;border-radius:14px;background:rgba(166,219,141,.12);border:1px solid rgba(166,219,141,.4);color:#e8f5e2;font-size:.82rem}
+    .scope-note,.calculation-notice{padding:14px 16px;border-radius:14px;font-size:.84rem;line-height:1.5}
+    .scope-note{margin-bottom:18px;background:#f1f7ee;border:1px solid #dce9d7;color:#35523a}
+    .calculation-notice{margin-top:14px;background:#fff8e8;border:1px solid #efd898;color:#6b5318}
+    .source-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px;font-size:.78rem}
+    .source-links a{color:var(--green);font-weight:800;text-decoration:underline}
+    .field input:disabled,.field select:disabled{background:#eef2f3;color:#7c898f;cursor:not-allowed}
+    .help-wrap{position:relative;display:inline-flex;align-items:center;gap:6px}
+    .help-btn{
+      width:19px;height:19px;border-radius:50%;border:1px solid #aebbc1;
+      background:#fff;color:var(--green);font-size:.76rem;font-weight:900;
+      display:inline-grid;place-items:center;cursor:pointer;line-height:1;
+      padding:0;vertical-align:middle;transition:.2s ease;
+      border-color:var(--green);
+      box-shadow:0 2px 8px rgba(91,166,70,.14)
+    }
+    .help-btn:hover,.help-btn:focus-visible,.help-btn[aria-expanded="true"]{
+      background:var(--green);color:#fff;border-color:var(--green);
+      box-shadow:0 4px 12px rgba(91,166,70,.32);outline:none;
+      transform:translateY(-1px)
+    }
+    .help-tip{
+      position:absolute;left:0;top:calc(100% + 8px);z-index:30;
+      width:min(290px,78vw);padding:14px 15px;border-radius:14px;
+      background:#fff;color:var(--ink);border:1px solid var(--line);
+      box-shadow:0 14px 38px rgba(4,24,43,.16);
+      font-size:.84rem;font-weight:500;line-height:1.45;
+      opacity:0;visibility:hidden;transform:translateY(-4px);
+      transition:.18s ease
+    }
+    .help-tip strong{display:block;margin-bottom:5px;color:var(--navy)}
+    .help-wrap.open .help-tip{
+      opacity:1;visibility:visible;transform:translateY(0)
+    }
+    .help-wrap.right .help-tip{left:auto;right:0}
+
+    .inline-help{
+      display:inline-block;margin-left:4px;color:var(--green);
+      text-decoration:none;cursor:pointer;font-weight:900
+    }
+    .inline-help:hover{color:#3f8731;text-decoration:underline}
+
+    .cost-compare{
+      margin-top:22px;padding-top:22px;border-top:1px solid var(--line)
+    }
+    .cost-compare h3{font-size:1.2rem;margin-bottom:6px}
+    .cost-compare>p{font-size:.86rem;color:var(--muted);margin-bottom:16px}
+    .cost-input-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .cost-input-grid .field{margin-bottom:0}
+    .cost-result{
+      margin-top:16px;padding:18px;border-radius:18px;background:#fff;border:1px solid var(--line)
+    }
+    .cost-result-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .cost-result-box{padding:12px;border-radius:12px;background:var(--soft)}
+    .cost-result-box strong{display:block;font-size:1.15rem;margin-top:3px}
+    .saving-positive{color:var(--green)}
+    .saving-negative{color:#b34848}
+
+    .calc-cta{margin-top:18px;width:100%}
+    @media(max-width:960px){
+      .funding-card,.calc-body{grid-template-columns:1fr}
+      .funding-card{padding:34px 28px}
+    }
+    @media(max-width:650px){
+      .field-grid,.result-grid,.cost-input-grid,.cost-result-grid{grid-template-columns:1fr}
+      .calc-header,.calc-inputs,.calc-results{padding:24px 20px}
+      .calculator-modal{padding:0}
+      .calculator-modal .modal-box{height:100dvh;max-height:100dvh;border-radius:0}
+    }
 
     /* Modal */
     .modal{position:fixed;inset:0;z-index:100;background:rgba(2,14,25,.72);display:none;align-items:center;justify-content:center;padding:20px}
@@ -376,6 +505,23 @@
       </div>
     </section>
 
+
+    <section class="section funding-teaser" id="foerderung">
+      <div class="container">
+        <div class="funding-card">
+          <div>
+            <span class="eyebrow">Förderung & Finanzierung</span>
+            <h2>Was könnte Ihre Wärmepumpe monatlich kosten?</h2>
+            <p class="lead">Ein Klick öffnet zwei getrennte Rechner: Förderung & Finanzierung sowie Heizkostenvergleich Gas → Wärmepumpe.</p>
+          </div>
+          <div class="funding-action">
+            <button class="btn btn-primary" type="button" data-modal="fundingCalculator">Förderung, Finanzierung & Heizkosten</button>
+            <small>Richtwert nach den Förderbedingungen ab 21. Juli 2026 · Finanzierung mit 6 % gerechnet</small>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="section section-dark" id="cube">
       <div class="container">
         <div class="cube-layout">
@@ -402,7 +548,7 @@
             <span class="eyebrow">Echte Systeme</span>
             <h2 style="margin-top:16px">Echte Anlagen. Echte Einbausituationen.</h2>
           </div>
-          <p class="lead">Keine perfekte Studiofassade: Die Fotos zeigen, wie moderne Wärmepumpentechnik an realen Gebäuden und in echten Technikräumen aussehen kann.</p>
+          <p class="lead">Jedes Gebäude ist anders. Deshalb zeigen wir bewusst unterschiedliche Einbausituationen – vom Einfamilienhaus bis zum größeren Projekt.</p>
         </div>
         <div class="gallery">
           <figure><img src="hero-winter.jpg" alt="Panasonic Wärmepumpe im Winter"><figcaption>Leistungsstark auch bei winterlichen Bedingungen</figcaption></figure>
@@ -451,14 +597,14 @@
         <div class="video-grid">
           <article class="video-card">
             <div class="video-shell" data-video="Y_BCjFFxS8U">
-              <img src="https://i.ytimg.com/vi/Y_BCjFFxS8U/hqdefault.jpg" alt="Vorschaubild 5 Gründe Video">
+              <img src="youtube-preview-5-gruende.svg" alt="Vorschaubild 5 Gründe Video">
               <button class="play" aria-label="Video abspielen">▶</button>
             </div>
             <div class="copy"><h3>5 Gründe, warum jetzt der richtige Zeitpunkt ist</h3><p>Förderung, Energiekosten und Planungssicherheit verständlich zusammengefasst.</p></div>
           </article>
           <article class="video-card">
             <div class="video-shell" data-video="LKBbFc4PbvE">
-              <img src="https://i.ytimg.com/vi/LKBbFc4PbvE/hqdefault.jpg" alt="Vorschaubild GALVANY Messevideo">
+              <img src="youtube-preview-messe.svg" alt="Vorschaubild GALVANY Messevideo">
               <button class="play" aria-label="Video abspielen">▶</button>
             </div>
             <div class="copy"><h3>GALVANY auf der Messe</h3><p>Ein direkter Einblick in Unternehmen, Produktidee und Wärmepumpenkonzept.</p></div>
@@ -554,6 +700,186 @@
     <a href="https://calendly.com/stefanschulzgalvany" target="_blank" rel="noopener"><span>📅</span>Beratung</a>
   </div>
 
+
+
+  <div class="modal calculator-modal" id="fundingCalculator">
+    <div class="modal-box">
+      <button class="modal-close" aria-label="Rechner schließen">×</button>
+      <div class="calc-header">
+        <span class="eyebrow">Unverbindlicher Richtwert</span>
+        <h2>Förderung, Finanzierung & Heizkosten</h2>
+        <p>Wählen Sie oben den gewünschten Rechner.</p>
+        <div class="rule-status"><strong>Förderregeln für Anträge vom 21.07.2026 bis 31.01.2027</strong><br>Prüfstand: 06.08.2026 · KfW-Zuschuss 458 · V5.7 Sprint 1</div>
+      </div>
+
+      <div class="calc-tabs" role="tablist" aria-label="Rechner auswählen">
+        <button type="button" class="calc-tab active" data-calc-tab="fundingPanel">Förderung & Finanzierung</button>
+        <button type="button" class="calc-tab" data-calc-tab="heatingPanel">Heizkostenvergleich</button>
+      </div>
+
+      <div class="calc-panel active" id="fundingPanel">
+        <div class="calc-body">
+          <form class="calc-inputs" id="fundingForm" onsubmit="return false">
+            <div class="scope-note"><strong>Geltungsbereich dieser Vorschau:</strong> Privatperson, bestehendes Wohngebäude und erste beziehungsweise einzige Wohneinheit. Die Wärmepumpe und die Maßnahme müssen die technischen Fördervoraussetzungen erfüllen. Mehrfamilienhäuser und WEG werden in dieser vereinfachten Berechnung noch nicht abgebildet.</div>
+            <div class="field-grid">
+              <div class="field full">
+                <div class="field-label"><span class="help-wrap">
+                  <span id="purchasePriceLabel">Förderfähige Gesamtkosten der Maßnahme</span>
+                  <button type="button" class="help-btn" aria-expanded="false" aria-label="Erklärung zu förderfähigen Gesamtkosten">?</button>
+                  <span class="help-tip" role="tooltip"><strong>Förderfähige Gesamtkosten</strong>Gemeint sind nur die von KfW, Fachunternehmen oder Energieeffizienz-Experten anerkannten Kosten. Für die erste Wohneinheit berücksichtigt diese Vorschau bis 31.01.2027 höchstens 28.000 €.</span>
+                </span></div>
+                <input id="purchasePrice" type="number" min="5000" max="150000" step="500" value="36000" aria-labelledby="purchasePriceLabel">
+              </div>
+              <div class="field">
+                <label for="oldHeating">Vorhandene Heizung</label>
+                <select id="oldHeating">
+                  <option value="gas">Gas-Zentralheizung</option>
+                  <option value="oil">Ölheizung</option>
+                  <option value="gasfloor">Gas-Etagenheizung</option>
+                  <option value="coal">Kohleheizung</option>
+                  <option value="night">Nachtspeicherheizung</option>
+                  <option value="biomass">Biomasseheizung</option>
+                  <option value="heatpump">Bestehende Wärmepumpe</option>
+                  <option value="other">Sonstige Heizung</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="heatingAge">Alter der Heizung in Jahren</label>
+                <input id="heatingAge" type="number" min="0" max="80" value="21">
+              </div>
+              <div class="field">
+                <label for="incomeKnown">KfW-relevantes Einkommen bekannt?</label>
+                <select id="incomeKnown">
+                  <option value="0">Nein / nur Brutto- oder Renteneinkommen bekannt</option>
+                  <option value="1">Ja, aus den maßgeblichen Steuerbescheiden</option>
+                </select>
+              </div>
+              <div class="field">
+                <div class="field-label"><span class="help-wrap right">
+                  <span id="incomeLabel">Zu versteuerndes Haushaltseinkommen</span>
+                  <button type="button" class="help-btn" aria-expanded="false" aria-label="Erklärung zum Haushaltseinkommen">?</button>
+                  <span class="help-tip" role="tooltip"><strong>KfW-relevantes Einkommen</strong>Für einen Antrag 2026 zählt der Durchschnitt der zu versteuernden Einkommen aus den Steuerbescheiden 2023 und 2024. Bruttoeinkommen, Rentenbescheid oder aktuelles Monatsnetto sind nicht gleichbedeutend.</span>
+                </span></div>
+                <input id="income" type="number" min="0" max="500000" step="1000" value="70000" aria-labelledby="incomeLabel">
+              </div>
+              <div class="field full">
+                <div class="field-label"><span class="help-wrap">
+                  <span id="childrenLabel">Berücksichtigungsfähiges Kind im Haushalt</span>
+                  <button type="button" class="help-btn" aria-expanded="false" aria-label="Erklärung zum Familienzuschlag">?</button>
+                  <span class="help-tip" role="tooltip"><strong>Familienzuschlag</strong>Mindestens ein Kind muss am Antragstag unter 18 Jahre alt, im Haushalt mit Haupt- oder alleinigem Wohnsitz gemeldet und kindergeldberechtigt sein. Der Zuschlag gilt einmalig, unabhängig von der Anzahl der Kinder.</span>
+                </span></div>
+                <select id="children" aria-labelledby="childrenLabel">
+                  <option value="0">Nein</option>
+                  <option value="1">Ja, mindestens ein Kind erfüllt alle Voraussetzungen</option>
+                </select>
+              </div>
+            </div>
+            <label class="check-field"><input id="ownerOccupied" type="checkbox"><span><strong>Selbstgenutztes Wohneigentum</strong><br><small>Ich bin Eigentümer und bewohne die betreffende Wohneinheit am Antragstag selbst als Haupt- oder alleinigen Wohnsitz. Erforderlich für Einkommens- und Klimageschwindigkeitsbonus.</small></span></label>
+            <label class="check-field"><input id="oldHeatingFunctional" type="checkbox"><span><strong>Alte Heizung ist funktionstüchtig</strong><br><small>Erforderlich für den Klimageschwindigkeitsbonus.</small></span></label>
+            <label class="check-field"><input id="oldHeatingRemoved" type="checkbox"><span><strong>Fachgerechte Demontage und Entsorgung</strong><br><small>Die alte Heizung wird im Rahmen des Austauschs fachgerecht demontiert und entsorgt.</small></span></label>
+          </form>
+
+          <div class="calc-results">
+            <span class="result-label">Gewählte Laufzeit</span>
+            <div class="term-toggle">
+              <button type="button" class="active" data-term="10">10 Jahre</button>
+              <button type="button" data-term="15">15 Jahre</button>
+            </div>
+            <div class="result-main">
+              <div class="result-label">Voraussichtliche Monatsrate</div>
+              <div class="result-amount"><span id="monthlyPayment">–</span> €</div>
+              <div>bei 6,0 % Sollzins und Finanzierung des Eigenanteils</div>
+            </div>
+            <div class="result-grid">
+              <div class="result-box"><span class="result-label">Förderung</span><strong id="subsidyAmount">–</strong></div>
+              <div class="result-box"><span class="result-label"><span class="help-wrap right">
+      <span>Eigenanteil</span>
+      <button type="button" class="help-btn" aria-expanded="false" aria-label="Erklärung zu Eigenanteil">?</button>
+      <span class="help-tip" role="tooltip"><strong>Eigenanteil</strong>Das ist der Betrag, der nach Abzug der voraussichtlichen Förderung übrig bleibt und selbst bezahlt oder finanziert werden müsste.</span>
+    </span></span><strong id="ownShare">–</strong></div>
+              <div class="result-box"><span class="result-label"><span class="help-wrap right">
+      <span>Fördersatz</span>
+      <button type="button" class="help-btn" aria-expanded="false" aria-label="Erklärung zu Fördersatz">?</button>
+      <span class="help-tip" role="tooltip"><strong>Fördersatz</strong>Der Fördersatz setzt sich aus der Grundförderung und möglichen Boni zusammen. Die tatsächliche Förderung wird im Einzelfall geprüft.</span>
+    </span></span><strong id="subsidyRate">–</strong></div>
+              <div class="result-box"><span class="result-label"><span class="help-wrap right">
+      <span>Förderfähige Kosten</span>
+      <button type="button" class="help-btn" aria-expanded="false" aria-label="Erklärung zu Förderfähige Kosten">?</button>
+      <span class="help-tip" role="tooltip"><strong>Förderfähige Kosten</strong>Für die erste Wohneinheit werden in dieser Modellrechnung maximal 28.000 € der Investitionskosten berücksichtigt.</span>
+    </span></span><strong id="eligibleCosts">–</strong></div>
+            </div>
+            <div class="bonus-list" id="bonusList"></div>
+            <div class="calculation-notice" id="calculationNotice" role="status"></div>
+            <a class="btn btn-primary calc-cta" href="https://calendly.com/stefanschulzgalvany" target="_blank" rel="noopener">Ergebnis persönlich prüfen lassen</a>
+            <p class="calc-note">Unverbindliche Erstorientierung nach den KfW-Förderbedingungen, Prüfstand 06.08.2026. Keine Förderzusage, Rechts-, Steuer- oder Finanzierungsberatung. Maßgeblich sind die Förderbedingungen am Tag der Antragstellung und die Prüfung durch KfW und Fachunternehmen.</p>
+            <div class="source-links"><a href="https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestehende-Immobilie/F%C3%B6rderprodukte/Heizungsf%C3%B6rderung-f%C3%BCr-Privatpersonen-Wohngeb%C3%A4ude-%28458%29/" target="_blank" rel="noopener">KfW-Programm 458</a><a href="https://www.kfw.de/PDF/Download-Center/F%C3%B6rderprogramme-%28Inlandsf%C3%B6rderung%29/PDF-Dokumente/6000005131_M_458.pdf" target="_blank" rel="noopener">Merkblatt 07/2026</a></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="calc-panel" id="heatingPanel">
+        <div class="calc-body">
+          <form class="calc-inputs" id="heatingCostForm" onsubmit="return false">
+            <h3 id="heatingComparisonTitle" style="margin-bottom:8px">Heizkostenvergleich Gas → Wärmepumpe</h3>
+            <p style="color:var(--muted);margin-bottom:20px">Alle Werte können Sie an Ihre letzte Abrechnung anpassen.</p>
+            <div class="field-label">Bisheriger Energieträger</div>
+            <div class="energy-toggle" role="group" aria-label="Bisherigen Energieträger auswählen">
+              <button type="button" class="active" data-energy="gas" aria-pressed="true">Gas</button>
+              <button type="button" data-energy="oil" aria-pressed="false">Heizöl</button>
+            </div>
+            <div class="field-grid">
+              <div class="field full">
+                <label id="annualHeatingLabel" for="annualHeating">Gasverbrauch pro Jahr (kWh)</label>
+                <input id="annualHeating" type="number" min="0" max="100000" step="500" value="20000">
+              </div>
+              <div class="field">
+                <label id="heatingPriceLabel" for="heatingPrice">Gaspreis (ct/kWh)</label>
+                <input id="heatingPrice" type="number" min="0" max="100" step="0.1" value="11">
+              </div>
+              <div class="field">
+                <label for="electricityPrice">Wärmepumpenstrom (ct/kWh)</label>
+                <input id="electricityPrice" type="number" min="0" max="100" step="0.1" value="30">
+              </div>
+              <div class="field">
+                <label for="seasonalPerformance"><span class="help-wrap ">
+      <span>Angenommene Jahresarbeitszahl</span>
+      <button type="button" class="help-btn" aria-expanded="false" aria-label="Erklärung zu Angenommene Jahresarbeitszahl">?</button>
+      <span class="help-tip" role="tooltip"><strong>Jahresarbeitszahl (JAZ)</strong>Sie beschreibt die Effizienz der Wärmepumpe über ein ganzes Jahr. Beispiel: Eine JAZ von 4,0 bedeutet, dass aus 1 kWh Strom im Jahresdurchschnitt etwa 4 kWh Wärme entstehen.</span>
+    </span></label>
+                <input id="seasonalPerformance" type="number" min="2" max="6" step="0.1" value="4.0">
+              </div>
+              <div class="field">
+                <label for="oldBoilerEfficiency"><span class="help-wrap ">
+      <span id="oldBoilerEfficiencyText">Wirkungsgrad alte Gasheizung (%)</span>
+      <button id="oldBoilerEfficiencyHelpButton" type="button" class="help-btn" aria-expanded="false" aria-label="Erklärung zu Wirkungsgrad alte Gasheizung (%)">?</button>
+      <span class="help-tip" role="tooltip"><strong>Wirkungsgrad der alten Heizung</strong><span id="oldBoilerEfficiencyHelp">Nicht die gesamte im Gas enthaltene Energie wird als Wärme nutzbar. Ein angenommener Wirkungsgrad von 90 % bedeutet: Aus 20.000 kWh Gas werden etwa 18.000 kWh nutzbare Wärme.</span></span>
+    </span></label>
+                <input id="oldBoilerEfficiency" type="number" min="50" max="100" step="1" value="90">
+              </div>
+            </div>
+          </form>
+
+          <div class="calc-results">
+            <div class="result-main">
+              <div class="result-label">Geschätzter WP-Strombedarf pro Jahr</div>
+              <div class="result-amount"><span id="wpElectricityUseMain">–</span></div>
+              <div id="heatingDerivationText">aus Ihrem bisherigen Gasverbrauch abgeleitet</div>
+            </div>
+            <div class="result-grid">
+              <div class="result-box"><span class="result-label" id="oldHeatingCostLabel">Bisherige Gaskosten</span><strong id="oldHeatingCost">–</strong></div>
+              <div class="result-box"><span class="result-label">Neue Stromkosten</span><strong id="wpHeatingCost">–</strong></div>
+              <div class="result-box"><span class="result-label" id="annualSavingLabel">Ersparnis gegenüber Gas</span><strong id="annualSaving">–</strong></div>
+              <div class="result-box"><span class="result-label">WP-Strombedarf</span><strong id="wpElectricityUse">–</strong></div>
+              <div class="result-box"><span class="result-label">Abgeleitete Nutzwärme</span><strong id="usefulHeatResult">–</strong></div>
+            </div>
+            <a class="btn btn-primary calc-cta" href="https://calendly.com/stefanschulzgalvany" target="_blank" rel="noopener">Verbrauch persönlich prüfen lassen</a>
+            <p class="calc-note" id="heatingCalculationNote">Grobe Modellrechnung. Nicht enthalten sind Grundpreise, Wartung, Warmwasserabweichungen, PV-Eigenverbrauch und individuelle Gebäudeeinflüsse.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="modal" id="impressum">
     <div class="modal-box">
       <button class="modal-close" aria-label="Schließen">×</button>
@@ -574,9 +900,8 @@
       <h3>Hosting und Server-Logfiles</h3><p>Diese Website wird über GitHub Pages bereitgestellt. Beim Aufruf können technisch erforderliche Daten wie IP-Adresse, Zeitpunkt, Browsertyp und aufgerufene Seite verarbeitet werden.</p>
       <h3>Kontaktaufnahme</h3><p>Bei Kontakt per Telefon, E-Mail oder WhatsApp werden die von Ihnen übermittelten Daten zur Bearbeitung Ihrer Anfrage verarbeitet. Für WhatsApp gelten zusätzlich die Datenschutzbestimmungen des jeweiligen Anbieters.</p>
       <h3>Calendly</h3><p>Für Terminbuchungen wird Calendly genutzt. Beim Öffnen des externen Links werden Daten an Calendly übertragen. Die Buchung erfolgt freiwillig auf der externen Plattform.</p>
-      <h3>YouTube</h3><p>YouTube-Videos werden erst nach Ihrem Klick geladen. Erst dann wird eine Verbindung zu YouTube hergestellt und es können Daten sowie Cookies verarbeitet werden.</p>
+      <h3>YouTube</h3><p>Die Vorschaubilder der Videos werden lokal von dieser Website geladen. Dabei wird noch keine Verbindung zu YouTube hergestellt. Erst wenn Sie ein Video aktiv über die Wiedergabeschaltfläche starten, wird das Video über die datenschutzfreundlichere Domain youtube-nocookie.com eingebunden. Ab diesem Zeitpunkt wird eine Verbindung zu YouTube hergestellt; dabei können insbesondere Ihre IP-Adresse und technische Browserdaten an YouTube übermittelt sowie weitere Daten verarbeitet werden.</p>
       <h3>Rechtsgrundlagen und Rechte</h3><p>Die Verarbeitung erfolgt je nach Vorgang insbesondere auf Grundlage von Art. 6 Abs. 1 lit. a, b oder f DSGVO. Sie haben insbesondere Rechte auf Auskunft, Berichtigung, Löschung, Einschränkung, Widerspruch, Datenübertragbarkeit und Beschwerde bei einer Datenschutzaufsichtsbehörde.</p>
-      <p style="margin-top:18px"><em>Hinweis: Diese Datenschutzerklärung ist eine auf die eingesetzten Dienste abgestimmte Arbeitsfassung und ersetzt keine individuelle Rechtsberatung.</em></p>
     </div>
   </div>
 
@@ -603,12 +928,268 @@
     document.querySelectorAll('.modal').forEach(modal=>modal.addEventListener('click',e=>{if(e.target===modal) modal.classList.remove('open')}));
     document.addEventListener('keydown',e=>{if(e.key==='Escape') document.querySelectorAll('.modal.open').forEach(m=>m.classList.remove('open'))});
 
+
+    const euro = new Intl.NumberFormat('de-DE',{style:'currency',currency:'EUR',maximumFractionDigits:0});
+    let financeTerm = 10;
+
+    function incomeBonus(income, hasChild){
+      const offset = hasChild ? 10000 : 0;
+      if(income <= 30000 + offset) return 40;
+      if(income <= 40000 + offset) return 30;
+      if(income <= 50000 + offset) return 10;
+      return 0;
+    }
+
+    function climateBonus(type, age, ownerOccupied, isFunctional, willBeRemoved){
+      if(!ownerOccupied || !isFunctional || !willBeRemoved) return 0;
+      if(['oil','coal','gasfloor','night'].includes(type)) return 16;
+      if(['gas','biomass'].includes(type) && age >= 20) return 16;
+      return 0;
+    }
+
+    function monthlyAnnuity(principal, annualRate, years){
+      if(principal <= 0) return 0;
+      const r = annualRate / 12;
+      const n = years * 12;
+      return principal * r / (1 - Math.pow(1 + r, -n));
+    }
+
+    function updateFundingFieldStates(){
+      const incomeKnown = document.getElementById('incomeKnown').value === '1';
+      const incomeField = document.getElementById('income');
+      incomeField.disabled = !incomeKnown;
+      incomeField.setAttribute('aria-disabled',String(!incomeKnown));
+    }
+
+    function calculateFunding(){
+      updateFundingFieldStates();
+      const price = Math.max(0, Number(document.getElementById('purchasePrice').value) || 0);
+      const type = document.getElementById('oldHeating').value;
+      const age = Math.max(0, Number(document.getElementById('heatingAge').value) || 0);
+      const incomeKnown = document.getElementById('incomeKnown').value === '1';
+      const income = Math.max(0, Number(document.getElementById('income').value) || 0);
+      const hasChild = document.getElementById('children').value === '1';
+      const owner = document.getElementById('ownerOccupied').checked;
+      const isFunctional = document.getElementById('oldHeatingFunctional').checked;
+      const willBeRemoved = document.getElementById('oldHeatingRemoved').checked;
+
+      const eligible = Math.min(price, 28000);
+      const basic = 30;
+      const climate = climateBonus(type, age, owner, isFunctional, willBeRemoved);
+      const incomePct = owner && incomeKnown ? incomeBonus(income, hasChild) : 0;
+      const cap = owner && incomePct === 40 ? 80 : 70;
+      const rawRate = basic + climate + incomePct;
+      const totalRate = Math.min(cap, rawRate);
+      const subsidy = eligible * totalRate / 100;
+      const own = Math.max(0, price - subsidy);
+      const monthly = monthlyAnnuity(own, 0.06, financeTerm);
+
+      document.getElementById('monthlyPayment').textContent = Math.round(monthly).toLocaleString('de-DE');
+      document.getElementById('subsidyAmount').textContent = euro.format(subsidy);
+      document.getElementById('ownShare').textContent = euro.format(own);
+      document.getElementById('subsidyRate').textContent = totalRate.toLocaleString('de-DE') + ' %';
+      document.getElementById('eligibleCosts').textContent = euro.format(eligible);
+
+      const items = [
+        `Grundförderung: ${basic} %`,
+        climate ? `Klimageschwindigkeitsbonus <span class="inline-help" data-help-title="Klimageschwindigkeitsbonus" data-help-text="Bis 31.01.2027 beträgt der Bonus 16 %. Er setzt Selbstnutzung, eine funktionstüchtige bonusfähige Altanlage sowie deren fachgerechte Demontage und Entsorgung voraus. Gas-Zentral- und Biomasseheizungen müssen mindestens 20 Jahre alt sein.">(?)</span>: ${climate} %` : 'Klimageschwindigkeitsbonus <span class="inline-help" data-help-title="Klimageschwindigkeitsbonus" data-help-text="Nicht berücksichtigt. Prüfen Sie Selbstnutzung, Funktionsfähigkeit, Demontage/Entsorgung sowie bei Gas-Zentral- und Biomasseheizungen das Mindestalter von 20 Jahren.">(?)</span>: 0 %',
+        incomePct ? `Einkommensbonus: ${incomePct} %` : `Einkommensbonus: ${incomeKnown && owner ? '0 %' : 'nicht berechnet'}`,
+        rawRate > cap ? `Rechnerische Summe: ${rawRate} % · angewendete Förderobergrenze: ${cap} %` : `Angewendete Förderobergrenze: ${cap} %`
+      ];
+      document.getElementById('bonusList').innerHTML = items.map(x=>`<span>✓ ${x}</span>`).join('');
+
+      const notices = [];
+      if(!owner) notices.push('Einkommens- und Klimageschwindigkeitsbonus werden ohne bestätigte Selbstnutzung nicht berücksichtigt.');
+      if(owner && !incomeKnown) notices.push('Der Einkommensbonus wurde nicht berechnet, weil das maßgebliche zu versteuernde Haushaltseinkommen nicht bestätigt ist.');
+      if(!isFunctional || !willBeRemoved) notices.push('Der Klimageschwindigkeitsbonus wurde ohne Bestätigung von Funktionsfähigkeit sowie Demontage und Entsorgung nicht berücksichtigt.');
+      if(price > 28000) notices.push('Von den eingegebenen Kosten werden für die erste Wohneinheit höchstens 28.000 € berücksichtigt.');
+      document.getElementById('calculationNotice').textContent = notices.length ? notices.join(' ') : 'Alle im Rechner abgefragten Bonusvoraussetzungen wurden bestätigt. Die endgültige Förderfähigkeit prüft die KfW.';
+    }
+
+    const heatingEnergyStates = {
+      gas: {consumption:20000, price:11, efficiency:90},
+      oil: {consumption:2000, price:1, efficiency:85}
+    };
+    let heatingEnergy = 'gas';
+    const heatingOilKwhPerLiter = 10.0;
+
+    function saveHeatingEnergyState(){
+      heatingEnergyStates[heatingEnergy] = {
+        consumption:Math.max(0, Number(document.getElementById('annualHeating').value) || 0),
+        price:Math.max(0, Number(document.getElementById('heatingPrice').value) || 0),
+        efficiency:Math.min(100, Math.max(50, Number(document.getElementById('oldBoilerEfficiency').value) || heatingEnergyStates[heatingEnergy].efficiency))
+      };
+    }
+
+    function updateHeatingEnergyView(){
+      const isOil = heatingEnergy === 'oil';
+      const state = heatingEnergyStates[heatingEnergy];
+      const consumptionInput = document.getElementById('annualHeating');
+      const priceInput = document.getElementById('heatingPrice');
+
+      document.getElementById('heatingComparisonTitle').textContent = `Heizkostenvergleich ${isOil ? 'Öl' : 'Gas'} → Wärmepumpe`;
+      document.getElementById('annualHeatingLabel').textContent = isOil ? 'Heizölverbrauch pro Jahr (Liter)' : 'Gasverbrauch pro Jahr (kWh)';
+      document.getElementById('heatingPriceLabel').textContent = isOil ? 'Heizölpreis (€/Liter)' : 'Gaspreis (ct/kWh)';
+      document.getElementById('oldBoilerEfficiencyText').textContent = `Wirkungsgrad alte ${isOil ? 'Ölheizung' : 'Gasheizung'} (%)`;
+      document.getElementById('oldBoilerEfficiencyHelpButton').setAttribute('aria-label',`Erklärung zu Wirkungsgrad alte ${isOil ? 'Ölheizung' : 'Gasheizung'} (%)`);
+      document.getElementById('oldBoilerEfficiencyHelp').textContent = isOil
+        ? 'Für die überschlägige Umrechnung werden 10,0 kWh je Liter Heizöl angesetzt. Bei 85 % Wirkungsgrad werden aus 2.000 Litern rechnerisch etwa 17.000 kWh nutzbare Wärme.'
+        : 'Nicht die gesamte im Gas enthaltene Energie wird als Wärme nutzbar. Ein angenommener Wirkungsgrad von 90 % bedeutet: Aus 20.000 kWh Gas werden etwa 18.000 kWh nutzbare Wärme.';
+      document.getElementById('heatingDerivationText').textContent = `aus Ihrem bisherigen ${isOil ? 'Heizölverbrauch' : 'Gasverbrauch'} abgeleitet`;
+      document.getElementById('oldHeatingCostLabel').textContent = `Bisherige ${isOil ? 'Heizölkosten' : 'Gaskosten'}`;
+      document.getElementById('annualSavingLabel').textContent = `Ersparnis gegenüber ${isOil ? 'Öl' : 'Gas'}`;
+      document.getElementById('heatingCalculationNote').textContent = isOil
+        ? 'Grobe Modellrechnung mit dem transparenten Näherungswert 1 Liter Heizöl = 10,0 kWh. Nicht enthalten sind Grundpreise, Wartung, Hilfsstrom, Warmwasserabweichungen, PV-Eigenverbrauch und individuelle Gebäudeeinflüsse. Das Ergebnis ist eine Erstorientierung und keine Verbrauchsgarantie.'
+        : 'Grobe Modellrechnung. Nicht enthalten sind Grundpreise, Wartung, Hilfsstrom, Warmwasserabweichungen, PV-Eigenverbrauch und individuelle Gebäudeeinflüsse. Das Ergebnis ist eine Erstorientierung und keine Verbrauchsgarantie.';
+
+      consumptionInput.max = isOil ? '10000' : '100000';
+      consumptionInput.step = isOil ? '100' : '500';
+      priceInput.max = isOil ? '5' : '100';
+      priceInput.step = isOil ? '0.01' : '0.1';
+      consumptionInput.value = state.consumption;
+      priceInput.value = state.price;
+      document.getElementById('oldBoilerEfficiency').value = state.efficiency;
+
+      document.querySelectorAll('.energy-toggle button').forEach(button=>{
+        const active = button.dataset.energy === heatingEnergy;
+        button.classList.toggle('active',active);
+        button.setAttribute('aria-pressed',String(active));
+      });
+    }
+
+    function calculateHeatingCosts(){
+      const annualConsumption = Math.max(0, Number(document.getElementById('annualHeating').value) || 0);
+      const heatingPrice = Math.max(0, Number(document.getElementById('heatingPrice').value) || 0);
+      const electricityPrice = Math.max(0, Number(document.getElementById('electricityPrice').value) || 0) / 100;
+      const seasonalPerformance = Math.max(0.1, Number(document.getElementById('seasonalPerformance').value) || 4);
+      const oldBoilerEfficiency = Math.min(1, Math.max(0.1, (Number(document.getElementById('oldBoilerEfficiency').value) || 90) / 100));
+
+      const usefulHeat = annualConsumption * (heatingEnergy === 'oil' ? heatingOilKwhPerLiter : 1) * oldBoilerEfficiency;
+      const wpElectricity = usefulHeat / seasonalPerformance;
+      const oldHeatingCost = heatingEnergy === 'oil'
+        ? annualConsumption * heatingPrice
+        : annualConsumption * heatingPrice / 100;
+      const wpHeatingCost = wpElectricity * electricityPrice;
+      const annualSaving = oldHeatingCost - wpHeatingCost;
+
+      document.getElementById('wpElectricityUseMain').textContent =
+        Math.round(wpElectricity).toLocaleString('de-DE') + ' kWh';
+
+      document.getElementById('oldHeatingCost').textContent = euro.format(oldHeatingCost);
+      document.getElementById('wpHeatingCost').textContent = euro.format(wpHeatingCost);
+      document.getElementById('wpElectricityUse').textContent =
+        Math.round(wpElectricity).toLocaleString('de-DE') + ' kWh';
+      document.getElementById('usefulHeatResult').textContent =
+        Math.round(usefulHeat).toLocaleString('de-DE') + ' kWh';
+
+      const savingEl = document.getElementById('annualSaving');
+      savingEl.textContent = annualSaving >= 0
+        ? euro.format(annualSaving)
+        : 'Mehrkosten ' + euro.format(Math.abs(annualSaving));
+      savingEl.classList.toggle('saving-positive', annualSaving >= 0);
+      savingEl.classList.toggle('saving-negative', annualSaving < 0);
+    }
+
+    document.querySelectorAll('#fundingForm input,#fundingForm select')
+      .forEach(el=>{
+        el.addEventListener('input',calculateFunding);
+        el.addEventListener('change',calculateFunding);
+      });
+
+    document.querySelectorAll('#heatingCostForm input,#heatingCostForm select')
+      .forEach(el=>{
+        el.addEventListener('input',calculateHeatingCosts);
+        el.addEventListener('change',calculateHeatingCosts);
+      });
+
+    document.querySelectorAll('.energy-toggle button').forEach(button=>{
+      button.addEventListener('click',()=>{
+        if(button.dataset.energy === heatingEnergy) return;
+        saveHeatingEnergyState();
+        heatingEnergy = button.dataset.energy;
+        updateHeatingEnergyView();
+        calculateHeatingCosts();
+      });
+    });
+
+    document.querySelectorAll('.term-toggle button').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        financeTerm = Number(btn.dataset.term);
+        document.querySelectorAll('.term-toggle button').forEach(b=>b.classList.toggle('active',b===btn));
+        calculateFunding();
+        calculateHeatingCosts();
+      });
+    });
+
+    updateHeatingEnergyView();
+    calculateFunding();
+    calculateHeatingCosts();
+
+    document.querySelectorAll('.calc-tab').forEach(tab=>{
+      tab.addEventListener('click',()=>{
+        document.querySelectorAll('.calc-tab').forEach(t=>t.classList.toggle('active',t===tab));
+        document.querySelectorAll('.calc-panel').forEach(panel=>panel.classList.toggle('active',panel.id===tab.dataset.calcTab));
+        calculateFunding();
+      });
+    });
+
+
+    function closeAllHelpTips(except=null){
+      document.querySelectorAll('.help-wrap.open').forEach(wrap=>{
+        if(wrap!==except){
+          wrap.classList.remove('open');
+          const btn=wrap.querySelector('.help-btn');
+          if(btn) btn.setAttribute('aria-expanded','false');
+        }
+      });
+      document.querySelectorAll('.dynamic-help-tip').forEach(t=>t.remove());
+    }
+
+    document.addEventListener('click',e=>{
+      const helpBtn=e.target.closest('.help-btn');
+      if(helpBtn){
+        e.preventDefault();
+        e.stopPropagation();
+        const wrap=helpBtn.closest('.help-wrap');
+        const willOpen=!wrap.classList.contains('open');
+        closeAllHelpTips(wrap);
+        wrap.classList.toggle('open',willOpen);
+        helpBtn.setAttribute('aria-expanded',String(willOpen));
+        return;
+      }
+
+      const inline=e.target.closest('.inline-help');
+      if(inline){
+        e.preventDefault();
+        e.stopPropagation();
+        closeAllHelpTips();
+        const tip=document.createElement('div');
+        tip.className='dynamic-help-tip';
+        tip.style.cssText='position:fixed;z-index:2000;max-width:290px;padding:14px 15px;border-radius:14px;background:#fff;color:#142334;border:1px solid #dfe8ea;box-shadow:0 14px 38px rgba(4,24,43,.16);font-size:.84rem;line-height:1.45';
+        tip.innerHTML=`<strong style="display:block;margin-bottom:5px;color:#071a2c">${inline.dataset.helpTitle}</strong>${inline.dataset.helpText}`;
+        document.body.appendChild(tip);
+        const r=inline.getBoundingClientRect();
+        const left=Math.min(window.innerWidth-tip.offsetWidth-12,Math.max(12,r.left));
+        const top=Math.min(window.innerHeight-tip.offsetHeight-12,r.bottom+8);
+        tip.style.left=left+'px';
+        tip.style.top=top+'px';
+        return;
+      }
+
+      closeAllHelpTips();
+    });
+
+    document.addEventListener('keydown',e=>{
+      if(e.key==='Escape') closeAllHelpTips();
+    });
+
     const brandMark=document.querySelector('.brand-mark');
     if(brandMark){
       const restartLogoAnimation=()=>{
         brandMark.classList.add('restart');
         void brandMark.offsetWidth;
         brandMark.classList.remove('restart');
+        calculateFunding();
       };
       brandMark.addEventListener('mouseenter',restartLogoAnimation);
       brandMark.addEventListener('focusin',restartLogoAnimation);
@@ -616,5 +1197,7 @@
     }
 
   </script>
+
+<!-- GALVANY V5.7 Preview · Sprint 1 Förderlogik · 06.08.2026 -->
 </body>
 </html>
