@@ -270,6 +270,9 @@
     .term-toggle{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0 22px}
     .term-toggle button{padding:12px;border:1px solid var(--line);border-radius:12px;background:#fff;font-weight:800;cursor:pointer}
     .term-toggle button.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+    .energy-toggle{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0 22px}
+    .energy-toggle button{padding:12px;border:1px solid var(--line);border-radius:12px;background:#fff;font-weight:800;cursor:pointer}
+    .energy-toggle button.active{background:var(--navy);color:#fff;border-color:var(--navy)}
     .result-main{padding:22px;border-radius:20px;background:#fff;border:1px solid var(--line)}
     .result-label{font-size:.82rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:800}
     .result-amount{font-size:clamp(2.5rem,5vw,4.5rem);line-height:1;font-weight:900;color:var(--green);margin:8px 0}
@@ -817,16 +820,21 @@
       <div class="calc-panel" id="heatingPanel">
         <div class="calc-body">
           <form class="calc-inputs" id="heatingCostForm" onsubmit="return false">
-            <h3 style="margin-bottom:8px">Heizkostenvergleich Gas → Wärmepumpe</h3>
+            <h3 id="heatingComparisonTitle" style="margin-bottom:8px">Heizkostenvergleich Gas → Wärmepumpe</h3>
             <p style="color:var(--muted);margin-bottom:20px">Alle Werte können Sie an Ihre letzte Abrechnung anpassen.</p>
+            <div class="field-label">Bisheriger Energieträger</div>
+            <div class="energy-toggle" role="group" aria-label="Bisherigen Energieträger auswählen">
+              <button type="button" class="active" data-energy="gas" aria-pressed="true">Gas</button>
+              <button type="button" data-energy="oil" aria-pressed="false">Heizöl</button>
+            </div>
             <div class="field-grid">
               <div class="field full">
-                <label for="annualGas">Gasverbrauch pro Jahr (kWh)</label>
-                <input id="annualGas" type="number" min="0" max="100000" step="500" value="20000">
+                <label id="annualHeatingLabel" for="annualHeating">Gasverbrauch pro Jahr (kWh)</label>
+                <input id="annualHeating" type="number" min="0" max="100000" step="500" value="20000">
               </div>
               <div class="field">
-                <label for="gasPrice">Gaspreis (ct/kWh)</label>
-                <input id="gasPrice" type="number" min="0" max="100" step="0.1" value="11">
+                <label id="heatingPriceLabel" for="heatingPrice">Gaspreis (ct/kWh)</label>
+                <input id="heatingPrice" type="number" min="0" max="100" step="0.1" value="11">
               </div>
               <div class="field">
                 <label for="electricityPrice">Wärmepumpenstrom (ct/kWh)</label>
@@ -842,9 +850,9 @@
               </div>
               <div class="field">
                 <label for="oldBoilerEfficiency"><span class="help-wrap ">
-      <span>Wirkungsgrad alte Gasheizung (%)</span>
-      <button type="button" class="help-btn" aria-expanded="false" aria-label="Erklärung zu Wirkungsgrad alte Gasheizung (%)">?</button>
-      <span class="help-tip" role="tooltip"><strong>Wirkungsgrad der alten Heizung</strong>Nicht die gesamte im Gas enthaltene Energie wird als Wärme nutzbar. Ein angenommener Wirkungsgrad von 90 % bedeutet: Aus 20.000 kWh Gas werden etwa 18.000 kWh nutzbare Wärme.</span>
+      <span id="oldBoilerEfficiencyText">Wirkungsgrad alte Gasheizung (%)</span>
+      <button id="oldBoilerEfficiencyHelpButton" type="button" class="help-btn" aria-expanded="false" aria-label="Erklärung zu Wirkungsgrad alte Gasheizung (%)">?</button>
+      <span class="help-tip" role="tooltip"><strong>Wirkungsgrad der alten Heizung</strong><span id="oldBoilerEfficiencyHelp">Nicht die gesamte im Gas enthaltene Energie wird als Wärme nutzbar. Ein angenommener Wirkungsgrad von 90 % bedeutet: Aus 20.000 kWh Gas werden etwa 18.000 kWh nutzbare Wärme.</span></span>
     </span></label>
                 <input id="oldBoilerEfficiency" type="number" min="50" max="100" step="1" value="90">
               </div>
@@ -855,16 +863,17 @@
             <div class="result-main">
               <div class="result-label">Geschätzter WP-Strombedarf pro Jahr</div>
               <div class="result-amount"><span id="wpElectricityUseMain">–</span></div>
-              <div>aus Ihrem bisherigen Gasverbrauch abgeleitet</div>
+              <div id="heatingDerivationText">aus Ihrem bisherigen Gasverbrauch abgeleitet</div>
             </div>
             <div class="result-grid">
-              <div class="result-box"><span class="result-label">Bisherige Gaskosten</span><strong id="oldHeatingCost">–</strong></div>
+              <div class="result-box"><span class="result-label" id="oldHeatingCostLabel">Bisherige Gaskosten</span><strong id="oldHeatingCost">–</strong></div>
               <div class="result-box"><span class="result-label">Neue Stromkosten</span><strong id="wpHeatingCost">–</strong></div>
-              <div class="result-box"><span class="result-label">Ersparnis gegenüber Gas</span><strong id="annualSaving">–</strong></div>
+              <div class="result-box"><span class="result-label" id="annualSavingLabel">Ersparnis gegenüber Gas</span><strong id="annualSaving">–</strong></div>
               <div class="result-box"><span class="result-label">WP-Strombedarf</span><strong id="wpElectricityUse">–</strong></div>
+              <div class="result-box"><span class="result-label">Abgeleitete Nutzwärme</span><strong id="usefulHeatResult">–</strong></div>
             </div>
             <a class="btn btn-primary calc-cta" href="https://calendly.com/stefanschulzgalvany" target="_blank" rel="noopener">Verbrauch persönlich prüfen lassen</a>
-            <p class="calc-note">Grobe Modellrechnung. Nicht enthalten sind Grundpreise, Wartung, Warmwasserabweichungen, PV-Eigenverbrauch und individuelle Gebäudeeinflüsse.</p>
+            <p class="calc-note" id="heatingCalculationNote">Grobe Modellrechnung. Nicht enthalten sind Grundpreise, Wartung, Warmwasserabweichungen, PV-Eigenverbrauch und individuelle Gebäudeeinflüsse.</p>
           </div>
         </div>
       </div>
@@ -998,16 +1007,69 @@
       document.getElementById('calculationNotice').textContent = notices.length ? notices.join(' ') : 'Alle im Rechner abgefragten Bonusvoraussetzungen wurden bestätigt. Die endgültige Förderfähigkeit prüft die KfW.';
     }
 
+    const heatingEnergyStates = {
+      gas: {consumption:20000, price:11, efficiency:90},
+      oil: {consumption:2000, price:1, efficiency:85}
+    };
+    let heatingEnergy = 'gas';
+    const heatingOilKwhPerLiter = 10.0;
+
+    function saveHeatingEnergyState(){
+      heatingEnergyStates[heatingEnergy] = {
+        consumption:Math.max(0, Number(document.getElementById('annualHeating').value) || 0),
+        price:Math.max(0, Number(document.getElementById('heatingPrice').value) || 0),
+        efficiency:Math.min(100, Math.max(50, Number(document.getElementById('oldBoilerEfficiency').value) || heatingEnergyStates[heatingEnergy].efficiency))
+      };
+    }
+
+    function updateHeatingEnergyView(){
+      const isOil = heatingEnergy === 'oil';
+      const state = heatingEnergyStates[heatingEnergy];
+      const consumptionInput = document.getElementById('annualHeating');
+      const priceInput = document.getElementById('heatingPrice');
+
+      document.getElementById('heatingComparisonTitle').textContent = `Heizkostenvergleich ${isOil ? 'Öl' : 'Gas'} → Wärmepumpe`;
+      document.getElementById('annualHeatingLabel').textContent = isOil ? 'Heizölverbrauch pro Jahr (Liter)' : 'Gasverbrauch pro Jahr (kWh)';
+      document.getElementById('heatingPriceLabel').textContent = isOil ? 'Heizölpreis (€/Liter)' : 'Gaspreis (ct/kWh)';
+      document.getElementById('oldBoilerEfficiencyText').textContent = `Wirkungsgrad alte ${isOil ? 'Ölheizung' : 'Gasheizung'} (%)`;
+      document.getElementById('oldBoilerEfficiencyHelpButton').setAttribute('aria-label',`Erklärung zu Wirkungsgrad alte ${isOil ? 'Ölheizung' : 'Gasheizung'} (%)`);
+      document.getElementById('oldBoilerEfficiencyHelp').textContent = isOil
+        ? 'Für die überschlägige Umrechnung werden 10,0 kWh je Liter Heizöl angesetzt. Bei 85 % Wirkungsgrad werden aus 2.000 Litern rechnerisch etwa 17.000 kWh nutzbare Wärme.'
+        : 'Nicht die gesamte im Gas enthaltene Energie wird als Wärme nutzbar. Ein angenommener Wirkungsgrad von 90 % bedeutet: Aus 20.000 kWh Gas werden etwa 18.000 kWh nutzbare Wärme.';
+      document.getElementById('heatingDerivationText').textContent = `aus Ihrem bisherigen ${isOil ? 'Heizölverbrauch' : 'Gasverbrauch'} abgeleitet`;
+      document.getElementById('oldHeatingCostLabel').textContent = `Bisherige ${isOil ? 'Heizölkosten' : 'Gaskosten'}`;
+      document.getElementById('annualSavingLabel').textContent = `Ersparnis gegenüber ${isOil ? 'Öl' : 'Gas'}`;
+      document.getElementById('heatingCalculationNote').textContent = isOil
+        ? 'Grobe Modellrechnung mit dem transparenten Näherungswert 1 Liter Heizöl = 10,0 kWh. Nicht enthalten sind Grundpreise, Wartung, Hilfsstrom, Warmwasserabweichungen, PV-Eigenverbrauch und individuelle Gebäudeeinflüsse. Das Ergebnis ist eine Erstorientierung und keine Verbrauchsgarantie.'
+        : 'Grobe Modellrechnung. Nicht enthalten sind Grundpreise, Wartung, Hilfsstrom, Warmwasserabweichungen, PV-Eigenverbrauch und individuelle Gebäudeeinflüsse. Das Ergebnis ist eine Erstorientierung und keine Verbrauchsgarantie.';
+
+      consumptionInput.max = isOil ? '10000' : '100000';
+      consumptionInput.step = isOil ? '100' : '500';
+      priceInput.max = isOil ? '5' : '100';
+      priceInput.step = isOil ? '0.01' : '0.1';
+      consumptionInput.value = state.consumption;
+      priceInput.value = state.price;
+      document.getElementById('oldBoilerEfficiency').value = state.efficiency;
+
+      document.querySelectorAll('.energy-toggle button').forEach(button=>{
+        const active = button.dataset.energy === heatingEnergy;
+        button.classList.toggle('active',active);
+        button.setAttribute('aria-pressed',String(active));
+      });
+    }
+
     function calculateHeatingCosts(){
-      const annualGas = Math.max(0, Number(document.getElementById('annualGas').value) || 0);
-      const gasPrice = Math.max(0, Number(document.getElementById('gasPrice').value) || 0) / 100;
+      const annualConsumption = Math.max(0, Number(document.getElementById('annualHeating').value) || 0);
+      const heatingPrice = Math.max(0, Number(document.getElementById('heatingPrice').value) || 0);
       const electricityPrice = Math.max(0, Number(document.getElementById('electricityPrice').value) || 0) / 100;
       const seasonalPerformance = Math.max(0.1, Number(document.getElementById('seasonalPerformance').value) || 4);
       const oldBoilerEfficiency = Math.min(1, Math.max(0.1, (Number(document.getElementById('oldBoilerEfficiency').value) || 90) / 100));
 
-      const usefulHeat = annualGas * oldBoilerEfficiency;
+      const usefulHeat = annualConsumption * (heatingEnergy === 'oil' ? heatingOilKwhPerLiter : 1) * oldBoilerEfficiency;
       const wpElectricity = usefulHeat / seasonalPerformance;
-      const oldHeatingCost = annualGas * gasPrice;
+      const oldHeatingCost = heatingEnergy === 'oil'
+        ? annualConsumption * heatingPrice
+        : annualConsumption * heatingPrice / 100;
       const wpHeatingCost = wpElectricity * electricityPrice;
       const annualSaving = oldHeatingCost - wpHeatingCost;
 
@@ -1018,6 +1080,8 @@
       document.getElementById('wpHeatingCost').textContent = euro.format(wpHeatingCost);
       document.getElementById('wpElectricityUse').textContent =
         Math.round(wpElectricity).toLocaleString('de-DE') + ' kWh';
+      document.getElementById('usefulHeatResult').textContent =
+        Math.round(usefulHeat).toLocaleString('de-DE') + ' kWh';
 
       const savingEl = document.getElementById('annualSaving');
       savingEl.textContent = annualSaving >= 0
@@ -1039,6 +1103,16 @@
         el.addEventListener('change',calculateHeatingCosts);
       });
 
+    document.querySelectorAll('.energy-toggle button').forEach(button=>{
+      button.addEventListener('click',()=>{
+        if(button.dataset.energy === heatingEnergy) return;
+        saveHeatingEnergyState();
+        heatingEnergy = button.dataset.energy;
+        updateHeatingEnergyView();
+        calculateHeatingCosts();
+      });
+    });
+
     document.querySelectorAll('.term-toggle button').forEach(btn=>{
       btn.addEventListener('click',()=>{
         financeTerm = Number(btn.dataset.term);
@@ -1048,6 +1122,7 @@
       });
     });
 
+    updateHeatingEnergyView();
     calculateFunding();
     calculateHeatingCosts();
 
