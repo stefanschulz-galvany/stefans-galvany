@@ -273,6 +273,12 @@
     .energy-toggle{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0 22px}
     .energy-toggle button{padding:12px;border:1px solid var(--line);border-radius:12px;background:#fff;font-weight:800;cursor:pointer}
     .energy-toggle button.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+    .oil-unit-toggle{display:none;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 16px}
+    .oil-unit-toggle.visible{display:grid}
+    .oil-unit-toggle button{padding:10px;border:1px solid var(--line);border-radius:12px;background:#fff;font-weight:800;cursor:pointer}
+    .oil-unit-toggle button.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+    .calculation-basis{padding:13px 14px;border:1px solid #cedade;border-radius:12px;background:var(--soft);font-size:.9rem}
+    .calculation-basis strong{display:block;margin-bottom:3px}
     .result-main{padding:22px;border-radius:20px;background:#fff;border:1px solid var(--line)}
     .result-label{font-size:.82rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:800}
     .result-amount{font-size:clamp(2.5rem,5vw,4.5rem);line-height:1;font-weight:900;color:var(--green);margin:8px 0}
@@ -827,6 +833,10 @@
               <button type="button" class="active" data-energy="gas" aria-pressed="true">Gas</button>
               <button type="button" data-energy="oil" aria-pressed="false">Heizöl</button>
             </div>
+            <div class="oil-unit-toggle" id="oilUnitToggle" role="group" aria-label="Einheit für Heizöl auswählen">
+              <button type="button" class="active" data-oil-unit="liter" aria-pressed="true">Liter</button>
+              <button type="button" data-oil-unit="kwh" aria-pressed="false">kWh</button>
+            </div>
             <div class="field-grid">
               <div class="field full">
                 <label id="annualHeatingLabel" for="annualHeating">Gasverbrauch pro Jahr (kWh)</label>
@@ -840,13 +850,15 @@
                 <label for="electricityPrice">Wärmepumpenstrom (ct/kWh)</label>
                 <input id="electricityPrice" type="number" min="0" max="100" step="0.1" value="30">
               </div>
-              <div class="field">
-                <label for="seasonalPerformance"><span class="help-wrap ">
-      <span>Angenommene Jahresarbeitszahl</span>
-      <button type="button" class="help-btn" aria-expanded="false" aria-label="Erklärung zu Angenommene Jahresarbeitszahl">?</button>
-      <span class="help-tip" role="tooltip"><strong>Jahresarbeitszahl (JAZ)</strong>Sie beschreibt die Effizienz der Wärmepumpe über ein ganzes Jahr. Beispiel: Eine JAZ von 4,0 bedeutet, dass aus 1 kWh Strom im Jahresdurchschnitt etwa 4 kWh Wärme entstehen.</span>
-    </span></label>
-                <input id="seasonalPerformance" type="number" min="2" max="6" step="0.1" value="4.0">
+              <div class="field full">
+                <div class="calculation-basis">
+                  <strong><span class="help-wrap">
+                    <span>Berechnungsgrundlage Wärmepumpe</span>
+                    <button type="button" class="help-btn" aria-expanded="false" aria-label="Erklärung zur Berechnungsgrundlage Wärmepumpe">?</button>
+                    <span class="help-tip" role="tooltip">Für die Modellrechnung wird fest eine Jahresarbeitszahl von 4,0 verwendet. Vereinfacht bedeutet das: Aus 1 kWh Strom entstehen im Jahresdurchschnitt etwa 4 kWh Wärme.</span>
+                  </span></strong>
+                  Jahresarbeitszahl (JAZ): 4,0 – keine Kundeneingabe nötig.
+                </div>
               </div>
               <div class="field">
                 <label for="oldBoilerEfficiency"><span class="help-wrap ">
@@ -1008,28 +1020,38 @@
 
     const heatingEnergyStates = {
       gas: {consumption:20000, price:11, efficiency:90},
-      oil: {consumption:2000, price:1, efficiency:85}
+      oilLiter: {consumption:2000, price:1, efficiency:85},
+      oilKwh: {consumption:20000, price:10, efficiency:85}
     };
     let heatingEnergy = 'gas';
+    let heatingOilUnit = 'liter';
     const heatingOilKwhPerLiter = 10.0;
+    const seasonalPerformance = 4.0;
+
+    function heatingStateKey(){
+      if(heatingEnergy === 'gas') return 'gas';
+      return heatingOilUnit === 'liter' ? 'oilLiter' : 'oilKwh';
+    }
 
     function saveHeatingEnergyState(){
-      heatingEnergyStates[heatingEnergy] = {
+      const key = heatingStateKey();
+      heatingEnergyStates[key] = {
         consumption:Math.max(0, Number(document.getElementById('annualHeating').value) || 0),
         price:Math.max(0, Number(document.getElementById('heatingPrice').value) || 0),
-        efficiency:Math.min(100, Math.max(50, Number(document.getElementById('oldBoilerEfficiency').value) || heatingEnergyStates[heatingEnergy].efficiency))
+        efficiency:Math.min(100, Math.max(50, Number(document.getElementById('oldBoilerEfficiency').value) || heatingEnergyStates[key].efficiency))
       };
     }
 
     function updateHeatingEnergyView(){
       const isOil = heatingEnergy === 'oil';
-      const state = heatingEnergyStates[heatingEnergy];
+      const oilInLiter = isOil && heatingOilUnit === 'liter';
+      const state = heatingEnergyStates[heatingStateKey()];
       const consumptionInput = document.getElementById('annualHeating');
       const priceInput = document.getElementById('heatingPrice');
 
       document.getElementById('heatingComparisonTitle').textContent = `Heizkostenvergleich ${isOil ? 'Öl' : 'Gas'} → Wärmepumpe`;
-      document.getElementById('annualHeatingLabel').textContent = isOil ? 'Heizölverbrauch pro Jahr (Liter)' : 'Gasverbrauch pro Jahr (kWh)';
-      document.getElementById('heatingPriceLabel').textContent = isOil ? 'Heizölpreis (€/Liter)' : 'Gaspreis (ct/kWh)';
+      document.getElementById('annualHeatingLabel').textContent = isOil ? `Heizölverbrauch pro Jahr (${oilInLiter ? 'Liter' : 'kWh'})` : 'Gasverbrauch pro Jahr (kWh)';
+      document.getElementById('heatingPriceLabel').textContent = isOil ? `Heizölpreis (${oilInLiter ? '€/Liter' : 'ct/kWh'})` : 'Gaspreis (ct/kWh)';
       document.getElementById('oldBoilerEfficiencyText').textContent = `Wirkungsgrad alte ${isOil ? 'Ölheizung' : 'Gasheizung'} (%)`;
       document.getElementById('oldBoilerEfficiencyHelpButton').setAttribute('aria-label',`Erklärung zu Wirkungsgrad alte ${isOil ? 'Ölheizung' : 'Gasheizung'} (%)`);
       document.getElementById('oldBoilerEfficiencyHelp').textContent = isOil
@@ -1042,10 +1064,10 @@
         ? 'Grobe Modellrechnung mit dem transparenten Näherungswert 1 Liter Heizöl = 10,0 kWh. Nicht enthalten sind Grundpreise, Wartung, Hilfsstrom, Warmwasserabweichungen, PV-Eigenverbrauch und individuelle Gebäudeeinflüsse. Das Ergebnis ist eine Erstorientierung und keine Verbrauchsgarantie.'
         : 'Grobe Modellrechnung. Nicht enthalten sind Grundpreise, Wartung, Hilfsstrom, Warmwasserabweichungen, PV-Eigenverbrauch und individuelle Gebäudeeinflüsse. Das Ergebnis ist eine Erstorientierung und keine Verbrauchsgarantie.';
 
-      consumptionInput.max = isOil ? '10000' : '100000';
-      consumptionInput.step = isOil ? '100' : '500';
-      priceInput.max = isOil ? '5' : '100';
-      priceInput.step = isOil ? '0.01' : '0.1';
+      consumptionInput.max = oilInLiter ? '10000' : '100000';
+      consumptionInput.step = oilInLiter ? '100' : '500';
+      priceInput.max = oilInLiter ? '5' : '100';
+      priceInput.step = oilInLiter ? '0.01' : '0.1';
       consumptionInput.value = state.consumption;
       priceInput.value = state.price;
       document.getElementById('oldBoilerEfficiency').value = state.efficiency;
@@ -1055,18 +1077,24 @@
         button.classList.toggle('active',active);
         button.setAttribute('aria-pressed',String(active));
       });
+      document.getElementById('oilUnitToggle').classList.toggle('visible',isOil);
+      document.querySelectorAll('.oil-unit-toggle button').forEach(button=>{
+        const active = button.dataset.oilUnit === heatingOilUnit;
+        button.classList.toggle('active',active);
+        button.setAttribute('aria-pressed',String(active));
+      });
     }
 
     function calculateHeatingCosts(){
       const annualConsumption = Math.max(0, Number(document.getElementById('annualHeating').value) || 0);
       const heatingPrice = Math.max(0, Number(document.getElementById('heatingPrice').value) || 0);
       const electricityPrice = Math.max(0, Number(document.getElementById('electricityPrice').value) || 0) / 100;
-      const seasonalPerformance = Math.max(0.1, Number(document.getElementById('seasonalPerformance').value) || 4);
       const oldBoilerEfficiency = Math.min(1, Math.max(0.1, (Number(document.getElementById('oldBoilerEfficiency').value) || 90) / 100));
 
-      const usefulHeat = annualConsumption * (heatingEnergy === 'oil' ? heatingOilKwhPerLiter : 1) * oldBoilerEfficiency;
+      const oilInLiter = heatingEnergy === 'oil' && heatingOilUnit === 'liter';
+      const usefulHeat = annualConsumption * (oilInLiter ? heatingOilKwhPerLiter : 1) * oldBoilerEfficiency;
       const wpElectricity = usefulHeat / seasonalPerformance;
-      const oldHeatingCost = heatingEnergy === 'oil'
+      const oldHeatingCost = oilInLiter
         ? annualConsumption * heatingPrice
         : annualConsumption * heatingPrice / 100;
       const wpHeatingCost = wpElectricity * electricityPrice;
@@ -1076,7 +1104,7 @@
         Math.round(wpElectricity).toLocaleString('de-DE') + ' kWh';
 
       document.getElementById('oldHeatingCost').textContent = euro.format(oldHeatingCost);
-      document.getElementById('wpHeatingCost').textContent = euro.format(wpHeatingCost);
+      document.getElementById('wpHeatingCost').textContent = 'ca. ' + euro.format(wpHeatingCost);
       document.getElementById('wpElectricityUse').textContent =
         Math.round(wpElectricity).toLocaleString('de-DE') + ' kWh';
       document.getElementById('usefulHeatResult').textContent =
@@ -1084,8 +1112,8 @@
 
       const savingEl = document.getElementById('annualSaving');
       savingEl.textContent = annualSaving >= 0
-        ? euro.format(annualSaving)
-        : 'Mehrkosten ' + euro.format(Math.abs(annualSaving));
+        ? 'ca. ' + euro.format(annualSaving)
+        : 'Mehrkosten ca. ' + euro.format(Math.abs(annualSaving));
       savingEl.classList.toggle('saving-positive', annualSaving >= 0);
       savingEl.classList.toggle('saving-negative', annualSaving < 0);
     }
@@ -1107,6 +1135,16 @@
         if(button.dataset.energy === heatingEnergy) return;
         saveHeatingEnergyState();
         heatingEnergy = button.dataset.energy;
+        updateHeatingEnergyView();
+        calculateHeatingCosts();
+      });
+    });
+
+    document.querySelectorAll('.oil-unit-toggle button').forEach(button=>{
+      button.addEventListener('click',()=>{
+        if(button.dataset.oilUnit === heatingOilUnit) return;
+        saveHeatingEnergyState();
+        heatingOilUnit = button.dataset.oilUnit;
         updateHeatingEnergyView();
         calculateHeatingCosts();
       });
