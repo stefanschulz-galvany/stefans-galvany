@@ -1,0 +1,259 @@
+name: Apply V5.8 heating-cost calculator fix
+
+on:
+  push:
+    paths:
+      - '.github/workflows/apply-v5-8-heizkosten-fix.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  apply-fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Update live heating-cost calculator
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+
+          def rep(old, new, label):
+              global s
+              if old not in s:
+                  raise SystemExit(f'Marker not found: {label}')
+              s = s.replace(old, new, 1)
+
+          rep(
+              '<p class="lead">Ein Klick öffnet zwei getrennte Rechner: Förderung & Finanzierung sowie Heizkostenvergleich Gas → Wärmepumpe.</p>',
+              '<p class="lead">Ein Klick öffnet zwei getrennte Rechner: Förderung & Finanzierung sowie Heizkostenvergleich Gas oder Heizöl → Wärmepumpe.</p>',
+              'teaser copy'
+          )
+
+          rep(
+              '''            <div class="energy-toggle" role="group" aria-label="Bisherigen Energieträger auswählen">
+              <button type="button" class="active" data-energy="gas" aria-pressed="true">Gas</button>
+              <button type="button" data-energy="oil" aria-pressed="false">Heizöl</button>
+            </div>
+            <div class="field-grid">''',
+              '''            <div class="energy-toggle" role="group" aria-label="Bisherigen Energieträger auswählen">
+              <button type="button" class="active" data-energy="gas" aria-pressed="true">Gas</button>
+              <button type="button" data-energy="oil" aria-pressed="false">Heizöl</button>
+            </div>
+            <div id="oilUnitWrap" style="display:none">
+              <div class="field-label">Heizölverbrauch eingeben als</div>
+              <div class="energy-toggle" id="oilUnitToggle" role="group" aria-label="Einheit für Heizölverbrauch auswählen">
+                <button type="button" class="active" data-oil-unit="liter" aria-pressed="true">Liter</button>
+                <button type="button" data-oil-unit="kwh" aria-pressed="false">kWh</button>
+              </div>
+            </div>
+            <div class="field-grid">''',
+              'oil unit toggle'
+          )
+
+          old_jaz = '''              <div class="field">
+                <label for="seasonalPerformance"><span class="help-wrap ">
+      <span>Angenommene Jahresarbeitszahl</span>
+      <button type="button" class="help-btn" aria-expanded="false" aria-label="Erklärung zu Angenommene Jahresarbeitszahl">?</button>
+      <span class="help-tip" role="tooltip"><strong>Jahresarbeitszahl (JAZ)</strong>Sie beschreibt die Effizienz der Wärmepumpe über ein ganzes Jahr. Beispiel: Eine JAZ von 4,0 bedeutet, dass aus 1 kWh Strom im Jahresdurchschnitt etwa 4 kWh Wärme entstehen.</span>
+    </span></label>
+                <input id="seasonalPerformance" type="number" min="2" max="6" step="0.1" value="4.0">
+              </div>'''
+          new_jaz = '''              <div class="field">
+                <div class="scope-note" style="margin:0;height:100%"><strong>Berechnungsgrundlage Wärmepumpe <span class="help-wrap"><button type="button" class="help-btn" aria-expanded="false" aria-label="Erklärung zur Jahresarbeitszahl">?</button><span class="help-tip" role="tooltip"><strong>Jahresarbeitszahl (JAZ)</strong>Für die Modellrechnung wird fest eine Jahresarbeitszahl von 4,0 verwendet. Vereinfacht bedeutet das: Aus 1 kWh Strom entstehen im Jahresdurchschnitt etwa 4 kWh Wärme.</span></span></strong><br>JAZ: <strong>4,0</strong> – keine Kundeneingabe nötig.</div>
+              </div>'''
+          rep(old_jaz, new_jaz, 'fixed JAZ')
+
+          rep(
+              '<div class="result-box"><span class="result-label">Neue Stromkosten</span><strong id="wpHeatingCost">–</strong></div>',
+              '<div class="result-box"><span class="result-label">Ca. neue Stromkosten</span><strong id="wpHeatingCost">–</strong></div>',
+              'approx electricity costs'
+          )
+
+          start = s.index('    const heatingEnergyStates = {')
+          end = s.index("    document.querySelectorAll('#fundingForm input,#fundingForm select')", start)
+          new_js = r'''    const heatingEnergyStates = {
+      gas: {consumption:20000, price:11, efficiency:90},
+      oilLiter: {consumption:2000, price:1.00, efficiency:85},
+      oilKwh: {consumption:20000, price:10.0, efficiency:85}
+    };
+    let heatingEnergy = 'gas';
+    let oilUnit = 'liter';
+    const heatingOilKwhPerLiter = 10.0;
+    const fixedJaz = 4.0;
+
+    function heatingStateKey(){
+      if(heatingEnergy === 'gas') return 'gas';
+      return oilUnit === 'liter' ? 'oilLiter' : 'oilKwh';
+    }
+
+    function saveHeatingEnergyState(){
+      const key = heatingStateKey();
+      heatingEnergyStates[key] = {
+        consumption:Math.max(0, Number(document.getElementById('annualHeating').value) || 0),
+        price:Math.max(0, Number(document.getElementById('heatingPrice').value) || 0),
+        efficiency:Math.min(100, Math.max(50, Number(document.getElementById('oldBoilerEfficiency').value) || heatingEnergyStates[key].efficiency))
+      };
+    }
+
+    function convertOilUnit(nextUnit){
+      if(oilUnit === nextUnit) return;
+      saveHeatingEnergyState();
+      if(nextUnit === 'kwh'){
+        heatingEnergyStates.oilKwh.consumption = heatingEnergyStates.oilLiter.consumption * heatingOilKwhPerLiter;
+        heatingEnergyStates.oilKwh.price = heatingEnergyStates.oilLiter.price / heatingOilKwhPerLiter * 100;
+        heatingEnergyStates.oilKwh.efficiency = heatingEnergyStates.oilLiter.efficiency;
+      } else {
+        heatingEnergyStates.oilLiter.consumption = heatingEnergyStates.oilKwh.consumption / heatingOilKwhPerLiter;
+        heatingEnergyStates.oilLiter.price = heatingEnergyStates.oilKwh.price / 100 * heatingOilKwhPerLiter;
+        heatingEnergyStates.oilLiter.efficiency = heatingEnergyStates.oilKwh.efficiency;
+      }
+      oilUnit = nextUnit;
+      updateHeatingEnergyView();
+      calculateHeatingCosts();
+    }
+
+    function updateHeatingEnergyView(){
+      const isOil = heatingEnergy === 'oil';
+      const state = heatingEnergyStates[heatingStateKey()];
+      const consumptionInput = document.getElementById('annualHeating');
+      const priceInput = document.getElementById('heatingPrice');
+      const oilUnitWrap = document.getElementById('oilUnitWrap');
+
+      oilUnitWrap.style.display = isOil ? 'block' : 'none';
+      document.getElementById('heatingComparisonTitle').textContent = `Heizkostenvergleich ${isOil ? 'Öl' : 'Gas'} → Wärmepumpe`;
+      if(!isOil){
+        document.getElementById('annualHeatingLabel').textContent = 'Gasverbrauch pro Jahr (kWh)';
+        document.getElementById('heatingPriceLabel').textContent = 'Gaspreis (ct/kWh)';
+        consumptionInput.max = '100000'; consumptionInput.step = '500';
+        priceInput.max = '100'; priceInput.step = '0.1';
+      } else if(oilUnit === 'liter'){
+        document.getElementById('annualHeatingLabel').textContent = 'Heizölverbrauch pro Jahr (Liter)';
+        document.getElementById('heatingPriceLabel').textContent = 'Heizölpreis (€/Liter)';
+        consumptionInput.max = '10000'; consumptionInput.step = '100';
+        priceInput.max = '5'; priceInput.step = '0.01';
+      } else {
+        document.getElementById('annualHeatingLabel').textContent = 'Heizölverbrauch pro Jahr (kWh)';
+        document.getElementById('heatingPriceLabel').textContent = 'Heizölpreis (ct/kWh)';
+        consumptionInput.max = '100000'; consumptionInput.step = '500';
+        priceInput.max = '100'; priceInput.step = '0.1';
+      }
+
+      document.getElementById('oldBoilerEfficiencyText').textContent = `Wirkungsgrad alte ${isOil ? 'Ölheizung' : 'Gasheizung'} (%)`;
+      document.getElementById('oldBoilerEfficiencyHelpButton').setAttribute('aria-label',`Erklärung zu Wirkungsgrad alte ${isOil ? 'Ölheizung' : 'Gasheizung'} (%)`);
+      document.getElementById('oldBoilerEfficiencyHelp').textContent = isOil
+        ? 'Bei Eingabe in Litern werden für die überschlägige Umrechnung 10,0 kWh je Liter Heizöl angesetzt. Der Wirkungsgrad berücksichtigt die Verluste der alten Heizung.'
+        : 'Nicht die gesamte im Gas enthaltene Energie wird als Wärme nutzbar. Ein angenommener Wirkungsgrad von 90 % bedeutet: Aus 20.000 kWh Gas werden etwa 18.000 kWh nutzbare Wärme.';
+      document.getElementById('heatingDerivationText').textContent = `aus Ihrem bisherigen ${isOil ? 'Heizölverbrauch' : 'Gasverbrauch'} abgeleitet`;
+      document.getElementById('oldHeatingCostLabel').textContent = `Bisherige ${isOil ? 'Heizölkosten' : 'Gaskosten'}`;
+      document.getElementById('annualSavingLabel').textContent = `Ersparnis gegenüber ${isOil ? 'Öl' : 'Gas'}`;
+      document.getElementById('heatingCalculationNote').textContent = isOil
+        ? 'Grobe Modellrechnung. Bei Eingabe in Litern gilt der transparente Näherungswert 1 Liter Heizöl = 10,0 kWh. Die Berechnung leitet den Wärmebedarf aus dem bisherigen Verbrauch ab und setzt nicht pauschal die Nennleistung der Wärmepumpe als Dauerverbrauch an. Das Ergebnis ist eine Erstorientierung und keine Verbrauchsgarantie.'
+        : 'Grobe Modellrechnung. Die Berechnung leitet den Wärmebedarf aus dem bisherigen Verbrauch ab und setzt nicht pauschal die Nennleistung der Wärmepumpe als Dauerverbrauch an. Nicht enthalten sind Grundpreise, Wartung, Hilfsstrom, Warmwasserabweichungen, PV-Eigenverbrauch und individuelle Gebäudeeinflüsse.';
+
+      consumptionInput.value = state.consumption;
+      priceInput.value = state.price;
+      document.getElementById('oldBoilerEfficiency').value = state.efficiency;
+
+      document.querySelectorAll('.energy-toggle [data-energy]').forEach(button=>{
+        const active = button.dataset.energy === heatingEnergy;
+        button.classList.toggle('active',active);
+        button.setAttribute('aria-pressed',String(active));
+      });
+      document.querySelectorAll('#oilUnitToggle button').forEach(button=>{
+        const active = button.dataset.oilUnit === oilUnit;
+        button.classList.toggle('active',active);
+        button.setAttribute('aria-pressed',String(active));
+      });
+    }
+
+    function calculateHeatingCosts(){
+      const annualConsumption = Math.max(0, Number(document.getElementById('annualHeating').value) || 0);
+      const heatingPrice = Math.max(0, Number(document.getElementById('heatingPrice').value) || 0);
+      const electricityPrice = Math.max(0, Number(document.getElementById('electricityPrice').value) || 0) / 100;
+      const oldBoilerEfficiency = Math.min(1, Math.max(0.1, (Number(document.getElementById('oldBoilerEfficiency').value) || 90) / 100));
+
+      let inputEnergyKwh, oldHeatingCost;
+      if(heatingEnergy === 'gas'){
+        inputEnergyKwh = annualConsumption;
+        oldHeatingCost = annualConsumption * heatingPrice / 100;
+      } else if(oilUnit === 'liter'){
+        inputEnergyKwh = annualConsumption * heatingOilKwhPerLiter;
+        oldHeatingCost = annualConsumption * heatingPrice;
+      } else {
+        inputEnergyKwh = annualConsumption;
+        oldHeatingCost = annualConsumption * heatingPrice / 100;
+      }
+
+      const usefulHeat = inputEnergyKwh * oldBoilerEfficiency;
+      const wpElectricity = usefulHeat / fixedJaz;
+      const wpHeatingCost = wpElectricity * electricityPrice;
+      const annualSaving = oldHeatingCost - wpHeatingCost;
+
+      document.getElementById('wpElectricityUseMain').textContent = Math.round(wpElectricity).toLocaleString('de-DE') + ' kWh';
+      document.getElementById('oldHeatingCost').textContent = euro.format(oldHeatingCost);
+      document.getElementById('wpHeatingCost').textContent = euro.format(wpHeatingCost);
+      document.getElementById('wpElectricityUse').textContent = Math.round(wpElectricity).toLocaleString('de-DE') + ' kWh';
+      document.getElementById('usefulHeatResult').textContent = Math.round(usefulHeat).toLocaleString('de-DE') + ' kWh';
+
+      const savingEl = document.getElementById('annualSaving');
+      savingEl.textContent = annualSaving >= 0 ? euro.format(annualSaving) : 'Mehrkosten ' + euro.format(Math.abs(annualSaving));
+      savingEl.classList.toggle('saving-positive', annualSaving >= 0);
+      savingEl.classList.toggle('saving-negative', annualSaving < 0);
+    }
+
+'''
+          s = s[:start] + new_js + s[end:]
+
+          old_listener = '''    document.querySelectorAll('.energy-toggle button').forEach(button=>{
+      button.addEventListener('click',()=>{
+        if(button.dataset.energy === heatingEnergy) return;
+        saveHeatingEnergyState();
+        heatingEnergy = button.dataset.energy;
+        updateHeatingEnergyView();
+        calculateHeatingCosts();
+      });
+    });'''
+          new_listener = '''    document.querySelectorAll('.energy-toggle [data-energy]').forEach(button=>{
+      button.addEventListener('click',()=>{
+        if(button.dataset.energy === heatingEnergy) return;
+        saveHeatingEnergyState();
+        heatingEnergy = button.dataset.energy;
+        updateHeatingEnergyView();
+        calculateHeatingCosts();
+      });
+    });
+
+    document.querySelectorAll('#oilUnitToggle button').forEach(button=>{
+      button.addEventListener('click',()=>convertOilUnit(button.dataset.oilUnit));
+    });'''
+          rep(old_listener, new_listener, 'energy listeners')
+
+          s = s.replace('<!-- GALVANY V5.7 Preview · Sprint 1 Förderlogik · 06.08.2026 -->', '<!-- GALVANY V5.8 Live · Heizkostenvergleich Gas/Öl · JAZ 4,0 · 10.08.2026 -->')
+          p.write_text(s, encoding='utf-8')
+          PY
+
+      - name: Verify expected changes
+        run: |
+          grep -q 'Heizölverbrauch eingeben als' index.html
+          grep -q 'Ca. neue Stromkosten' index.html
+          grep -q 'const fixedJaz = 4.0' index.html
+          if grep -q 'id="seasonalPerformance"' index.html; then
+            echo 'Old editable JAZ field still present' >&2
+            exit 1
+          fi
+
+      - name: Commit live fix
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html
+          git commit -m 'V5.8: fix oil comparison and use fixed JAZ 4.0'
+          git push
