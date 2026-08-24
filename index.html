@@ -238,10 +238,23 @@
     .funding-card h2{font-size:clamp(2rem,4vw,3.7rem);margin:14px 0 18px}
     .funding-action{display:grid;gap:14px;justify-items:start}
     .funding-action small{color:var(--muted);max-width:330px}
-    .calculator-modal .modal-box{width:min(980px,100%);height:min(92vh,920px);max-height:92vh;padding:0;overflow:hidden;display:flex;flex-direction:column}
+    .calculator-modal .modal-box{
+      width:min(980px,calc(100vw - 40px));height:min(92vh,920px);
+      min-width:min(720px,calc(100vw - 40px));min-height:min(560px,calc(100vh - 40px));
+      max-width:calc(100vw - 40px);max-height:calc(100vh - 40px);
+      padding:0;overflow:hidden;display:flex;flex-direction:column;resize:both
+    }
     .calc-header{padding:26px 34px;background:var(--navy);color:#fff;flex:0 0 auto}
+    .calc-header-row{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;padding-right:50px}
+    .calc-header-copy{min-width:0}
     .calc-header h2{margin:8px 0 6px}
     .calc-header p{color:#cbd8df}
+    .calc-print-btn{
+      flex:0 0 auto;border:1px solid rgba(255,255,255,.34);background:var(--green);color:#fff;
+      border-radius:12px;padding:12px 16px;font:inherit;font-weight:900;cursor:pointer;
+      box-shadow:0 8px 22px rgba(0,0,0,.18)
+    }
+    .calc-print-btn:hover,.calc-print-btn:focus-visible{background:#4c963b;outline:2px solid #fff;outline-offset:2px}
     .calc-tabs{position:sticky;top:0;z-index:4;
       display:grid;grid-template-columns:1fr 1fr;gap:8px;
       padding:14px 34px;background:#eaf0f2;border-bottom:1px solid var(--line)
@@ -349,12 +362,61 @@
     @media(max-width:960px){
       .funding-card,.calc-body{grid-template-columns:1fr}
       .funding-card{padding:34px 28px}
+      .calculator-modal .modal-box{width:min(980px,100%);min-width:0;resize:none}
     }
     @media(max-width:650px){
       .field-grid,.result-grid,.cost-input-grid,.cost-result-grid{grid-template-columns:1fr}
       .calc-header,.calc-inputs,.calc-results{padding:24px 20px}
+      .calc-header-row{display:block;padding-right:44px}
+      .calc-print-btn{margin-top:16px}
       .calculator-modal{padding:0}
-      .calculator-modal .modal-box{height:100dvh;max-height:100dvh;border-radius:0}
+      .calculator-modal .modal-box{width:100%;height:100dvh;min-height:0;max-width:100%;max-height:100dvh;border-radius:0;resize:none}
+    }
+    @media(pointer:coarse){.calculator-modal .modal-box{min-width:0;resize:none}}
+
+    @media print{
+      @page{size:A4;margin:12mm}
+      html,body{background:#fff!important;height:auto!important;overflow:visible!important}
+      body>*{display:none!important}
+      #fundingCalculator{
+        display:block!important;position:static!important;inset:auto!important;
+        width:auto!important;height:auto!important;padding:0!important;background:#fff!important
+      }
+      #fundingCalculator .modal-box{
+        display:block!important;position:static!important;width:100%!important;height:auto!important;
+        min-width:0!important;min-height:0!important;max-width:none!important;max-height:none!important;
+        overflow:visible!important;resize:none!important;border-radius:0!important;box-shadow:none!important
+      }
+      #fundingCalculator .calc-header{padding:0 0 7mm!important;background:#fff!important;color:#071a2c!important;border-bottom:2px solid #5ba646}
+      #fundingCalculator .calc-header-row{display:block;padding:0}
+      #fundingCalculator .calc-header h2{font-size:22pt!important;color:#071a2c!important}
+      #fundingCalculator .calc-header p{color:#455564!important}
+      #fundingCalculator .rule-status{color:#35523a!important;background:#f1f7ee!important;border-color:#b9d5ae!important}
+      #fundingCalculator .modal-close,
+      #fundingCalculator .calc-print-btn,
+      #fundingCalculator .calc-tabs,
+      #fundingCalculator .help-btn,
+      #fundingCalculator .help-tip,
+      #fundingCalculator .dynamic-help-tip,
+      #fundingCalculator .calc-cta{display:none!important}
+      #fundingCalculator .calc-panel{display:none!important;overflow:visible!important}
+      #fundingCalculator .calc-panel.active{display:block!important}
+      #fundingCalculator .calc-body{display:grid!important;grid-template-columns:1fr 1fr!important;align-items:start}
+      #fundingCalculator .calc-inputs,#fundingCalculator .calc-results{padding:7mm 6mm!important;background:#fff!important}
+      #fundingCalculator .field input,#fundingCalculator .field select{padding:8px 9px;border-color:#9da9ae!important}
+      #fundingCalculator .result-main,#fundingCalculator .result-box,#fundingCalculator .scope-note,#fundingCalculator .calculation-notice{
+        background:#fff!important;border-color:#aebbc1!important;box-shadow:none!important;break-inside:avoid
+      }
+      #fundingCalculator .result-amount{font-size:30pt!important;color:#3f8731!important}
+      #fundingCalculator .term-toggle button:not(.active),
+      #fundingCalculator .energy-toggle button:not(.active),
+      #fundingCalculator .oil-unit-toggle button:not(.active){display:none!important}
+      #fundingCalculator .term-toggle,#fundingCalculator .energy-toggle,#fundingCalculator .oil-unit-toggle{display:block!important;margin:8px 0 14px!important}
+      #fundingCalculator .term-toggle button.active,#fundingCalculator .energy-toggle button.active,#fundingCalculator .oil-unit-toggle button.active{
+        display:block!important;width:100%!important;padding:8px!important;background:#fff!important;color:#071a2c!important;border:1px solid #9da9ae!important
+      }
+      #fundingCalculator .result-grid,#fundingCalculator .result-box,#fundingCalculator .result-main,#fundingCalculator .calc-note{break-inside:avoid}
+      #fundingCalculator *{-webkit-print-color-adjust:economy;print-color-adjust:economy}
     }
 
     /* Modal */
@@ -712,9 +774,14 @@
     <div class="modal-box">
       <button class="modal-close" aria-label="Rechner schließen">×</button>
       <div class="calc-header">
-        <span class="eyebrow">Unverbindlicher Richtwert</span>
-        <h2>Förderung, Finanzierung & Heizkosten</h2>
-        <p>Wählen Sie oben den gewünschten Rechner.</p>
+        <div class="calc-header-row">
+          <div class="calc-header-copy">
+            <span class="eyebrow">Unverbindlicher Richtwert</span>
+            <h2>Förderung, Finanzierung & Heizkosten</h2>
+            <p>Wählen Sie oben den gewünschten Rechner.</p>
+          </div>
+          <button class="calc-print-btn" id="calculatorPrintButton" type="button">Drucken / PDF</button>
+        </div>
         <div class="rule-status"><strong>Förderregeln für Anträge vom 21.07.2026 bis 31.01.2027</strong><br>Prüfstand: 06.08.2026 · KfW-Zuschuss 458 · V5.7 Sprint 1</div>
       </div>
 
@@ -939,6 +1006,8 @@
     document.querySelectorAll('.modal-close').forEach(btn=>btn.addEventListener('click',()=>btn.closest('.modal').classList.remove('open')));
     document.querySelectorAll('.modal').forEach(modal=>modal.addEventListener('click',e=>{if(e.target===modal) modal.classList.remove('open')}));
     document.addEventListener('keydown',e=>{if(e.key==='Escape') document.querySelectorAll('.modal.open').forEach(m=>m.classList.remove('open'))});
+
+    document.getElementById('calculatorPrintButton').addEventListener('click',()=>window.print());
 
 
     const euro = new Intl.NumberFormat('de-DE',{style:'currency',currency:'EUR',maximumFractionDigits:0});
