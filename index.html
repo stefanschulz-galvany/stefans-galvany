@@ -146,6 +146,59 @@
     .story-card h3{margin-bottom:10px}
     .story-card p{color:var(--muted)}
 
+    /* Dimensioning */
+    .dimensioning{overflow:hidden;background:#fff}
+    .dimensioning-intro{max-width:920px;margin:0 auto 64px;text-align:center}
+    .dimensioning-intro .eyebrow{margin-bottom:20px}
+    .dimensioning-intro h2{font-size:clamp(2.8rem,6vw,5.7rem);margin-bottom:24px}
+    .dimensioning-intro .lead{max-width:720px;margin:auto}
+    .sizing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch}
+    .sizing-card{min-height:360px;padding:38px;border:1px solid var(--line);border-radius:28px;background:linear-gradient(145deg,#fff,#f6f8f8);display:flex;flex-direction:column;transition:transform .35s ease,box-shadow .35s ease,border-color .35s ease}
+    .sizing-card:hover{transform:translateY(-7px);box-shadow:0 24px 64px rgba(4,24,43,.11)}
+    .sizing-card.featured{color:#fff;background:linear-gradient(145deg,#65b34f,#4b9239);border-color:transparent;box-shadow:0 24px 60px rgba(91,166,70,.25)}
+    .sizing-card.featured:hover{box-shadow:0 30px 70px rgba(91,166,70,.32)}
+    .sizing-power{font-size:clamp(3.4rem,5vw,5.2rem);line-height:.95;font-weight:900;letter-spacing:-.06em;color:var(--navy)}
+    .sizing-card.featured .sizing-power{color:#fff}
+    .sizing-card h3{margin:18px 0 14px}
+    .sizing-card p{color:var(--muted)}
+    .sizing-card.featured p{color:rgba(255,255,255,.9)}
+    .sizing-example{display:block;margin-top:auto;padding-top:28px;font-size:.78rem;font-weight:800;letter-spacing:.035em;color:rgba(255,255,255,.76)}
+    .dimension-panel{margin-top:110px;padding:clamp(42px,7vw,86px);border-radius:30px;background:#f4f7f7;text-align:center}
+    .dimension-panel h3{font-size:clamp(2rem,4vw,3.6rem);margin-bottom:46px}
+    .energy-flow{display:grid;justify-items:center;gap:10px}
+    .energy-value{font-size:clamp(3.2rem,8vw,7.4rem);line-height:.95;font-weight:900;letter-spacing:-.065em;color:var(--navy)}
+    .energy-value.heat{color:var(--green)}
+    .energy-arrow{width:54px;height:72px;position:relative;color:var(--green)}
+    .energy-arrow:before{content:"";position:absolute;left:50%;top:4px;width:2px;height:52px;background:currentColor;transform:translateX(-50%)}
+    .energy-arrow:after{content:"";position:absolute;left:50%;bottom:8px;width:17px;height:17px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:translateX(-50%) rotate(45deg)}
+    .energy-copy{max-width:680px;margin:34px auto 0;color:var(--muted);font-size:clamp(1rem,1.6vw,1.2rem)}
+    .tcap-block{margin-top:120px}
+    .tcap-heading{max-width:860px;margin:0 auto 54px;text-align:center}
+    .tcap-heading h3{font-size:clamp(2.4rem,5vw,4.8rem);margin-bottom:20px}
+    .temperature-chart{max-width:980px;margin:auto;padding:42px 42px 30px;border:1px solid var(--line);border-radius:30px;background:#fff;box-shadow:0 20px 60px rgba(4,24,43,.08)}
+    .chart-area{position:relative;height:280px;border-left:1px solid #ccd7da;border-bottom:1px solid #ccd7da;background:repeating-linear-gradient(to bottom,transparent 0,transparent 69px,rgba(7,26,44,.07) 70px)}
+    .chart-label{position:absolute;left:20px;top:18px;font-size:.76rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+    .tcap-line{position:absolute;left:4%;right:4%;top:43%;height:5px;border-radius:99px;background:var(--green);box-shadow:0 8px 22px rgba(91,166,70,.28)}
+    .tcap-line:before,.tcap-line:after{content:"";position:absolute;top:50%;width:13px;height:13px;border-radius:50%;background:var(--green);border:4px solid #fff;box-shadow:0 0 0 1px rgba(91,166,70,.3);transform:translateY(-50%)}
+    .tcap-line:before{left:-3px}.tcap-line:after{right:-3px}
+    .tcap-tag{position:absolute;right:7%;top:calc(43% - 43px);padding:7px 12px;border-radius:999px;background:#eaf5e6;color:#39762c;font-size:.78rem;font-weight:900}
+    .chart-axis{display:flex;justify-content:space-between;margin:13px 0 0;padding-left:0;color:var(--muted);font-size:.82rem;font-weight:800}
+    .chart-axis-title{text-align:center;margin-top:13px;color:var(--muted);font-size:.78rem}
+    .tcap-copy{max-width:800px;margin:34px auto 0;text-align:center;font-size:clamp(1rem,1.6vw,1.18rem)}
+    .tcap-note{max-width:800px;margin:14px auto 0;text-align:center;color:var(--muted);font-size:.88rem}
+    .dimensioning-close{max-width:820px;margin:100px auto 0;text-align:center}
+    .dimensioning-close p{font-size:clamp(1.5rem,3vw,2.6rem);line-height:1.2;font-weight:850;letter-spacing:-.035em;color:var(--navy);margin-bottom:30px}
+    @supports (animation-timeline:view()){
+      .sizing-card,.dimension-panel,.temperature-chart{
+        animation:dimensionReveal linear both;
+        animation-timeline:view();
+        animation-range:entry 8% cover 28%
+      }
+      .sizing-card:nth-child(2){animation-range:entry 12% cover 32%}
+      .sizing-card:nth-child(3){animation-range:entry 16% cover 36%}
+    }
+    @keyframes dimensionReveal{from{opacity:.2}to{opacity:1}}
+
     /* Cube */
     .cube-layout{display:grid;grid-template-columns:1.05fr .95fr;gap:24px;align-items:stretch}
     .media-card{position:relative;border-radius:var(--radius);overflow:hidden;min-height:600px;background:#0d2235;box-shadow:var(--shadow)}
@@ -445,6 +498,8 @@
       .topbar{display:none}
       .section-head,.intro-grid,.cube-layout,.quote-wrap,.contact-card{grid-template-columns:1fr}
       .story-grid{grid-template-columns:1fr 1fr}
+      .sizing-grid{grid-template-columns:1fr}
+      .sizing-card{min-height:0}
       .gallery{grid-template-columns:1fr 1fr;grid-template-rows:280px 220px 220px}
       .gallery figure:first-child{grid-column:1/3;grid-row:auto}
       .smart-grid,.app-showcase,.video-grid{grid-template-columns:1fr}
@@ -464,6 +519,22 @@
       .brand-text span{display:none}
       .brand-mark{width:48px;height:48px}
       .story-grid,.process{grid-template-columns:1fr}
+      .dimensioning-intro{margin-bottom:42px;text-align:left}
+      .dimensioning-intro .lead{margin:0}
+      .dimensioning-intro h2{font-size:clamp(2.65rem,14vw,4rem)}
+      .sizing-card{padding:28px;border-radius:24px}
+      .dimension-panel{margin-top:76px;padding:48px 20px;border-radius:24px}
+      .dimension-panel h3{margin-bottom:34px}
+      .energy-arrow{height:58px}
+      .energy-arrow:before{height:39px}
+      .tcap-block{margin-top:84px}
+      .tcap-heading{text-align:left;margin-bottom:34px}
+      .temperature-chart{padding:24px 18px 22px;border-radius:24px}
+      .chart-area{height:220px}
+      .chart-label{left:12px;top:12px}
+      .tcap-tag{right:5%;font-size:.7rem}
+      .tcap-copy,.tcap-note{text-align:left}
+      .dimensioning-close{margin-top:72px}
       .gallery{display:grid;grid-template-columns:1fr;grid-template-rows:repeat(4,260px)}
       .gallery figure:first-child{grid-column:auto}
       .media-card{min-height:420px}
@@ -556,6 +627,68 @@
           <p class="lead">Ich selbst habe lange überlegt, welche Wärmepumpe ich anbieten möchte. Am Ende gab es für mich keinen Zweifel: Ich habe mich für die insgesamt beste Lösung entschieden – bei weitem. Entscheidend ist für mich das Gesamtpaket aus Panasonic-Technik, GALVANY Cube, schneller Montage, Fernbetreuung und Fördermittelservice.</p>
           <p class="lead" style="margin-top:18px">Genauso sollen Sie genau prüfen, vergleichen und sich dann entscheiden. Dabei helfe ich Ihnen. Doch zum Schluss steht Ihre Entscheidung – ich unterstütze nur dabei.</p>
           <p class="signature">Stefan Schulz <small>Ihr regionaler GALVANY Expert</small></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section dimensioning" id="dimensionierung">
+      <div class="container">
+        <div class="dimensioning-intro">
+          <span class="eyebrow">Die richtige Auslegung</span>
+          <h2>Nicht größer.<br>Sondern richtig.</h2>
+          <p class="lead">Die passende Wärmepumpe arbeitet effizienter, ruhiger und genau für Ihr Haus.</p>
+        </div>
+
+        <div class="sizing-grid" aria-label="Beispiel für die Dimensionierung bei 9 Kilowatt Heizlast">
+          <article class="sizing-card">
+            <div class="sizing-power">6 kW</div>
+            <h3>Zu klein</h3>
+            <p>Bei hoher Heizlast kann zusätzliche elektrische Unterstützung erforderlich werden.</p>
+          </article>
+          <article class="sizing-card featured">
+            <div class="sizing-power">9 kW</div>
+            <h3>Passend ausgelegt</h3>
+            <p>Die Anlage deckt den Wärmebedarf und kann bei geringerem Bedarf ihre Leistung reduzieren.</p>
+            <small class="sizing-example">Beispiel bei einer Heizlast von 9 kW</small>
+          </article>
+          <article class="sizing-card">
+            <div class="sizing-power">16 kW</div>
+            <h3>Zu groß</h3>
+            <p>Mehr Leistung bedeutet nicht automatisch mehr Effizienz. Eine überdimensionierte Anlage kann häufiger takten.</p>
+          </article>
+        </div>
+
+        <div class="dimension-panel">
+          <h3>Aus Strom wird Wärme.</h3>
+          <div class="energy-flow" aria-label="Eine Kilowattstunde Strom ergibt ungefähr drei bis fünf Kilowattstunden Wärme">
+            <div class="energy-value">1 kWh Strom</div>
+            <div class="energy-arrow" aria-hidden="true"></div>
+            <div class="energy-value heat">ca. 3–5 kWh Wärme</div>
+          </div>
+          <p class="energy-copy">Eine Wärmepumpe erzeugt die Wärme nicht ausschließlich aus Strom. Sie nutzt zusätzlich Energie aus der Umgebung.</p>
+        </div>
+
+        <div class="tcap-block">
+          <div class="tcap-heading">
+            <h3>Leistung auch wenn es draußen richtig kalt wird.</h3>
+          </div>
+          <div class="temperature-chart" role="img" aria-label="Schematische Darstellung einer weitgehend konstanten T-CAP Heizleistung zwischen plus 7 und minus 20 Grad Celsius">
+            <div class="chart-area">
+              <span class="chart-label">Heizleistung</span>
+              <div class="tcap-line" aria-hidden="true"></div>
+              <span class="tcap-tag">T-CAP Heizleistung</span>
+            </div>
+            <div class="chart-axis" aria-hidden="true"><span>+7 °C</span><span>0 °C</span><span>−10 °C</span><span>−20 °C</span></div>
+            <div class="chart-axis-title">Außentemperatur</div>
+          </div>
+          <p class="tcap-note">Darstellung der Heizleistung bei 35 °C Vorlauftemperatur.</p>
+          <p class="tcap-copy">Panasonic T-CAP ist darauf ausgelegt, die Heizleistung auch bei sehr niedrigen Außentemperaturen aufrechtzuerhalten.</p>
+          <p class="tcap-note">Die tatsächlich verfügbare Heizleistung hängt unter anderem von Auslegung, Gerät, Vorlauftemperatur und Betriebsbedingungen ab.</p>
+        </div>
+
+        <div class="dimensioning-close">
+          <p>Entscheidend ist nicht die größte Wärmepumpe – sondern die richtige für Ihr Gebäude.</p>
+          <a class="btn btn-primary" href="#kontakt">Passende Anlage für mein Haus prüfen</a>
         </div>
       </div>
     </section>
