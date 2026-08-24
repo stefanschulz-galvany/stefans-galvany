@@ -374,49 +374,36 @@
     }
     @media(pointer:coarse){.calculator-modal .modal-box{min-width:0;resize:none}}
 
+    .calculator-print-summary{display:none}
+
     @media print{
       @page{size:A4;margin:12mm}
       html,body{background:#fff!important;height:auto!important;overflow:visible!important}
       body>*{display:none!important}
-      #fundingCalculator{
-        display:block!important;position:static!important;inset:auto!important;
-        width:auto!important;height:auto!important;padding:0!important;background:#fff!important
-      }
-      #fundingCalculator .modal-box{
-        display:block!important;position:static!important;width:100%!important;height:auto!important;
-        min-width:0!important;min-height:0!important;max-width:none!important;max-height:none!important;
-        overflow:visible!important;resize:none!important;border-radius:0!important;box-shadow:none!important
-      }
-      #fundingCalculator .calc-header{padding:0 0 7mm!important;background:#fff!important;color:#071a2c!important;border-bottom:2px solid #5ba646}
-      #fundingCalculator .calc-header-row{display:block;padding:0}
-      #fundingCalculator .calc-header h2{font-size:22pt!important;color:#071a2c!important}
-      #fundingCalculator .calc-header p{color:#455564!important}
-      #fundingCalculator .rule-status{color:#35523a!important;background:#f1f7ee!important;border-color:#b9d5ae!important}
-      #fundingCalculator .modal-close,
-      #fundingCalculator .calc-print-btn,
-      #fundingCalculator .calc-tabs,
-      #fundingCalculator .help-btn,
-      #fundingCalculator .help-tip,
-      #fundingCalculator .dynamic-help-tip,
-      #fundingCalculator .calc-cta{display:none!important}
-      #fundingCalculator .calc-panel{display:none!important;overflow:visible!important}
-      #fundingCalculator .calc-panel.active{display:block!important}
-      #fundingCalculator .calc-body{display:grid!important;grid-template-columns:1fr 1fr!important;align-items:start}
-      #fundingCalculator .calc-inputs,#fundingCalculator .calc-results{padding:7mm 6mm!important;background:#fff!important}
-      #fundingCalculator .field input,#fundingCalculator .field select{padding:8px 9px;border-color:#9da9ae!important}
-      #fundingCalculator .result-main,#fundingCalculator .result-box,#fundingCalculator .scope-note,#fundingCalculator .calculation-notice{
-        background:#fff!important;border-color:#aebbc1!important;box-shadow:none!important;break-inside:avoid
-      }
-      #fundingCalculator .result-amount{font-size:30pt!important;color:#3f8731!important}
-      #fundingCalculator .term-toggle button:not(.active),
-      #fundingCalculator .energy-toggle button:not(.active),
-      #fundingCalculator .oil-unit-toggle button:not(.active){display:none!important}
-      #fundingCalculator .term-toggle,#fundingCalculator .energy-toggle,#fundingCalculator .oil-unit-toggle{display:block!important;margin:8px 0 14px!important}
-      #fundingCalculator .term-toggle button.active,#fundingCalculator .energy-toggle button.active,#fundingCalculator .oil-unit-toggle button.active{
-        display:block!important;width:100%!important;padding:8px!important;background:#fff!important;color:#071a2c!important;border:1px solid #9da9ae!important
-      }
-      #fundingCalculator .result-grid,#fundingCalculator .result-box,#fundingCalculator .result-main,#fundingCalculator .calc-note{break-inside:avoid}
-      #fundingCalculator *{-webkit-print-color-adjust:economy;print-color-adjust:economy}
+      #calculatorPrintSummary{display:block!important;color:#142334!important;font-size:9.5pt;line-height:1.38}
+      #calculatorPrintSummary *{box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+      .print-page{min-height:273mm;position:relative}
+      .print-page+.print-page{break-before:page;page-break-before:always}
+      .print-kicker{color:#071a2c;font-size:8pt;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
+      .print-title{color:#071a2c!important;font-size:24pt!important;letter-spacing:-.035em;margin:3mm 0 1.5mm!important}
+      .print-subtitle{color:#455564!important;font-size:11pt;margin:0 0 7mm!important}
+      .print-section-title{color:#071a2c!important;font-size:17pt!important;margin:0 0 5mm!important;padding-bottom:2.5mm;border-bottom:2px solid #dfe8ea}
+      .print-intro{color:#455564!important;margin:0 0 5mm!important}
+      .print-data-grid{display:grid;grid-template-columns:1fr 1fr;gap:3mm;margin-bottom:5mm}
+      .print-data-item{padding:3mm 3.5mm;border:1px solid #dfe8ea;border-radius:3mm;background:#f7f9fa;break-inside:avoid}
+      .print-data-item.wide{grid-column:1/-1}
+      .print-label{display:block;color:#627080;font-size:7.5pt;font-weight:800;letter-spacing:.04em;text-transform:uppercase;margin-bottom:1mm}
+      .print-value{display:block;color:#071a2c!important;font-size:12pt;font-weight:900}
+      .print-value.saving{color:#5ba646!important}
+      .print-requirements,.print-bonuses,.print-explanation,.print-disclaimer,.print-final-note{break-inside:avoid}
+      .print-requirements,.print-bonuses{padding:3.5mm 4mm;border:1px solid #dfe8ea;border-radius:3mm;margin:0 0 4mm}
+      .print-requirements h3,.print-bonuses h3{color:#071a2c!important;font-size:11pt!important;margin:0 0 2mm!important}
+      .print-requirements ul,.print-bonuses ul{margin:0;padding-left:5mm}
+      .print-requirements li,.print-bonuses li{margin:1mm 0;color:#354655}
+      .print-explanation{padding:4mm;border-left:3px solid #071a2c;background:#f1f4f6;margin:5mm 0;color:#294432!important}
+      .print-disclaimer{padding:3.5mm 4mm;border:1px solid #cedade;border-radius:3mm;background:#fff;color:#455564!important;margin-top:5mm}
+      .print-final-note{padding:4mm;border:2px solid #071a2c;border-radius:3mm;color:#071a2c!important;font-weight:900;margin-top:6mm}
+      .print-footer{position:absolute;left:0;right:0;bottom:0;padding-top:3mm;border-top:1px solid #dfe8ea;color:#627080;font-size:7.5pt;display:flex;justify-content:space-between}
     }
 
     /* Modal */
@@ -959,6 +946,72 @@
     </div>
   </div>
 
+  <section class="calculator-print-summary" id="calculatorPrintSummary" aria-hidden="true">
+    <div class="print-page">
+      <div class="print-kicker">Ihre persönliche Erstorientierung</div>
+      <h1 class="print-title">Ihre Wärmepumpen-Übersicht</h1>
+      <p class="print-subtitle">Förderung, Finanzierung und Heizkosten – verständlich zusammengefasst</p>
+
+      <h2 class="print-section-title">Förderung &amp; Finanzierung</h2>
+      <p class="print-intro">Die folgenden Werte basieren auf Ihren aktuellen Eingaben im Rechner und geben Ihnen eine erste, unverbindliche Orientierung.</p>
+
+      <div class="print-data-grid">
+        <div class="print-data-item"><span class="print-label">Gesamtkosten der Maßnahme</span><strong class="print-value" id="printPurchasePrice">–</strong></div>
+        <div class="print-data-item"><span class="print-label">Vorhandene Heizung</span><strong class="print-value" id="printOldHeating">–</strong></div>
+        <div class="print-data-item"><span class="print-label">Alter der Heizung</span><strong class="print-value" id="printHeatingAge">–</strong></div>
+        <div class="print-data-item"><span class="print-label">Förderfähige Kosten</span><strong class="print-value" id="printEligibleCosts">–</strong></div>
+        <div class="print-data-item"><span class="print-label">Voraussichtliche Förderung</span><strong class="print-value" id="printSubsidyAmount">–</strong></div>
+        <div class="print-data-item"><span class="print-label">Fördersatz</span><strong class="print-value" id="printSubsidyRate">–</strong></div>
+        <div class="print-data-item"><span class="print-label">Voraussichtlicher Eigenanteil</span><strong class="print-value" id="printOwnShare">–</strong></div>
+        <div class="print-data-item"><span class="print-label">Finanzierungslaufzeit</span><strong class="print-value" id="printFinanceTerm">–</strong></div>
+        <div class="print-data-item"><span class="print-label">Voraussichtliche Monatsrate</span><strong class="print-value" id="printMonthlyPayment">–</strong></div>
+        <div class="print-data-item"><span class="print-label">Sollzins</span><strong class="print-value">6,0 %</strong></div>
+      </div>
+
+      <div class="print-requirements">
+        <h3>Bestätigte Fördervoraussetzungen</h3>
+        <ul id="printFundingRequirements"></ul>
+      </div>
+
+      <div class="print-bonuses">
+        <h3>Berücksichtigte Förderung und Boni</h3>
+        <ul id="printFundingBonuses"></ul>
+      </div>
+
+      <div class="print-disclaimer"><strong>Wichtig:</strong> Die Förderberechnung ist eine unverbindliche Erstorientierung und keine Förderzusage. Die endgültige Förderfähigkeit muss individuell anhand der zum Antragszeitpunkt geltenden Bedingungen geprüft werden. Die Finanzierung ist ein unverbindliches Rechenbeispiel und kein Kreditangebot.</div>
+      <div class="print-footer"><span>www.waermepumpe-mit-stefan.de</span><span>Förderung &amp; Finanzierung</span></div>
+    </div>
+
+    <div class="print-page">
+      <div class="print-kicker">Ihre persönliche Erstorientierung</div>
+      <h2 class="print-section-title" style="margin-top:3mm!important">Heizkostenvergleich</h2>
+      <p class="print-intro">Vergleich Ihrer bisherigen Heizkosten mit den rechnerischen Stromkosten einer Wärmepumpe auf Grundlage der aktuell eingegebenen Verbrauchs- und Preiswerte.</p>
+
+      <div class="print-data-grid">
+        <div class="print-data-item"><span class="print-label">Bisheriger Energieträger</span><strong class="print-value" id="printEnergyType">–</strong></div>
+        <div class="print-data-item"><span class="print-label">Verbrauchseinheit</span><strong class="print-value" id="printEnergyUnit">–</strong></div>
+        <div class="print-data-item"><span class="print-label">Jahresverbrauch</span><strong class="print-value" id="printAnnualHeating">–</strong></div>
+        <div class="print-data-item"><span class="print-label" id="printHeatingPriceLabel">Energiepreis</span><strong class="print-value" id="printHeatingPrice">–</strong></div>
+        <div class="print-data-item"><span class="print-label">Wärmepumpenstrompreis</span><strong class="print-value" id="printElectricityPrice">–</strong></div>
+        <div class="print-data-item"><span class="print-label">Jahresarbeitszahl (JAZ)</span><strong class="print-value">4,0</strong></div>
+        <div class="print-data-item wide"><span class="print-label">Wirkungsgrad der alten Heizung</span><strong class="print-value" id="printOldBoilerEfficiency">–</strong></div>
+      </div>
+
+      <div class="print-data-grid">
+        <div class="print-data-item"><span class="print-label" id="printOldHeatingCostLabel">Bisherige Heizkosten</span><strong class="print-value" id="printOldHeatingCost">–</strong></div>
+        <div class="print-data-item"><span class="print-label">Ca. neue Stromkosten</span><strong class="print-value" id="printWpHeatingCost">–</strong></div>
+        <div class="print-data-item wide"><span class="print-label">Voraussichtliche Ersparnis</span><strong class="print-value" id="printAnnualSaving">–</strong></div>
+        <div class="print-data-item"><span class="print-label">WP-Strombedarf</span><strong class="print-value" id="printWpElectricityUse">–</strong></div>
+        <div class="print-data-item"><span class="print-label">Abgeleitete Nutzwärme</span><strong class="print-value" id="printUsefulHeat">–</strong></div>
+      </div>
+
+      <p class="print-explanation" id="printHeatingExplanation"></p>
+      <div class="print-final-note" id="printFinalNote">Voraussichtliche Ersparnis bei gleichbleibenden Öl-/Gas-/Stromkosten. Ohne Gewähr.</div>
+      <div class="print-disclaimer">Grobe, unverbindliche Modellrechnung. Die tatsächlichen Kosten hängen unter anderem vom Gebäude, der realen Effizienz der Anlage, dem Nutzerverhalten, Warmwasserbedarf, Grundpreisen, Wartung, PV-Eigenverbrauch und zukünftigen Energiepreisen ab.</div>
+      <div class="print-footer"><span>www.waermepumpe-mit-stefan.de</span><span>Heizkostenvergleich</span></div>
+    </div>
+  </section>
+
   <div class="modal" id="impressum">
     <div class="modal-box">
       <button class="modal-close" aria-label="Schließen">×</button>
@@ -1007,7 +1060,10 @@
     document.querySelectorAll('.modal').forEach(modal=>modal.addEventListener('click',e=>{if(e.target===modal) modal.classList.remove('open')}));
     document.addEventListener('keydown',e=>{if(e.key==='Escape') document.querySelectorAll('.modal.open').forEach(m=>m.classList.remove('open'))});
 
-    document.getElementById('calculatorPrintButton').addEventListener('click',()=>window.print());
+    document.getElementById('calculatorPrintButton').addEventListener('click',()=>{
+      buildCalculatorPrintSummary();
+      requestAnimationFrame(()=>window.print());
+    });
 
 
     const euro = new Intl.NumberFormat('de-DE',{style:'currency',currency:'EUR',maximumFractionDigits:0});
@@ -1096,6 +1152,87 @@
     let heatingOilUnit = 'liter';
     const heatingOilKwhPerLiter = 10.0;
     const seasonalPerformance = 4.0;
+
+    function setPrintText(id,value){
+      document.getElementById(id).textContent = value;
+    }
+
+    function formatPrintNumber(value,maximumFractionDigits=0){
+      return new Intl.NumberFormat('de-DE',{maximumFractionDigits}).format(Number(value) || 0);
+    }
+
+    function buildCalculatorPrintSummary(){
+      calculateFunding();
+      calculateHeatingCosts();
+
+      const selectedHeating = document.getElementById('oldHeating');
+      const fundingRequirements = [];
+      if(document.getElementById('ownerOccupied').checked) fundingRequirements.push('Selbstgenutztes Wohneigentum wurde bestätigt.');
+      if(document.getElementById('oldHeatingFunctional').checked) fundingRequirements.push('Die alte Heizung wurde als funktionstüchtig bestätigt.');
+      if(document.getElementById('oldHeatingRemoved').checked) fundingRequirements.push('Fachgerechte Demontage und Entsorgung wurden bestätigt.');
+      if(document.getElementById('incomeKnown').value === '1') fundingRequirements.push('Das KfW-relevante Haushaltseinkommen wurde anhand der maßgeblichen Steuerbescheide angegeben.');
+      if(document.getElementById('children').value === '1') fundingRequirements.push('Mindestens ein berücksichtigungsfähiges Kind im Haushalt wurde bestätigt.');
+      if(!fundingRequirements.length) fundingRequirements.push('Keine der im Rechner abgefragten Bonusvoraussetzungen wurde bestätigt.');
+
+      const requirementsList = document.getElementById('printFundingRequirements');
+      requirementsList.replaceChildren(...fundingRequirements.map(text=>{
+        const item = document.createElement('li');
+        item.textContent = text;
+        return item;
+      }));
+
+      const bonusTexts = Array.from(document.querySelectorAll('#bonusList>span')).map(item=>item.textContent.replace('(?)','').replace(/^✓\s*/,'').trim());
+      const incomeKnown = document.getElementById('incomeKnown').value === '1';
+      const ownerOccupied = document.getElementById('ownerOccupied').checked;
+      if(!incomeKnown || !ownerOccupied){
+        bonusTexts.push('Der Einkommensbonus wurde nicht berechnet, weil das maßgebliche Einkommen oder die erforderliche Selbstnutzung nicht bestätigt wurde.');
+      }
+      const bonusesList = document.getElementById('printFundingBonuses');
+      bonusesList.replaceChildren(...bonusTexts.map(text=>{
+        const item = document.createElement('li');
+        item.textContent = text;
+        return item;
+      }));
+
+      setPrintText('printPurchasePrice',euro.format(Math.max(0,Number(document.getElementById('purchasePrice').value) || 0)));
+      setPrintText('printOldHeating',selectedHeating.options[selectedHeating.selectedIndex].text);
+      setPrintText('printHeatingAge',formatPrintNumber(document.getElementById('heatingAge').value) + ' Jahre');
+      setPrintText('printEligibleCosts',document.getElementById('eligibleCosts').textContent);
+      setPrintText('printSubsidyAmount',document.getElementById('subsidyAmount').textContent);
+      setPrintText('printSubsidyRate',document.getElementById('subsidyRate').textContent);
+      setPrintText('printOwnShare',document.getElementById('ownShare').textContent);
+      setPrintText('printFinanceTerm',financeTerm + ' Jahre');
+      setPrintText('printMonthlyPayment',document.getElementById('monthlyPayment').textContent + ' €');
+
+      const isOil = heatingEnergy === 'oil';
+      const oilInLiter = isOil && heatingOilUnit === 'liter';
+      const annualConsumption = document.getElementById('annualHeating').value;
+      const heatingPrice = document.getElementById('heatingPrice').value;
+      const electricityPrice = document.getElementById('electricityPrice').value;
+      const energyName = isOil ? 'Heizöl' : 'Gas';
+      const energyUnit = oilInLiter ? 'Liter' : 'kWh';
+      const energyPriceUnit = oilInLiter ? '€/Liter' : 'ct/kWh';
+
+      setPrintText('printEnergyType',energyName);
+      setPrintText('printEnergyUnit',energyUnit);
+      setPrintText('printAnnualHeating',formatPrintNumber(annualConsumption) + ' ' + energyUnit);
+      setPrintText('printHeatingPriceLabel',isOil ? 'Heizölpreis' : 'Gaspreis');
+      setPrintText('printHeatingPrice',formatPrintNumber(heatingPrice,2) + ' ' + energyPriceUnit);
+      setPrintText('printElectricityPrice',formatPrintNumber(electricityPrice,2) + ' ct/kWh');
+      setPrintText('printOldBoilerEfficiency',formatPrintNumber(document.getElementById('oldBoilerEfficiency').value,1) + ' %');
+      const hasSaving = document.getElementById('annualSaving').classList.contains('saving-positive');
+      setPrintText('printOldHeatingCostLabel',isOil ? 'Bisherige Heizölkosten' : 'Bisherige Gaskosten');
+      setPrintText('printOldHeatingCost',document.getElementById('oldHeatingCost').textContent);
+      setPrintText('printWpHeatingCost',document.getElementById('wpHeatingCost').textContent);
+      setPrintText('printAnnualSaving',document.getElementById('annualSaving').textContent);
+      document.getElementById('printAnnualSaving').classList.toggle('saving',hasSaving);
+      setPrintText('printWpElectricityUse',document.getElementById('wpElectricityUse').textContent);
+      setPrintText('printUsefulHeat',document.getElementById('usefulHeatResult').textContent);
+
+      setPrintText('printHeatingExplanation',hasSaving
+        ? 'Bei den eingegebenen Verbrauchs- und Preiswerten liegen die rechnerischen jährlichen Energiekosten der Wärmepumpe unter den bisherigen Heizkosten. Die tatsächlichen Kosten hängen unter anderem vom Gebäude, der realen Effizienz der Anlage, dem Nutzerverhalten und zukünftigen Energiepreisen ab.'
+        : 'Bei den eingegebenen Verbrauchs- und Preiswerten liegen die rechnerischen jährlichen Energiekosten der Wärmepumpe nicht unter den bisherigen Heizkosten. Die tatsächlichen Kosten hängen unter anderem vom Gebäude, der realen Effizienz der Anlage, dem Nutzerverhalten und zukünftigen Energiepreisen ab.');
+    }
 
     function heatingStateKey(){
       if(heatingEnergy === 'gas') return 'gas';
