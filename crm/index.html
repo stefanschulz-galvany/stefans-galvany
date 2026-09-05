@@ -18,59 +18,17 @@
   </style>
 </head>
 <body>
-  <header>
-    <div><h1>GALVANY CRM</h1><p>Leads · Termine · Angebote · Nachfassen</p></div>
-    <button id="logoutBtn" class="logout hidden">Abmelden</button>
-  </header>
-
+  <header><div><h1>GALVANY CRM</h1><p>Leads · Termine · Angebote · Nachfassen</p></div><button id="logoutBtn" class="logout hidden">Abmelden</button></header>
   <main>
-    <section id="loginView" class="login">
-      <h2>Anmelden</h2>
-      <p>Dein privates GALVANY-Vertriebsboard.</p>
-      <input id="email" type="email" autocomplete="email" placeholder="E-Mail-Adresse">
-      <button id="loginBtn">Login-Link senden</button>
-      <div id="loginMsg" class="msg"></div>
-    </section>
-
-    <section id="appView" class="wrap hidden">
-      <div class="toolbar">
-        <input id="search" class="search" placeholder="Kunde suchen …">
-        <div id="count" class="badge">0 Kunden</div>
-      </div>
-      <div class="tablewrap">
-        <table class="crm">
-          <thead><tr><th>Kunde</th><th>Lead</th><th>Termin</th><th>Wahrgenommen</th><th>Angebot</th><th>Nachfassen</th><th>Status</th></tr></thead>
-          <tbody id="rows"></tbody>
-        </table>
-        <div id="empty" class="empty hidden">Keine Kunden gefunden.</div>
-      </div>
-    </section>
+    <section id="loginView" class="login"><h2>Anmelden</h2><p>Dein privates GALVANY-Vertriebsboard.</p><input id="email" type="email" autocomplete="email" placeholder="E-Mail-Adresse"><button id="loginBtn">Login-Link senden</button><div id="loginMsg" class="msg"></div></section>
+    <section id="appView" class="wrap hidden"><div class="toolbar"><input id="search" class="search" placeholder="Kunde suchen …"><div id="count" class="badge">0 Kunden</div></div><div class="tablewrap"><table class="crm"><thead><tr><th>Kunde</th><th>Lead</th><th>Termin</th><th>Wahrgenommen</th><th>Angebot</th><th>Nachfassen</th><th>Status</th></tr></thead><tbody id="rows"></tbody></table><div id="empty" class="empty hidden">Keine Kunden gefunden.</div></div></section>
   </main>
-
 <script>
 const SUPABASE_URL='https://lcyfhlknzmgjmffhvlvx.supabase.co';
-const SUPABASE_KEY='PASTE_SUPABASE_PUBLISHABLE_KEY_HERE';
-const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
-const $=id=>document.getElementById(id);
-let leads=[];
-
-function fmtDate(d){if(!d)return '';return new Intl.DateTimeFormat('de-DE',{day:'2-digit',month:'2-digit',year:'numeric'}).format(new Date(d+'T12:00:00'))}
-function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
-function dot(row,field,extra=''){const val=!!row[field];return `<button class="dot ${val?'green':'red'}" aria-label="${field}" onclick="toggle('${row.id}','${field}',${val})"></button>${extra}`}
-function render(){const q=$('search').value.trim().toLowerCase();const data=leads.filter(r=>`${r.first_name||''} ${r.last_name||''} ${r.city||''}`.toLowerCase().includes(q));$('count').textContent=`${data.length} Kunde${data.length===1?'':'n'}`;$('rows').innerHTML=data.map(r=>{
-  const overdue=r.follow_up_due_date&&!r.follow_up_done&&new Date(r.follow_up_due_date+'T23:59:59')<new Date();
-  const due=r.follow_up_due_date?`<div class="due ${overdue?'overdue':''}">${overdue?'fällig: ':'ab: '}${fmtDate(r.follow_up_due_date)}</div>`:'';
-  const phone=r.phone?`<a href="tel:${esc(r.phone)}">☎ ${esc(r.phone)}</a>`:''; const mail=r.email?`<a href="mailto:${esc(r.email)}">✉ Mail</a>`:'';
-  return `<tr><td><div class="name">${esc(r.first_name)} ${esc(r.last_name)}</div><div class="contact">${phone}${mail}</div></td><td>${dot(r,'lead_done')}</td><td>${dot(r,'appointment_done')}</td><td>${dot(r,'meeting_completed')}</td><td>${dot(r,'offer_done')}</td><td>${dot(r,'follow_up_done',due)}</td><td><select class="status ${r.status}" onchange="setStatus('${r.id}',this.value)"><option value="offen" ${r.status==='offen'?'selected':''}>Offen</option><option value="vertrag" ${r.status==='vertrag'?'selected':''}>Vertrag</option><option value="verloren" ${r.status==='verloren'?'selected':''}>Verloren</option></select></td></tr>`}).join('');$('empty').classList.toggle('hidden',data.length!==0)}
-
-async function load(){const {data,error}=await sb.from('galvany_leads').select('*').order('lead_received_at',{ascending:false});if(error){alert('CRM konnte nicht geladen werden: '+error.message);return}leads=data||[];render()}
-window.toggle=async(id,field,current)=>{const patch={[field]:!current};if(field==='follow_up_done'&&!current)patch.follow_up_completed_at=new Date().toISOString();const {error}=await sb.from('galvany_leads').update(patch).eq('id',id);if(error){alert(error.message);return}await load()}
-window.setStatus=async(id,status)=>{const {error}=await sb.from('galvany_leads').update({status}).eq('id',id);if(error){alert(error.message);return}await load()}
-$('search').addEventListener('input',render);
-$('loginBtn').onclick=async()=>{const email=$('email').value.trim();if(!email)return;$('loginMsg').textContent='Sende Login-Link …';const {error}=await sb.auth.signInWithOtp({email,options:{emailRedirectTo:location.href}});$('loginMsg').textContent=error?error.message:'Login-Link wurde per E-Mail gesendet.'}
-$('logoutBtn').onclick=async()=>{await sb.auth.signOut();location.reload()}
-async function boot(){if(SUPABASE_KEY.startsWith('PASTE_')){$('loginMsg').textContent='CRM-Verbindung ist noch nicht freigeschaltet.';return}const {data:{session}}=await sb.auth.getSession();if(session){$('loginView').classList.add('hidden');$('appView').classList.remove('hidden');$('logoutBtn').classList.remove('hidden');await load()}sb.auth.onAuthStateChange(async(_,s)=>{if(s){$('loginView').classList.add('hidden');$('appView').classList.remove('hidden');$('logoutBtn').classList.remove('hidden');await load()}})}
-boot();
-</script>
-</body>
-</html>
+const SUPABASE_KEY='sb_publishable_bxgh_jkrvrTFETuOscflNg_mn4V09qK';
+const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);const $=id=>document.getElementById(id);let leads=[];
+function fmtDate(d){if(!d)return '';return new Intl.DateTimeFormat('de-DE',{day:'2-digit',month:'2-digit',year:'numeric'}).format(new Date(d+'T12:00:00'))}function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}function dot(row,field,extra=''){const val=!!row[field];return `<button class="dot ${val?'green':'red'}" aria-label="${field}" onclick="toggle('${row.id}','${field}',${val})"></button>${extra}`}
+function render(){const q=$('search').value.trim().toLowerCase();const data=leads.filter(r=>`${r.first_name||''} ${r.last_name||''} ${r.city||''}`.toLowerCase().includes(q));$('count').textContent=`${data.length} Kunde${data.length===1?'':'n'}`;$('rows').innerHTML=data.map(r=>{const overdue=r.follow_up_due_date&&!r.follow_up_done&&new Date(r.follow_up_due_date+'T23:59:59')<new Date();const due=r.follow_up_due_date?`<div class="due ${overdue?'overdue':''}">${overdue?'fällig: ':'ab: '}${fmtDate(r.follow_up_due_date)}</div>`:'';const phone=r.phone?`<a href="tel:${esc(r.phone)}">☎ ${esc(r.phone)}</a>`:'';const mail=r.email?`<a href="mailto:${esc(r.email)}">✉ Mail</a>`:'';return `<tr><td><div class="name">${esc(r.first_name)} ${esc(r.last_name)}</div><div class="contact">${phone}${mail}</div></td><td>${dot(r,'lead_done')}</td><td>${dot(r,'appointment_done')}</td><td>${dot(r,'meeting_completed')}</td><td>${dot(r,'offer_done')}</td><td>${dot(r,'follow_up_done',due)}</td><td><select class="status ${r.status}" onchange="setStatus('${r.id}',this.value)"><option value="offen" ${r.status==='offen'?'selected':''}>Offen</option><option value="vertrag" ${r.status==='vertrag'?'selected':''}>Vertrag</option><option value="verloren" ${r.status==='verloren'?'selected':''}>Verloren</option></select></td></tr>`}).join('');$('empty').classList.toggle('hidden',data.length!==0)}
+async function load(){const {data,error}=await sb.from('galvany_leads').select('*').order('lead_received_at',{ascending:false});if(error){alert('CRM konnte nicht geladen werden: '+error.message);return}leads=data||[];render()}window.toggle=async(id,field,current)=>{const patch={[field]:!current};if(field==='follow_up_done'&&!current)patch.follow_up_completed_at=new Date().toISOString();const {error}=await sb.from('galvany_leads').update(patch).eq('id',id);if(error){alert(error.message);return}await load()} ;window.setStatus=async(id,status)=>{const {error}=await sb.from('galvany_leads').update({status}).eq('id',id);if(error){alert(error.message);return}await load()};$('search').addEventListener('input',render);
+$('loginBtn').onclick=async()=>{const email=$('email').value.trim();if(!email)return;$('loginMsg').textContent='Sende Login-Link …';const {error}=await sb.auth.signInWithOtp({email,options:{emailRedirectTo:location.href}});$('loginMsg').textContent=error?error.message:'Login-Link wurde per E-Mail gesendet.'};$('logoutBtn').onclick=async()=>{await sb.auth.signOut();location.reload()};async function boot(){const {data:{session}}=await sb.auth.getSession();if(session){$('loginView').classList.add('hidden');$('appView').classList.remove('hidden');$('logoutBtn').classList.remove('hidden');await load()}sb.auth.onAuthStateChange(async(_,s)=>{if(s){$('loginView').classList.add('hidden');$('appView').classList.remove('hidden');$('logoutBtn').classList.remove('hidden');await load()}})}boot();
+</script></body></html>
