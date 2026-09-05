@@ -1611,6 +1611,163 @@
 
   </script>
 
+  <style id="financeEnhancementsStyle">
+    .finance-scope-wrap{margin:0 0 18px}
+    .finance-scope-toggle{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0 8px}
+    .finance-scope-toggle button{padding:12px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);font-weight:800;cursor:pointer}
+    .finance-scope-toggle button.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+    .finance-scope-help{font-size:.78rem;color:var(--muted);line-height:1.45}
+    .custom-term-wrap{margin:-8px 0 20px;padding:14px;border:1px solid var(--line);border-radius:14px;background:#fff}
+    .custom-term-wrap label{display:block;font-size:.82rem;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px}
+    .custom-term-input-row{display:flex;align-items:center;gap:10px}
+    .custom-term-input-row input{width:110px;padding:11px 12px;border:1px solid #cedade;border-radius:12px;background:#fff;color:var(--ink);font:inherit;font-weight:800}
+    .custom-term-input-row span{font-weight:800;color:var(--navy)}
+    .custom-term-wrap small{display:block;margin-top:7px;color:var(--muted)}
+    @media print{
+      .print-page{height:auto!important;min-height:0!important;position:static!important;overflow:visible!important;break-inside:auto!important;page-break-inside:auto!important}
+      #printFundingPage{break-after:auto!important;page-break-after:auto!important}
+      #printHeatingPage{break-before:page!important;page-break-before:always!important}
+      .print-disclaimer{position:static!important;left:auto!important;right:auto!important;bottom:auto!important;margin-top:4mm!important}
+      #printHeatingPage .print-disclaimer{margin-top:0!important}
+    }
+  </style>
+
+  <script>
+    (()=>{
+      const FINANCE_RATE = 0.0599;
+      let financeScope = 'own';
+
+      const fundingResults = document.querySelector('#fundingPanel .calc-results');
+      const termToggle = fundingResults ? fundingResults.querySelector('.term-toggle') : null;
+      const resultMain = fundingResults ? fundingResults.querySelector('.result-main') : null;
+      if(!fundingResults || !termToggle || !resultMain) return;
+
+      const teaserNote = document.querySelector('.funding-action small');
+      if(teaserNote) teaserNote.textContent = 'Richtwert nach den Förderbedingungen ab 21. Juli 2026 · Finanzierung mit 5,99 % gerechnet';
+
+      const scopeWrap = document.createElement('div');
+      scopeWrap.className = 'finance-scope-wrap';
+      scopeWrap.innerHTML = `
+        <span class="result-label">Finanzierungsbetrag</span>
+        <div class="finance-scope-toggle" role="group" aria-label="Finanzierungsbetrag auswählen">
+          <button type="button" class="active" data-finance-scope="own" aria-pressed="true">Eigenanteil</button>
+          <button type="button" data-finance-scope="full" aria-pressed="false">Gesamtkosten</button>
+        </div>
+        <div class="finance-scope-help">Die Förderung bleibt separat ausgewiesen. Ob und wie sie bei einer Finanzierung berücksichtigt wird, richtet sich nach dem jeweiligen Kreditvertrag.</div>`;
+      fundingResults.insertBefore(scopeWrap, fundingResults.firstChild);
+
+      const customTermWrap = document.createElement('div');
+      customTermWrap.className = 'custom-term-wrap';
+      customTermWrap.innerHTML = `
+        <label for="customFinanceTerm">Andere Laufzeit</label>
+        <div class="custom-term-input-row">
+          <input id="customFinanceTerm" type="number" min="5" max="20" step="1" inputmode="numeric" placeholder="z. B. 12" aria-label="Andere Laufzeit zwischen 5 und 20 Jahren">
+          <span>Jahre</span>
+        </div>
+        <small>Freie Eingabe von 5 bis 20 Jahren.</small>`;
+      termToggle.insertAdjacentElement('afterend', customTermWrap);
+
+      const basisLine = resultMain.querySelector('div:last-child');
+      if(basisLine) basisLine.id = 'monthlyPaymentBasis';
+
+      const originalCalculateFunding = calculateFunding;
+      calculateFunding = function(){
+        originalCalculateFunding();
+        const price = Math.max(0, Number(document.getElementById('purchasePrice').value) || 0);
+        const ownText = document.getElementById('ownShare').textContent || '0';
+        const own = Math.max(0, Number(ownText.replace(/[^\d-]/g,'')) || 0);
+        const principal = financeScope === 'full' ? price : own;
+        const monthly = monthlyAnnuity(principal, FINANCE_RATE, financeTerm);
+        document.getElementById('monthlyPayment').textContent = Math.round(monthly).toLocaleString('de-DE');
+        const basis = document.getElementById('monthlyPaymentBasis');
+        if(basis){
+          basis.textContent = financeScope === 'full'
+            ? 'bei 5,99 % Sollzins und Finanzierung der gesamten Investitionskosten'
+            : 'bei 5,99 % Sollzins und Finanzierung des Eigenanteils';
+        }
+      };
+
+      const syncScopeButtons = ()=>{
+        document.querySelectorAll('.finance-scope-toggle button').forEach(btn=>{
+          const active = btn.dataset.financeScope === financeScope;
+          btn.classList.toggle('active',active);
+          btn.setAttribute('aria-pressed',String(active));
+        });
+      };
+
+      document.querySelectorAll('.finance-scope-toggle button').forEach(btn=>{
+        btn.addEventListener('click',()=>{
+          financeScope = btn.dataset.financeScope;
+          syncScopeButtons();
+          calculateFunding();
+        });
+      });
+
+      const customTermInput = document.getElementById('customFinanceTerm');
+      const presetButtons = Array.from(termToggle.querySelectorAll('button[data-term]'));
+
+      presetButtons.forEach(btn=>{
+        btn.addEventListener('click',()=>{
+          customTermInput.value = '';
+        });
+      });
+
+      const applyCustomTerm = ()=>{
+        const value = Number(customTermInput.value);
+        if(!Number.isInteger(value) || value < 5 || value > 20) return false;
+        financeTerm = value;
+        presetButtons.forEach(btn=>btn.classList.remove('active'));
+        calculateFunding();
+        return true;
+      };
+
+      customTermInput.addEventListener('input',applyCustomTerm);
+      customTermInput.addEventListener('change',()=>{
+        if(customTermInput.value === '') return;
+        let value = Math.round(Number(customTermInput.value));
+        if(!Number.isFinite(value)) return;
+        value = Math.max(5,Math.min(20,value));
+        customTermInput.value = String(value);
+        applyCustomTerm();
+      });
+
+      const originalBuildCalculatorPrintSummary = buildCalculatorPrintSummary;
+      buildCalculatorPrintSummary = function(){
+        originalBuildCalculatorPrintSummary();
+        const price = Math.max(0, Number(document.getElementById('purchasePrice').value) || 0);
+        const ownText = document.getElementById('ownShare').textContent || '0';
+        const own = Math.max(0, Number(ownText.replace(/[^\d-]/g,'')) || 0);
+        const principal = financeScope === 'full' ? price : own;
+        const monthly = monthlyAnnuity(principal, FINANCE_RATE, financeTerm);
+
+        const heading = document.querySelector('#printFundingPage .print-finance-heading');
+        if(heading) heading.textContent = financeScope === 'full' ? 'Finanzierung der Gesamtkosten' : 'Finanzierung des Eigenanteils';
+
+        const cells = Array.from(document.querySelectorAll('#printFundingPage .print-finance-grid .print-finance-cell'));
+        if(cells.length >= 12){
+          cells[0].textContent = '';
+          cells[1].textContent = 'Gewählte Laufzeit';
+          cells[2].textContent = financeTerm + ' Jahre';
+          cells[3].textContent = 'Sollzins';
+          cells[4].textContent = '5,99 %';
+          cells[5].textContent = '';
+          cells[6].textContent = 'Monatsrate';
+          cells[7].textContent = 'ca. ' + Math.round(monthly).toLocaleString('de-DE') + ' €';
+          cells[8].textContent = '';
+          cells[9].textContent = 'Finanzierungsbetrag';
+          cells[10].textContent = euro.format(principal);
+          cells[11].textContent = financeScope === 'full' ? 'Gesamtkosten' : 'Eigenanteil';
+        }
+
+        const financeNote = document.querySelector('#printFundingPage .print-finance-note');
+        if(financeNote) financeNote.textContent = 'Unverbindliches Rechenbeispiel mit 5,99 % Sollzins. Maßgeblich sind die Bedingungen des jeweiligen Kreditangebots.';
+      };
+
+      syncScopeButtons();
+      calculateFunding();
+    })();
+  </script>
+
 <!-- GALVANY V5.7 Preview · Sprint 1 Förderlogik · 06.08.2026 -->
 </body>
 </html>
