@@ -1,6 +1,10 @@
 name: PDF Entscheidungshilfe aktualisieren
 
 on:
+  push:
+    paths:
+      - '.github/workflows/pdf-decision-helper.yml'
+      - '.github/scripts/apply_pdf_decision_helper.py'
   workflow_dispatch:
 
 permissions:
@@ -14,152 +18,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Entscheidungshilfe und Safari-Druck fixen
-        shell: bash
-        run: |
-          python3 - <<'PY'
-          from pathlib import Path
-
-          p = Path('index.html')
-          s = p.read_text(encoding='utf-8')
-          marker = '<style id="decisionPdfPrintFix">'
-          if marker in s:
-              print('Fix bereits vorhanden.')
-              raise SystemExit(0)
-
-          addition = r'''
-
-  <style id="decisionPdfPrintFix">
-    @media print {
-      @page { size:A4; margin:9mm; }
-
-      #calculatorPrintSummary {
-        width:192mm !important;
-        max-width:192mm !important;
-        margin:0 auto !important;
-        font-size:8.15pt !important;
-        line-height:1.20 !important;
-      }
-
-      .print-page {
-        display:block !important;
-        width:192mm !important;
-        height:auto !important;
-        min-height:0 !important;
-        max-height:none !important;
-        position:static !important;
-        overflow:visible !important;
-        break-inside:auto !important;
-        page-break-inside:auto !important;
-      }
-
-      #printFundingPage {
-        break-before:auto !important;
-        page-break-before:auto !important;
-        break-after:page !important;
-        page-break-after:always !important;
-      }
-
-      #printHeatingPage {
-        break-before:auto !important;
-        page-break-before:auto !important;
-      }
-
-      #printFundingPage .print-title { font-size:20pt !important; margin:1mm 0 .5mm !important; }
-      #printFundingPage .print-subtitle { font-size:8.5pt !important; margin:0 0 2mm !important; }
-      #printFundingPage .print-section-title { font-size:13pt !important; margin:0 0 1.5mm !important; padding-bottom:1mm !important; }
-      #printFundingPage .print-intro { margin:0 0 1.8mm !important; }
-      #printFundingPage .print-block-title { font-size:8.5pt !important; margin:0 0 .8mm !important; }
-      #printFundingPage .print-primary-grid { gap:1.2mm !important; margin-bottom:1.8mm !important; }
-      #printFundingPage .print-primary-item { padding:2mm 2.5mm !important; }
-      #printFundingPage .print-primary-item .print-value { font-size:13.5pt !important; margin-top:.4mm !important; }
-      #printFundingPage .print-facts-grid { gap:1.2mm !important; margin-bottom:1.8mm !important; }
-      #printFundingPage .print-fact { padding:1.4mm 1.8mm !important; min-height:9.5mm !important; }
-
-      #printFundingPage .print-finance-compare {
-        margin:0 0 1.4mm !important;
-        border:1px solid #d8e1e4 !important;
-        border-radius:2.5mm !important;
-        overflow:hidden !important;
-      }
-      #printFundingPage .print-finance-heading { padding:1.5mm 2mm !important; font-size:7.7pt !important; }
-      #printFundingPage .decision-finance-grid { display:grid !important; grid-template-columns:1fr 1fr !important; gap:0 !important; }
-      #printFundingPage .decision-finance-card { padding:2mm 2.5mm !important; background:#fff !important; }
-      #printFundingPage .decision-finance-card + .decision-finance-card { border-left:1px solid #d8e1e4 !important; }
-      #printFundingPage .decision-finance-card h4 { margin:0 0 1.2mm !important; color:#071a2c !important; font-size:9pt !important; }
-      #printFundingPage .decision-finance-row { display:flex !important; justify-content:space-between !important; gap:3mm !important; padding:.6mm 0 !important; border-top:1px solid #edf1f2 !important; }
-      #printFundingPage .decision-finance-row span { color:#627080 !important; font-size:7pt !important; }
-      #printFundingPage .decision-finance-row strong { color:#071a2c !important; font-size:8.3pt !important; text-align:right !important; }
-      #printFundingPage .decision-finance-row.rate strong { color:#5ba646 !important; font-size:12pt !important; }
-      #printFundingPage .print-finance-note { padding:1mm 2mm !important; font-size:6.8pt !important; line-height:1.18 !important; }
-
-      #printFundingPage .print-bonuses,
-      #printFundingPage .print-requirements { padding:1.2mm 1.8mm !important; margin:0 0 1mm !important; }
-      #printFundingPage .print-bonuses h3,
-      #printFundingPage .print-requirements h3 { font-size:7.8pt !important; margin:0 0 .4mm !important; }
-      #printFundingPage .print-bonuses ul,
-      #printFundingPage .print-requirements ul { margin:0 !important; padding-left:4mm !important; columns:2 !important; column-gap:5mm !important; }
-      #printFundingPage .print-bonuses li,
-      #printFundingPage .print-requirements li { margin:0 0 .15mm !important; font-size:6.8pt !important; line-height:1.15 !important; }
-
-      .print-disclaimer {
-        position:static !important;
-        left:auto !important;
-        right:auto !important;
-        bottom:auto !important;
-        margin-top:.8mm !important;
-        padding:1.2mm 1.8mm !important;
-        font-size:6.7pt !important;
-        line-height:1.16 !important;
-      }
-      #printHeatingPage .print-disclaimer { margin-top:0 !important; }
-    }
-  </style>
-
-  <script id="decisionPdfPrintScript">
-    (()=>{
-      const RATE = 0.0599;
-      const previousBuild = buildCalculatorPrintSummary;
-
-      buildCalculatorPrintSummary = function(){
-        previousBuild();
-
-        const price = Math.max(0, Number(document.getElementById('purchasePrice').value) || 0);
-        const ownText = document.getElementById('ownShare').textContent || '0';
-        const own = Math.max(0, Number(ownText.replace(/[^\d-]/g,'')) || 0);
-        const years = Number(financeTerm) || 10;
-        const ownMonthly = monthlyAnnuity(own, RATE, years);
-        const fullMonthly = monthlyAnnuity(price, RATE, years);
-
-        const compare = document.querySelector('#printFundingPage .print-finance-compare');
-        if(!compare) return;
-
-        compare.innerHTML = `
-          <div class="print-finance-heading">Finanzierung im direkten Vergleich</div>
-          <div class="decision-finance-grid">
-            <div class="decision-finance-card">
-              <h4>Eigenanteil finanzieren</h4>
-              <div class="decision-finance-row"><span>Finanzierungsbetrag</span><strong>${euro.format(own)}</strong></div>
-              <div class="decision-finance-row"><span>Laufzeit</span><strong>${years} Jahre</strong></div>
-              <div class="decision-finance-row"><span>Sollzins</span><strong>5,99 %</strong></div>
-              <div class="decision-finance-row rate"><span>Monatsrate</span><strong>ca. ${Math.round(ownMonthly).toLocaleString('de-DE')} €</strong></div>
-            </div>
-            <div class="decision-finance-card">
-              <h4>Gesamtkosten finanzieren</h4>
-              <div class="decision-finance-row"><span>Finanzierungsbetrag</span><strong>${euro.format(price)}</strong></div>
-              <div class="decision-finance-row"><span>Laufzeit</span><strong>${years} Jahre</strong></div>
-              <div class="decision-finance-row"><span>Sollzins</span><strong>5,99 %</strong></div>
-              <div class="decision-finance-row rate"><span>Monatsrate</span><strong>ca. ${Math.round(fullMonthly).toLocaleString('de-DE')} €</strong></div>
-            </div>
-          </div>
-          <p class="print-finance-note"><strong>Entscheidungshilfe:</strong> Variante 1 zeigt die Finanzierung nach Abzug der voraussichtlichen Förderung. Variante 2 zeigt die Finanzierung der gesamten Investitionskosten. Ob und wie eine spätere Förderung im Rahmen einer Finanzierung berücksichtigt wird, richtet sich nach den Bedingungen des jeweiligen Kreditgebers. Beide Werte sind unverbindliche Rechenbeispiele und keine Kreditangebote.</p>`;
-      };
-    })();
-  </script>
-'''
-
-          s = s.replace('\n<!-- GALVANY V5.7 Preview', addition + '\n\n<!-- GALVANY V5.7 Preview', 1)
-          p.write_text(s, encoding='utf-8')
-          PY
+        run: python3 .github/scripts/apply_pdf_decision_helper.py
 
       - name: Änderung speichern
         shell: bash
@@ -168,8 +27,8 @@ jobs:
             echo "Keine Änderung nötig."
             exit 0
           fi
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add index.html
-          git commit -m 'Build two-page PDF decision helper'
+          git commit -m "Build two-page PDF decision helper"
           git push
