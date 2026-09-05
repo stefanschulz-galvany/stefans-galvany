@@ -5,6 +5,7 @@ on:
     paths:
       - '.github/workflows/pdf-decision-helper.yml'
       - '.github/scripts/apply_pdf_decision_helper.py'
+      - '.github/scripts/update_environment_energy_block.py'
   workflow_dispatch:
 
 permissions:
@@ -20,6 +21,9 @@ jobs:
       - name: Entscheidungshilfe und Safari-Druck fixen
         run: python3 .github/scripts/apply_pdf_decision_helper.py
 
+      - name: Umweltenergie-Block aktualisieren
+        run: python3 .github/scripts/update_environment_energy_block.py
+
       - name: Änderung speichern
         shell: bash
         run: |
@@ -30,7 +34,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add index.html
-          git commit -m "Build two-page PDF decision helper"
+          git commit -m "Emphasize environmental energy in heat pump explanation"
           git push
 
-# trigger 2026-09-05
+# trigger environment energy update 2026-09-05
