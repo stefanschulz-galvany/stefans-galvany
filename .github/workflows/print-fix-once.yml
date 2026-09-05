@@ -1,0 +1,82 @@
+name: One-shot Safari print pagination fix
+
+on:
+  push:
+    paths:
+      - '.github/workflows/print-fix-once.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch-print-css:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Patch Safari print CSS
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path('index.html')
+          text = path.read_text(encoding='utf-8')
+
+          old = '''    @media print{
+      .print-page{height:auto!important;min-height:0!important;position:static!important;overflow:visible!important;break-inside:auto!important;page-break-inside:auto!important}
+      #printFundingPage{break-after:auto!important;page-break-after:auto!important}
+      #printHeatingPage{break-before:page!important;page-break-before:always!important}
+      .print-disclaimer{position:static!important;left:auto!important;right:auto!important;bottom:auto!important;margin-top:4mm!important}
+      #printHeatingPage .print-disclaimer{margin-top:0!important}
+    }'''
+
+          new = '''    @media print{
+      @page{size:A4;margin:8mm!important}
+      #calculatorPrintSummary{width:190mm!important;max-width:190mm!important;font-size:8.6pt!important;line-height:1.28!important}
+      .print-page{display:block!important;width:190mm!important;height:auto!important;min-height:0!important;position:static!important;overflow:visible!important;break-inside:auto!important;page-break-inside:auto!important}
+
+      /* Safari: nur EIN Seitenumbruch verwenden. Seite 1 wird kompakt gehalten,
+         damit sie sicher auf eine physische A4-Seite passt. */
+      #printFundingPage{break-after:page!important;page-break-after:always!important}
+      #printHeatingPage{break-before:auto!important;page-break-before:auto!important}
+
+      #printFundingPage .print-title{font-size:22pt!important;margin:2mm 0 1mm!important}
+      #printFundingPage .print-subtitle{font-size:9.5pt!important;margin:0 0 4mm!important}
+      #printFundingPage .print-section-title{font-size:15pt!important;margin:0 0 2.5mm!important;padding-bottom:1.8mm!important}
+      #printFundingPage .print-intro{margin:0 0 3mm!important}
+      #printFundingPage .print-block-title{font-size:9.5pt!important;margin:0 0 1.5mm!important}
+      #printFundingPage .print-primary-grid{gap:2mm!important;margin-bottom:3mm!important}
+      #printFundingPage .print-primary-item{padding:3mm 3.5mm!important}
+      #printFundingPage .print-primary-item .print-value{font-size:16pt!important;margin-top:1mm!important}
+      #printFundingPage .print-facts-grid{gap:1.8mm!important;margin-bottom:3mm!important}
+      #printFundingPage .print-fact{padding:2.3mm 2.8mm!important;min-height:13mm!important}
+      #printFundingPage .print-finance-compare{margin:0 0 2.5mm!important}
+      #printFundingPage .print-finance-heading{padding:2.2mm 3mm!important;font-size:8.5pt!important}
+      #printFundingPage .print-finance-cell{padding:1.6mm 2.6mm!important}
+      #printFundingPage .print-finance-cell.term{font-size:9pt!important}
+      #printFundingPage .print-finance-rate{font-size:13pt!important}
+      #printFundingPage .print-finance-note{padding:1.8mm 3mm!important;font-size:7.8pt!important}
+      #printFundingPage .print-bonuses,
+      #printFundingPage .print-requirements{padding:2.3mm 3mm!important;margin:0 0 2mm!important}
+      #printFundingPage .print-bonuses h3,
+      #printFundingPage .print-requirements h3{font-size:9.2pt!important;margin:0 0 1mm!important}
+      #printFundingPage .print-bonuses li,
+      #printFundingPage .print-requirements li{margin:0 0 .6mm!important}
+      .print-disclaimer{position:static!important;left:auto!important;right:auto!important;bottom:auto!important;margin-top:2mm!important;padding:2.5mm 3mm!important;font-size:7.8pt!important}
+      #printHeatingPage .print-disclaimer{margin-top:0!important}
+    }'''
+
+          if old not in text:
+              raise SystemExit('Expected print override block not found; aborting without changes.')
+
+          path.write_text(text.replace(old, new, 1), encoding='utf-8')
+          PY
+
+      - name: Commit fix and remove one-shot workflow
+        run: |
+          rm .github/workflows/print-fix-once.yml
+          git config user.name "GALVANY print fix"
+          git config user.email "actions@users.noreply.github.com"
+          git add index.html .github/workflows/print-fix-once.yml
+          git commit -m "Fix Safari blank PDF page"
+          git push
