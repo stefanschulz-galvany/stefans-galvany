@@ -430,10 +430,13 @@
     @media print{
       @page{size:A4;margin:12mm}
       html,body{background:#fff!important;width:100%!important;height:auto!important;margin:0!important;padding:0!important;overflow:visible!important}
-      body>*{display:none!important}
+      /* Keep the normal calculator page out of the print flow. The page view
+         uses a later .calculator-page { display:block!important } rule, so the
+         old body>* selector was not specific enough in Safari. */
+      body> *:not(#calculatorPrintSummary){display:none!important}
       #calculatorPrintSummary{display:block!important;width:186mm!important;max-width:186mm!important;margin:0 auto!important;color:#142334!important;font-size:9.2pt;line-height:1.36}
       #calculatorPrintSummary *{box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-      .print-page{display:block!important;width:186mm!important;height:273mm;position:relative;overflow:hidden;break-inside:avoid;page-break-inside:avoid}
+      .print-page{display:block!important;width:186mm!important;height:272mm;position:relative;overflow:hidden;break-inside:avoid;page-break-inside:avoid}
       #printFundingPage{break-after:page;page-break-after:always}
       #printHeatingPage{break-before:auto;page-break-before:auto}
       .print-kicker{color:#071a2c;font-size:7.5pt;font-weight:900;letter-spacing:.13em;text-transform:uppercase}
