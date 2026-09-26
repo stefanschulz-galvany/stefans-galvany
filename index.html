@@ -177,15 +177,20 @@
     .tcap-block{margin-top:120px}
     .tcap-heading{max-width:860px;margin:0 auto 54px;text-align:center}
     .tcap-heading h3{font-size:clamp(2.4rem,5vw,4.8rem);margin-bottom:20px}
-    .temperature-chart{max-width:980px;margin:auto;padding:42px 42px 30px;border:1px solid var(--line);border-radius:30px;background:#fff;box-shadow:0 20px 60px rgba(4,24,43,.08)}
-    .chart-area{position:relative;height:280px;border-left:1px solid #ccd7da;border-bottom:1px solid #ccd7da;background:repeating-linear-gradient(to bottom,transparent 0,transparent 69px,rgba(7,26,44,.07) 70px)}
-    .chart-label{position:absolute;left:20px;top:18px;font-size:.76rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-    .tcap-line{position:absolute;left:4%;right:4%;top:43%;height:5px;border-radius:99px;background:var(--green);box-shadow:0 8px 22px rgba(91,166,70,.28)}
-    .tcap-line:before,.tcap-line:after{content:"";position:absolute;top:50%;width:13px;height:13px;border-radius:50%;background:var(--green);border:4px solid #fff;box-shadow:0 0 0 1px rgba(91,166,70,.3);transform:translateY(-50%)}
-    .tcap-line:before{left:-3px}.tcap-line:after{right:-3px}
-    .tcap-tag{position:absolute;right:7%;top:calc(43% - 43px);padding:7px 12px;border-radius:999px;background:#eaf5e6;color:#39762c;font-size:.78rem;font-weight:900}
-    .chart-axis{display:flex;justify-content:space-between;margin:13px 0 0;padding-left:0;color:var(--muted);font-size:.82rem;font-weight:800}
-    .chart-axis-title{text-align:center;margin-top:13px;color:var(--muted);font-size:.78rem}
+    .temperature-chart{max-width:1120px;margin:auto;padding:clamp(22px,4vw,42px);border:1px solid var(--line);border-radius:30px;background:#fff;box-shadow:0 20px 60px rgba(4,24,43,.08)}
+    .heat-chart-toolbar{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:18px;margin-bottom:26px}
+    .heat-chart-control{display:grid;gap:8px}.heat-chart-control>span:first-child{font-size:.73rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+    .heat-chart-switch{display:flex;gap:7px;padding:5px;border:1px solid var(--line);border-radius:15px;background:var(--soft)}
+    .heat-chart-switch button{min-width:74px;padding:.72rem .9rem;border:0;border-radius:11px;background:transparent;color:var(--navy);font:inherit;font-size:.88rem;font-weight:850;cursor:pointer;transition:.2s ease}
+    .heat-chart-switch button:hover{background:#fff}.heat-chart-switch button.active{background:var(--navy);color:#fff;box-shadow:0 7px 18px rgba(7,26,44,.16)}
+    .heat-chart-layout{display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:24px;align-items:stretch}.heat-chart-plot{position:relative;min-width:0;border-radius:20px;background:#fbfcfc;overflow:hidden}
+    #heatComparisonChart{display:block;width:100%;height:auto;min-height:390px;touch-action:pan-y}.heat-chart-legend{display:grid;align-content:start;gap:8px}
+    .heat-chart-legend-title{margin-bottom:3px;font-size:.74rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+    .heat-maker{display:flex;align-items:center;gap:10px;width:100%;padding:12px 13px;border:1px solid var(--line);border-radius:14px;background:#fff;color:var(--navy);font:inherit;font-size:.84rem;font-weight:800;text-align:left;cursor:pointer;transition:.2s ease}
+    .heat-maker:hover,.heat-maker.active{transform:translateX(-3px);border-color:var(--maker-color);box-shadow:0 10px 24px rgba(4,24,43,.09)}.heat-maker.active{background:#f7faf6}
+    .heat-maker-dot{width:11px;height:11px;border-radius:50%;background:var(--maker-color);box-shadow:0 0 0 4px rgba(91,166,70,.13)}
+    .heat-chart-readout{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:18px;padding:17px 19px;border-radius:16px;background:#eef6eb;color:var(--navy);font-size:.9rem}.heat-chart-readout strong{font-weight:900}
+    .heat-chart-hint{margin-top:12px;color:var(--muted);font-size:.8rem;text-align:center}.heat-chart-source{max-width:940px;margin:17px auto 0;color:var(--muted);font-size:.76rem;line-height:1.55;text-align:center}
     .tcap-copy{max-width:800px;margin:34px auto 0;text-align:center;font-size:clamp(1rem,1.6vw,1.18rem)}
     .tcap-note{max-width:800px;margin:14px auto 0;text-align:center;color:var(--muted);font-size:.88rem}
     .tcap-more{display:flex;justify-content:center;margin-top:32px}
@@ -218,6 +223,7 @@
       .sizing-card:nth-child(3){animation-range:entry 16% cover 36%}
     }
     @keyframes dimensionReveal{from{opacity:.2}to{opacity:1}}
+    @media(max-width:760px){.heat-chart-layout{grid-template-columns:1fr}.heat-chart-legend{grid-template-columns:repeat(2,minmax(0,1fr))}.heat-chart-legend-title{grid-column:1/-1}.heat-maker{padding:11px 10px;font-size:.78rem}.heat-maker:hover,.heat-maker.active{transform:none}.heat-chart-switch{width:100%}.heat-chart-switch button{flex:1;min-width:0;padding:.68rem .55rem}#heatComparisonChart{min-height:330px}}
 
     /* Cube */
     .cube-layout{display:grid;grid-template-columns:1.05fr .95fr;gap:24px;align-items:stretch}
@@ -743,18 +749,20 @@
           <div class="tcap-heading">
             <h3>Leistung auch wenn es draußen richtig kalt wird.</h3>
           </div>
-          <div class="temperature-chart" role="img" aria-label="Schematische Darstellung einer weitgehend konstanten T-CAP Heizleistung zwischen plus 7 und minus 20 Grad Celsius">
-            <div class="chart-area">
-              <span class="chart-label">Heizleistung</span>
-              <div class="tcap-line" aria-hidden="true"></div>
-              <span class="tcap-tag">T-CAP Heizleistung</span>
+          <div class="temperature-chart" aria-label="Interaktiver Vergleich der Heizleistung verschiedener Wärmepumpen-Leistungsklassen">
+            <div class="heat-chart-toolbar">
+              <label class="heat-chart-control"><span>Leistungsklasse</span><span class="heat-chart-switch" id="heatPowerSwitch"><button type="button" data-power="9" class="active" aria-pressed="true">9 kW</button><button type="button" data-power="12" aria-pressed="false">12 kW</button><button type="button" data-power="16" aria-pressed="false">16 kW</button></span></label>
+              <label class="heat-chart-control"><span>Beispielgebäude</span><span class="heat-chart-switch" id="heatHouseSwitch"><button type="button" data-house="efficient" aria-pressed="false">Gut gedämmt</button><button type="button" data-house="existing" class="active" aria-pressed="true">Bestand</button><button type="button" data-house="old" aria-pressed="false">Altbau</button></span></label>
             </div>
-            <div class="chart-axis" aria-hidden="true"><span>+7 °C</span><span>0 °C</span><span>−10 °C</span><span>−20 °C</span></div>
-            <div class="chart-axis-title">Außentemperatur</div>
+            <div class="heat-chart-layout">
+              <div class="heat-chart-plot"><svg id="heatComparisonChart" viewBox="0 0 760 430" role="img" aria-labelledby="heatChartTitle heatChartDescription"><title id="heatChartTitle">Heizleistung nach Außentemperatur</title><desc id="heatChartDescription">Interaktive, vereinfachte Vergleichsdarstellung. Hersteller rechts auswählen, um die jeweilige Kurve hervorzuheben.</desc></svg></div>
+              <div class="heat-chart-legend" id="heatMakerLegend"><div class="heat-chart-legend-title">Hersteller auswählen</div></div>
+            </div>
+            <div class="heat-chart-readout" id="heatChartReadout" aria-live="polite"></div>
+            <p class="heat-chart-hint">Mit dem Cursor über einen Hersteller fahren – auf Handy oder iPad antippen.</p>
           </div>
-          <p class="tcap-note">Darstellung der Heizleistung bei 35 °C Vorlauftemperatur.</p>
-          <p class="tcap-copy">Panasonic T-CAP ist darauf ausgelegt, die Heizleistung auch bei sehr niedrigen Außentemperaturen aufrechtzuerhalten.</p>
-          <p class="tcap-note">Die tatsächlich verfügbare Heizleistung hängt unter anderem von Auslegung, Gerät, Vorlauftemperatur und Betriebsbedingungen ab.</p>
+          <p class="heat-chart-source">Vereinfachte Erstorientierung für vergleichbare Leistungsklassen bei 35 °C Vorlauftemperatur. Modellvarianten und Prüfbedingungen unterscheiden sich je Hersteller. Die Gebäudelinie ist ein Anschauungsbeispiel; der tatsächliche Bivalenzpunkt kann erst mit Heizlastberechnung und konkreten Herstellerdaten bestimmt werden.</p>
+          <p class="tcap-copy">So wird sichtbar, warum nicht allein die Zahl auf dem Typenschild zählt: Entscheidend ist, welche Heizleistung bei Frost tatsächlich zur Verfügung steht.</p>
           <div class="tcap-more">
             <button class="btn btn-outline" type="button" data-modal-open="tcapModal">Was T-CAP wirklich ist →</button>
           </div>
@@ -1306,6 +1314,44 @@
     document.querySelectorAll('.modal-close').forEach(btn=>btn.addEventListener('click',()=>btn.closest('.modal').classList.remove('open')));
     document.querySelectorAll('.modal').forEach(modal=>modal.addEventListener('click',e=>{if(e.target===modal) modal.classList.remove('open')}));
     document.addEventListener('keydown',e=>{if(e.key==='Escape') document.querySelectorAll('.modal.open').forEach(m=>m.classList.remove('open'))});
+
+    const heatChart=document.getElementById('heatComparisonChart');
+    if(heatChart){
+      const makers=[
+        {id:'panasonic',name:'Panasonic T-CAP',color:'#5ba646',factors:[1,1,1,1,1]},
+        {id:'vaillant',name:'Vaillant',color:'#008f95',factors:[1.05,1.02,.96,.88,.80]},
+        {id:'viessmann',name:'Viessmann',color:'#e32119',factors:[1.05,1.01,.95,.86,.78]},
+        {id:'bosch',name:'Bosch',color:'#007bc0',factors:[1.04,1,.94,.84,.75]},
+        {id:'buderus',name:'Buderus',color:'#124e91',factors:[1.04,1,.93,.83,.74]},
+        {id:'wolf',name:'Wolf',color:'#f0a500',factors:[1.06,1.02,.96,.87,.79]},
+        {id:'stiebel',name:'Stiebel Eltron',color:'#c20e1a',factors:[1.05,1.01,.95,.85,.77]}
+      ];
+      const temperatures=[7,2,-7,-15,-20],houseFactors={efficient:.72,existing:1,old:1.22},ns='http://www.w3.org/2000/svg';
+      const state={power:9,house:'existing',maker:'panasonic'},plot={left:64,right:728,top:34,bottom:360};
+      const legend=document.getElementById('heatMakerLegend'),readout=document.getElementById('heatChartReadout');
+      const svgEl=(tag,attrs={},content='')=>{const node=document.createElementNS(ns,tag);Object.entries(attrs).forEach(([key,value])=>node.setAttribute(key,value));if(content)node.textContent=content;return node};
+      const xPos=temp=>plot.left+(7-temp)/27*(plot.right-plot.left),maxY=()=>state.power*1.45,yPos=value=>plot.bottom-(value/maxY())*(plot.bottom-plot.top);
+      function outputAt(maker,temp){for(let i=0;i<temperatures.length-1;i++){const high=temperatures[i],low=temperatures[i+1];if(temp<=high&&temp>=low){const ratio=(high-temp)/(high-low);return state.power*(maker.factors[i]+ratio*(maker.factors[i+1]-maker.factors[i]))}}return state.power*maker.factors[maker.factors.length-1]}
+      const houseAt=temp=>Math.max(0,state.power*houseFactors[state.house]*(15-temp)/27);
+      function bivalence(maker){let previous=outputAt(maker,7)-houseAt(7);for(let temp=6.9;temp>=-20;temp-=.1){const diff=outputAt(maker,temp)-houseAt(temp);if(diff<=0&&previous>0)return temp;previous=diff}return null}
+      const curvePath=values=>values.map((point,index)=>`${index?'L':'M'} ${xPos(point.temp).toFixed(1)} ${yPos(point.value).toFixed(1)}`).join(' ');
+      function setActiveButtons(container,attribute,value){container.querySelectorAll('button').forEach(button=>{const active=button.dataset[attribute]===String(value);button.classList.toggle('active',active);button.setAttribute('aria-pressed',String(active))})}
+      function selectMaker(id){state.maker=id;legend.querySelectorAll('.heat-maker').forEach(button=>button.classList.toggle('active',button.dataset.maker===id));drawHeatChart()}
+      makers.forEach(maker=>{const button=document.createElement('button');button.type='button';button.className='heat-maker'+(maker.id===state.maker?' active':'');button.dataset.maker=maker.id;button.style.setProperty('--maker-color',maker.color);button.innerHTML=`<span class="heat-maker-dot" aria-hidden="true"></span><span>${maker.name}</span>`;['mouseenter','focus','click'].forEach(event=>button.addEventListener(event,()=>selectMaker(maker.id)));legend.appendChild(button)});
+      function drawHeatChart(){
+        heatChart.replaceChildren();const selected=makers.find(maker=>maker.id===state.maker);heatChart.appendChild(svgEl('rect',{x:0,y:0,width:760,height:430,fill:'#fbfcfc'}));
+        for(let value=0;value<=maxY();value+=3){const y=yPos(value);heatChart.appendChild(svgEl('line',{x1:plot.left,y1:y,x2:plot.right,y2:y,stroke:'#dfe7e9'}));heatChart.appendChild(svgEl('text',{x:plot.left-12,y:y+4,'text-anchor':'end',fill:'#667783','font-size':12,'font-weight':700},`${value} kW`))}
+        [-20,-15,-10,-5,0,5,7].forEach(temp=>{const x=xPos(temp);heatChart.appendChild(svgEl('line',{x1:x,y1:plot.top,x2:x,y2:plot.bottom,stroke:'#edf1f2'}));heatChart.appendChild(svgEl('text',{x,y:plot.bottom+24,'text-anchor':'middle',fill:'#667783','font-size':12,'font-weight':700},`${temp>0?'+':''}${temp}°`))});
+        heatChart.appendChild(svgEl('text',{x:18,y:20,fill:'#667783','font-size':12,'font-weight':800},'HEIZLEISTUNG'));heatChart.appendChild(svgEl('text',{x:(plot.left+plot.right)/2,y:410,'text-anchor':'middle',fill:'#667783','font-size':12,'font-weight':800},'AUSSENTEMPERATUR'));
+        makers.forEach(maker=>{const active=maker.id===state.maker,values=temperatures.map((temp,index)=>({temp,value:state.power*maker.factors[index]}));heatChart.appendChild(svgEl('path',{d:curvePath(values),fill:'none',stroke:maker.color,'stroke-width':active?5:1.6,'stroke-opacity':active?1:.16,'stroke-linecap':'round','stroke-linejoin':'round'}))});
+        const houseValues=[];for(let temp=7;temp>=-20;temp--)houseValues.push({temp,value:houseAt(temp)});heatChart.appendChild(svgEl('path',{d:curvePath(houseValues),fill:'none',stroke:'#071a2c','stroke-width':3,'stroke-dasharray':'8 7'}));heatChart.appendChild(svgEl('text',{x:xPos(-18),y:yPos(houseAt(-18))-10,'text-anchor':'end',fill:'#071a2c','font-size':12,'font-weight':900},'Wärmebedarf Haus'));
+        const bp=bivalence(selected);if(bp!==null){const bx=xPos(bp),by=yPos(houseAt(bp)),labelX=Math.min(bx+12,610),labelY=Math.max(by-42,12);heatChart.appendChild(svgEl('circle',{cx:bx,cy:by,r:8,fill:'#fff',stroke:selected.color,'stroke-width':4}));heatChart.appendChild(svgEl('rect',{x:labelX,y:labelY,width:106,height:31,rx:15,fill:selected.color}));heatChart.appendChild(svgEl('text',{x:labelX+53,y:labelY+20,'text-anchor':'middle',fill:'#fff','font-size':11,'font-weight':900},`Bivalenz ca. ${bp.toFixed(1).replace('.',',')} °C`))}
+        const minus15=outputAt(selected,-15);readout.innerHTML=`<span><strong>${selected.name}</strong> · ${state.power}‑kW‑Klasse</span><span>bei −15 °C: <strong>ca. ${minus15.toFixed(1).replace('.',',')} kW</strong></span><span>${bp===null?'im Beispiel bis −20 °C ausreichend':`Bivalenzpunkt im Beispiel: <strong>${bp.toFixed(1).replace('.',',')} °C</strong>`}</span>`;
+      }
+      document.getElementById('heatPowerSwitch').addEventListener('click',event=>{const button=event.target.closest('button[data-power]');if(!button)return;state.power=Number(button.dataset.power);setActiveButtons(document.getElementById('heatPowerSwitch'),'power',state.power);drawHeatChart()});
+      document.getElementById('heatHouseSwitch').addEventListener('click',event=>{const button=event.target.closest('button[data-house]');if(!button)return;state.house=button.dataset.house;setActiveButtons(document.getElementById('heatHouseSwitch'),'house',state.house);drawHeatChart()});
+      drawHeatChart();
+    }
 
     document.getElementById('calculatorPrintButton').addEventListener('click',()=>{
       buildCalculatorPrintSummary();
