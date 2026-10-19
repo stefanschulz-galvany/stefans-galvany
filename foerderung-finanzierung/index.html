@@ -349,6 +349,14 @@
     .result-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
     .result-box{padding:14px;border-radius:14px;background:#fff;border:1px solid var(--line)}
     .result-box strong{display:block;font-size:1.2rem;margin-top:3px}
+    .scenario-heading{margin:20px 0 10px;font-size:1rem;color:var(--navy)}
+    .scenario-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+    .scenario-card{padding:13px 11px;border-radius:14px;background:#fff;border:1px solid var(--line)}
+    .scenario-card.realistic{border-color:#9fcf90;background:#f4faf1;box-shadow:inset 0 0 0 1px #d7ead1}
+    .scenario-card span{display:block;font-size:.72rem;line-height:1.25;color:var(--muted);font-weight:800}
+    .scenario-card strong{display:block;margin-top:5px;color:var(--navy);font-size:1.02rem}
+    .scenario-card small{display:block;margin-top:3px;color:var(--muted);font-size:.7rem}
+    .modulation-note{margin-top:14px;padding:13px 14px;border-radius:14px;background:#eef6eb;border:1px solid #d8ead1;color:#35523a;font-size:.8rem;line-height:1.45}
     .bonus-list{display:grid;gap:7px;margin:18px 0;font-size:.9rem;color:var(--muted)}
     .calc-note{font-size:.78rem;color:var(--muted);margin-top:16px}
     .rule-status{margin-top:14px;padding:12px 14px;border-radius:14px;background:rgba(166,219,141,.12);border:1px solid rgba(166,219,141,.4);color:#e8f5e2;font-size:.82rem}
@@ -416,7 +424,7 @@
       .calculator-modal .modal-box{width:min(980px,100%);min-width:0;resize:none}
     }
     @media(max-width:650px){
-      .field-grid,.result-grid,.cost-input-grid,.cost-result-grid{grid-template-columns:1fr}
+      .field-grid,.result-grid,.scenario-grid,.cost-input-grid,.cost-result-grid{grid-template-columns:1fr}
       .calc-header,.calc-inputs,.calc-results{padding:24px 20px}
       .calc-header-row{display:block;padding-right:44px}
       .calc-print-btn{margin-top:16px}
@@ -470,6 +478,10 @@
       .print-bonuses li,.print-requirements li{margin:0 0 1.2mm;color:#354655;break-inside:avoid}
       .print-disclaimer{position:absolute;left:0;right:0;bottom:0;padding:3.5mm 4mm;border:1px solid #cedade;border-radius:3mm;background:#f8fafb;color:#455564!important;font-size:8.3pt}
       .print-results-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:3mm;margin-bottom:5mm}
+      .print-results-grid.print-scenarios{grid-template-columns:repeat(3,1fr);gap:2.5mm;margin-bottom:4mm}
+      .print-results-grid.print-scenarios .print-result-item{padding:3mm 3.5mm}
+      .print-results-grid.print-scenarios .print-result-item .print-value{font-size:13pt}
+      .print-results-grid.print-scenarios .print-result-item>span:last-child{display:block;color:#627080;font-size:7.2pt;margin-top:1mm}
       .print-result-item{padding:4mm 4.5mm;border:1px solid #d8e1e4;border-radius:3mm;background:#f2f5f6;break-inside:avoid}
       .print-result-item .print-value{font-size:16pt;line-height:1.1;margin-top:1.5mm}
       .print-saving-card{padding:5mm 5.5mm;border:1.5px solid #b9d5ae;border-radius:3.5mm;background:#f4f8f2;margin:0 0 6mm}
@@ -711,9 +723,9 @@ body{background:#f6f8f8}.calculator-page{display:block!important;position:static
                   <strong><span class="help-wrap">
                     <span>Berechnungsgrundlage Wärmepumpe</span>
                     <button type="button" class="help-btn" aria-expanded="false" aria-label="Erklärung zur Berechnungsgrundlage Wärmepumpe">?</button>
-                    <span class="help-tip" role="tooltip">Für die Modellrechnung wird fest eine Jahresarbeitszahl von 4,0 verwendet. Vereinfacht bedeutet das: Aus 1 kWh Strom entstehen im Jahresdurchschnitt etwa 4 kWh Wärme.</span>
+                    <span class="help-tip" role="tooltip">Die Jahresarbeitszahl fasst den wechselnden Betrieb über ein ganzes Jahr zusammen. Die Wärmepumpe moduliert ihre Wärmeleistung je nach Bedarf. 9 kW Heizleistung sind keine dauerhafte elektrische Aufnahme.</span>
                   </span></strong>
-                  Jahresarbeitszahl (JAZ): 4,0 – keine Kundeneingabe nötig.
+                  Hauptwert mit realistischer JAZ 3,5. Zusätzlich werden JAZ 3,0 und 4,0 als Vergleich gezeigt.
                 </div>
               </div>
               <div class="field">
@@ -740,6 +752,13 @@ body{background:#f6f8f8}.calculator-page{display:block!important;position:static
               <div class="result-box"><span class="result-label">WP-Strombedarf</span><strong id="wpElectricityUse">–</strong></div>
               <div class="result-box"><span class="result-label">Abgeleitete Nutzwärme</span><strong id="usefulHeatResult">–</strong></div>
             </div>
+            <h4 class="scenario-heading">Mögliche Jahreskosten je nach Effizienz</h4>
+            <div class="scenario-grid" aria-label="Stromkostenszenarien">
+              <div class="scenario-card"><span>Konservativ · JAZ 3,0</span><strong id="scenarioCost30">–</strong><small id="scenarioUse30">–</small></div>
+              <div class="scenario-card realistic"><span>Realistisch · JAZ 3,5</span><strong id="scenarioCost35">–</strong><small id="scenarioUse35">–</small></div>
+              <div class="scenario-card"><span>Gute Bedingungen · JAZ 4,0</span><strong id="scenarioCost40">–</strong><small id="scenarioUse40">–</small></div>
+            </div>
+            <div class="modulation-note"><strong>Wichtig:</strong> Die Leistungsangabe von beispielsweise 9 kW bezeichnet die maximale Wärmeleistung, nicht den dauerhaften Stromverbrauch. Die Anlage moduliert ihre Leistung passend zum Bedarf. Entscheidend für den Jahresverbrauch sind der Wärmebedarf des Gebäudes und die tatsächlich erreichte Jahresarbeitszahl.</div>
             <a class="btn btn-primary calc-cta" href="https://calendly.com/stefanschulzgalvany" target="_blank" rel="noopener">Verbrauch persönlich prüfen lassen</a>
             <p class="calc-note" id="heatingCalculationNote">Grobe Modellrechnung. Nicht enthalten sind Grundpreise, Wartung, Warmwasserabweichungen, PV-Eigenverbrauch und individuelle Gebäudeeinflüsse.</p>
           </div>
@@ -806,7 +825,7 @@ body{background:#f6f8f8}.calculator-page{display:block!important;position:static
         <div class="print-fact"><span class="print-label">Jahresverbrauch</span><strong class="print-value" id="printAnnualHeating">–</strong></div>
         <div class="print-fact"><span class="print-label" id="printHeatingPriceLabel">Energiepreis</span><strong class="print-value" id="printHeatingPrice">–</strong></div>
         <div class="print-fact"><span class="print-label">Wärmepumpenstrompreis</span><strong class="print-value" id="printElectricityPrice">–</strong></div>
-        <div class="print-fact"><span class="print-label">Jahresarbeitszahl</span><strong class="print-value">4,0</strong></div>
+        <div class="print-fact"><span class="print-label">Rechenwert Jahresarbeitszahl</span><strong class="print-value">3,5</strong></div>
         <div class="print-fact"><span class="print-label">Wirkungsgrad alte Heizung</span><strong class="print-value" id="printOldBoilerEfficiency">–</strong></div>
       </div>
 
@@ -818,7 +837,15 @@ body{background:#f6f8f8}.calculator-page{display:block!important;position:static
         <div class="print-result-item"><span class="print-label">Abgeleitete Nutzwärme</span><strong class="print-value" id="printUsefulHeat">–</strong></div>
       </div>
 
+      <h3 class="print-block-title">Stromkosten-Szenarien</h3>
+      <div class="print-results-grid print-scenarios">
+        <div class="print-result-item"><span class="print-label">Konservativ · JAZ 3,0</span><strong class="print-value" id="printScenarioCost30">–</strong><span id="printScenarioUse30"></span></div>
+        <div class="print-result-item"><span class="print-label">Realistisch · JAZ 3,5</span><strong class="print-value" id="printScenarioCost35">–</strong><span id="printScenarioUse35"></span></div>
+        <div class="print-result-item"><span class="print-label">Gute Bedingungen · JAZ 4,0</span><strong class="print-value" id="printScenarioCost40">–</strong><span id="printScenarioUse40"></span></div>
+      </div>
+
       <div class="print-saving-card"><span class="print-label">Voraussichtliche Ersparnis</span><strong class="print-value" id="printAnnualSaving">–</strong></div>
+      <p class="print-explanation"><strong>Zur Einordnung:</strong> Eine Leistungsangabe von beispielsweise 9 kW bezeichnet die maximale Wärmeleistung und keine dauerhafte Stromaufnahme. Die Wärmepumpe moduliert ihre Leistung. Der Jahresstrombedarf wird aus dem Wärmebedarf und der Jahresarbeitszahl ermittelt.</p>
       <p class="print-explanation" id="printHeatingExplanation"></p>
       <div class="print-final-note" id="printFinalNote">Voraussichtliche Ersparnis bei gleichbleibenden Öl-/Gas-/Stromkosten. Ohne Gewähr.</div>
       <div class="print-disclaimer">Grobe, unverbindliche Modellrechnung. Die tatsächlichen Kosten hängen unter anderem vom Gebäude, der realen Effizienz der Anlage, dem Nutzerverhalten, Warmwasserbedarf, Grundpreisen, Wartung, PV-Eigenverbrauch und zukünftigen Energiepreisen ab.</div>
@@ -943,7 +970,8 @@ body{background:#f6f8f8}.calculator-page{display:block!important;position:static
     let heatingEnergy = 'gas';
     let heatingOilUnit = 'liter';
     const heatingOilKwhPerLiter = 10.0;
-    const seasonalPerformance = 4.0;
+    const seasonalPerformance = 3.5;
+    const heatingScenarios = [3.0, 3.5, 4.0];
 
     function setPrintText(id,value){
       document.getElementById(id).textContent = value;
@@ -1023,6 +1051,12 @@ body{background:#f6f8f8}.calculator-page{display:block!important;position:static
       document.getElementById('printAnnualSaving').classList.toggle('saving',hasSaving);
       setPrintText('printWpElectricityUse',document.getElementById('wpElectricityUse').textContent);
       setPrintText('printUsefulHeat',document.getElementById('usefulHeatResult').textContent);
+      setPrintText('printScenarioCost30',document.getElementById('scenarioCost30').textContent);
+      setPrintText('printScenarioCost35',document.getElementById('scenarioCost35').textContent);
+      setPrintText('printScenarioCost40',document.getElementById('scenarioCost40').textContent);
+      setPrintText('printScenarioUse30',document.getElementById('scenarioUse30').textContent);
+      setPrintText('printScenarioUse35',document.getElementById('scenarioUse35').textContent);
+      setPrintText('printScenarioUse40',document.getElementById('scenarioUse40').textContent);
 
       setPrintText('printHeatingExplanation',hasSaving
         ? 'Bei den eingegebenen Verbrauchs- und Preiswerten liegen die rechnerischen jährlichen Energiekosten der Wärmepumpe unter den bisherigen Heizkosten. Die tatsächlichen Kosten hängen unter anderem vom Gebäude, der realen Effizienz der Anlage, dem Nutzerverhalten und zukünftigen Energiepreisen ab.'
@@ -1110,6 +1144,14 @@ body{background:#f6f8f8}.calculator-page{display:block!important;position:static
         Math.round(wpElectricity).toLocaleString('de-DE') + ' kWh';
       document.getElementById('usefulHeatResult').textContent =
         Math.round(usefulHeat).toLocaleString('de-DE') + ' kWh';
+
+      heatingScenarios.forEach(jaz=>{
+        const suffix = String(Math.round(jaz * 10));
+        const scenarioUse = usefulHeat / jaz;
+        const scenarioCost = scenarioUse * electricityPrice;
+        document.getElementById('scenarioCost' + suffix).textContent = 'ca. ' + euro.format(scenarioCost);
+        document.getElementById('scenarioUse' + suffix).textContent = Math.round(scenarioUse).toLocaleString('de-DE') + ' kWh Strom/Jahr';
+      });
 
       const savingEl = document.getElementById('annualSaving');
       savingEl.textContent = annualSaving >= 0
@@ -1401,3 +1443,4 @@ body{background:#f6f8f8}.calculator-page{display:block!important;position:static
       calculateFunding();
     })();
   </script></body></html>
+
