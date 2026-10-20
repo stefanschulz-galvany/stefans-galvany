@@ -101,8 +101,18 @@ Deno.serve(async (req) => {
     .upsert(record, { onConflict: "lead_id,message_key,filename" });
   if (dbError) {
     await supabase.storage.from("galvany-offers").remove([storagePath]);
-    console.error("offer upload metadata stage failed:", dbError.message);
-    return response(503, { error: "Metadata write failed" });
+    console.error("offer upload metadata stage failed:", dbError.code, dbError.message);
+    const statusByCode: Record<string, number> = {
+      "23514": 541,
+      "22P02": 542,
+      "42P01": 543,
+      "42501": 544,
+      "23505": 546,
+    };
+    const diagnosticStatus = String(dbError.code || "").startsWith("PGRST")
+      ? 545
+      : (statusByCode[String(dbError.code || "")] || 547);
+    return response(diagnosticStatus, { error: "Metadata write failed" });
   }
 
   return response(200, { ok: true, storage_path: storagePath, sha256 });
