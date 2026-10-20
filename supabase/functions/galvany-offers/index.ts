@@ -78,7 +78,10 @@ Deno.serve(async (req) => {
   const { error: uploadError } = await supabase.storage
     .from("galvany-offers")
     .upload(storagePath, pdf, { contentType: "application/pdf", upsert: true });
-  if (uploadError) return response(500, { error: "PDF upload failed" });
+  if (uploadError) {
+    console.error("offer upload storage stage failed:", uploadError.message);
+    return response(502, { error: "PDF upload failed" });
+  }
 
   const record = {
     lead_id: leadId,
@@ -98,7 +101,8 @@ Deno.serve(async (req) => {
     .upsert(record, { onConflict: "lead_id,message_key,filename" });
   if (dbError) {
     await supabase.storage.from("galvany-offers").remove([storagePath]);
-    return response(500, { error: "Metadata write failed" });
+    console.error("offer upload metadata stage failed:", dbError.message);
+    return response(503, { error: "Metadata write failed" });
   }
 
   return response(200, { ok: true, storage_path: storagePath, sha256 });
