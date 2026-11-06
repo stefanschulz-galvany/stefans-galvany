@@ -1795,7 +1795,8 @@
 
   <script>
     (()=>{
-      const FINANCE_RATE = 0.0599;
+      const financeRateForTerm = years => Number(years) > 10 ? 0.0629 : 0.0599;
+      const financeRateLabelForTerm = years => Number(years) > 10 ? '6,29 %' : '5,99 %';
       let financeScope = 'own';
 
       const fundingResults = document.querySelector('#fundingPanel .calc-results');
@@ -1804,7 +1805,7 @@
       if(!fundingResults || !termToggle || !resultMain) return;
 
       const teaserNote = document.querySelector('.funding-action small');
-      if(teaserNote) teaserNote.textContent = 'Richtwert nach den Förderbedingungen ab 21. Juli 2026 · Finanzierung mit 5,99 % gerechnet';
+      if(teaserNote) teaserNote.textContent = 'Richtwert nach den Förderbedingungen ab 21. Juli 2026 · Sollzins bis 10 Jahre 5,99 %, bei längerer Laufzeit 6,29 %';
 
       const scopeWrap = document.createElement('div');
       scopeWrap.className = 'finance-scope-wrap';
@@ -1838,13 +1839,15 @@
         const ownText = document.getElementById('ownShare').textContent || '0';
         const own = Math.max(0, Number(ownText.replace(/[^\d-]/g,'')) || 0);
         const principal = financeScope === 'full' ? price : own;
-        const monthly = monthlyAnnuity(principal, FINANCE_RATE, financeTerm);
+        const financeRate = financeRateForTerm(financeTerm);
+        const financeRateLabel = financeRateLabelForTerm(financeTerm);
+        const monthly = monthlyAnnuity(principal, financeRate, financeTerm);
         document.getElementById('monthlyPayment').textContent = Math.round(monthly).toLocaleString('de-DE');
         const basis = document.getElementById('monthlyPaymentBasis');
         if(basis){
           basis.textContent = financeScope === 'full'
-            ? 'bei 5,99 % Sollzins und Finanzierung der gesamten Investitionskosten'
-            : 'bei 5,99 % Sollzins und Finanzierung des Eigenanteils';
+            ? `bei ${financeRateLabel} Sollzins und Finanzierung der gesamten Investitionskosten`
+            : `bei ${financeRateLabel} Sollzins und Finanzierung des Eigenanteils`;
         }
       };
 
@@ -1899,7 +1902,9 @@
         const ownText = document.getElementById('ownShare').textContent || '0';
         const own = Math.max(0, Number(ownText.replace(/[^\d-]/g,'')) || 0);
         const principal = financeScope === 'full' ? price : own;
-        const monthly = monthlyAnnuity(principal, FINANCE_RATE, financeTerm);
+        const financeRate = financeRateForTerm(financeTerm);
+        const financeRateLabel = financeRateLabelForTerm(financeTerm);
+        const monthly = monthlyAnnuity(principal, financeRate, financeTerm);
 
         const heading = document.querySelector('#printFundingPage .print-finance-heading');
         if(heading) heading.textContent = financeScope === 'full' ? 'Finanzierung der Gesamtkosten' : 'Finanzierung des Eigenanteils';
@@ -1910,7 +1915,7 @@
           cells[1].textContent = 'Gewählte Laufzeit';
           cells[2].textContent = financeTerm + ' Jahre';
           cells[3].textContent = 'Sollzins';
-          cells[4].textContent = '5,99 %';
+          cells[4].textContent = financeRateLabel;
           cells[5].textContent = '';
           cells[6].textContent = 'Monatsrate';
           cells[7].textContent = 'ca. ' + Math.round(monthly).toLocaleString('de-DE') + ' €';
@@ -1921,7 +1926,7 @@
         }
 
         const financeNote = document.querySelector('#printFundingPage .print-finance-note');
-        if(financeNote) financeNote.textContent = 'Unverbindliches Rechenbeispiel mit 5,99 % Sollzins. Maßgeblich sind die Bedingungen des jeweiligen Kreditangebots.';
+        if(financeNote) financeNote.textContent = `Unverbindliches Rechenbeispiel mit ${financeRateLabel} Sollzins. Maßgeblich sind die Bedingungen des jeweiligen Kreditangebots.`;
       };
 
       syncScopeButtons();
@@ -2010,7 +2015,8 @@
 
   <script id="decisionPdfPrintScript">
     (()=>{
-      const RATE = 0.0599;
+      const decisionRateForTerm = years => Number(years) > 10 ? 0.0629 : 0.0599;
+      const decisionRateLabelForTerm = years => Number(years) > 10 ? '6,29 %' : '5,99 %';
       const previousBuild = buildCalculatorPrintSummary;
       buildCalculatorPrintSummary = function(){
         previousBuild();
@@ -2018,8 +2024,10 @@
         const ownText = document.getElementById('ownShare').textContent || '0';
         const own = Math.max(0, Number(ownText.replace(/[^\d-]/g,'')) || 0);
         const years = Number(financeTerm) || 10;
-        const ownMonthly = monthlyAnnuity(own, RATE, years);
-        const fullMonthly = monthlyAnnuity(price, RATE, years);
+        const rate = decisionRateForTerm(years);
+        const rateLabel = decisionRateLabelForTerm(years);
+        const ownMonthly = monthlyAnnuity(own, rate, years);
+        const fullMonthly = monthlyAnnuity(price, rate, years);
         const compare = document.querySelector('#printFundingPage .print-finance-compare');
         if(!compare) return;
         compare.innerHTML = `
@@ -2029,14 +2037,14 @@
               <h4>Variante A · Eigenanteil finanzieren</h4>
               <div class="decision-finance-row"><span>Finanzierungsbetrag</span><strong>${euro.format(own)}</strong></div>
               <div class="decision-finance-row"><span>Laufzeit</span><strong>${years} Jahre</strong></div>
-              <div class="decision-finance-row"><span>Sollzins</span><strong>5,99 %</strong></div>
+              <div class="decision-finance-row"><span>Sollzins</span><strong>${rateLabel}</strong></div>
               <div class="decision-finance-row rate"><span>Monatsrate</span><strong>ca. ${Math.round(ownMonthly).toLocaleString('de-DE')} €</strong></div>
             </div>
             <div class="decision-finance-card">
               <h4>Variante B · Gesamtkosten finanzieren</h4>
               <div class="decision-finance-row"><span>Finanzierungsbetrag</span><strong>${euro.format(price)}</strong></div>
               <div class="decision-finance-row"><span>Laufzeit</span><strong>${years} Jahre</strong></div>
-              <div class="decision-finance-row"><span>Sollzins</span><strong>5,99 %</strong></div>
+              <div class="decision-finance-row"><span>Sollzins</span><strong>${rateLabel}</strong></div>
               <div class="decision-finance-row rate"><span>Monatsrate</span><strong>ca. ${Math.round(fullMonthly).toLocaleString('de-DE')} €</strong></div>
             </div>
           </div>
