@@ -1310,7 +1310,8 @@ body{background:#f6f8f8}.calculator-page{display:block!important;position:static
   
 
     (()=>{
-      const FINANCE_RATE = 0.0599;
+      const financeRateForTerm = years => Number(years) > 10 ? 0.0629 : 0.0599;
+      const financeRateLabelForTerm = years => Number(years) > 10 ? '6,29 %' : '5,99 %';
       let financeScope = 'own';
 
       const fundingResults = document.querySelector('#fundingPanel .calc-results');
@@ -1319,7 +1320,7 @@ body{background:#f6f8f8}.calculator-page{display:block!important;position:static
       if(!fundingResults || !termToggle || !resultMain) return;
 
       const teaserNote = document.querySelector('.funding-action small');
-      if(teaserNote) teaserNote.textContent = 'Richtwert nach den Förderbedingungen ab 21. Juli 2026 · Finanzierung mit 5,99 % gerechnet';
+      if(teaserNote) teaserNote.textContent = 'Richtwert nach den Förderbedingungen ab 21. Juli 2026 · Sollzins bis 10 Jahre 5,99 %, bei längerer Laufzeit 6,29 %';
 
       const scopeWrap = document.createElement('div');
       scopeWrap.className = 'finance-scope-wrap';
@@ -1353,13 +1354,15 @@ body{background:#f6f8f8}.calculator-page{display:block!important;position:static
         const ownText = document.getElementById('ownShare').textContent || '0';
         const own = Math.max(0, Number(ownText.replace(/[^\d-]/g,'')) || 0);
         const principal = financeScope === 'full' ? price : own;
-        const monthly = monthlyAnnuity(principal, FINANCE_RATE, financeTerm);
+        const financeRate = financeRateForTerm(financeTerm);
+        const financeRateLabel = financeRateLabelForTerm(financeTerm);
+        const monthly = monthlyAnnuity(principal, financeRate, financeTerm);
         document.getElementById('monthlyPayment').textContent = Math.round(monthly).toLocaleString('de-DE');
         const basis = document.getElementById('monthlyPaymentBasis');
         if(basis){
           basis.textContent = financeScope === 'full'
-            ? 'bei 5,99 % Sollzins und Finanzierung der gesamten Investitionskosten'
-            : 'bei 5,99 % Sollzins und Finanzierung des Eigenanteils';
+            ? `bei ${financeRateLabel} Sollzins und Finanzierung der gesamten Investitionskosten`
+            : `bei ${financeRateLabel} Sollzins und Finanzierung des Eigenanteils`;
         }
       };
 
@@ -1414,7 +1417,9 @@ body{background:#f6f8f8}.calculator-page{display:block!important;position:static
         const ownText = document.getElementById('ownShare').textContent || '0';
         const own = Math.max(0, Number(ownText.replace(/[^\d-]/g,'')) || 0);
         const principal = financeScope === 'full' ? price : own;
-        const monthly = monthlyAnnuity(principal, FINANCE_RATE, financeTerm);
+        const financeRate = financeRateForTerm(financeTerm);
+        const financeRateLabel = financeRateLabelForTerm(financeTerm);
+        const monthly = monthlyAnnuity(principal, financeRate, financeTerm);
 
         const heading = document.querySelector('#printFundingPage .print-finance-heading');
         if(heading) heading.textContent = financeScope === 'full' ? 'Finanzierung der Gesamtkosten' : 'Finanzierung des Eigenanteils';
@@ -1425,7 +1430,7 @@ body{background:#f6f8f8}.calculator-page{display:block!important;position:static
           cells[1].textContent = 'Gewählte Laufzeit';
           cells[2].textContent = financeTerm + ' Jahre';
           cells[3].textContent = 'Sollzins';
-          cells[4].textContent = '5,99 %';
+          cells[4].textContent = financeRateLabel;
           cells[5].textContent = '';
           cells[6].textContent = 'Monatsrate';
           cells[7].textContent = 'ca. ' + Math.round(monthly).toLocaleString('de-DE') + ' €';
@@ -1436,7 +1441,7 @@ body{background:#f6f8f8}.calculator-page{display:block!important;position:static
         }
 
         const financeNote = document.querySelector('#printFundingPage .print-finance-note');
-        if(financeNote) financeNote.textContent = 'Unverbindliches Rechenbeispiel mit 5,99 % Sollzins. Maßgeblich sind die Bedingungen des jeweiligen Kreditangebots.';
+        if(financeNote) financeNote.textContent = `Unverbindliches Rechenbeispiel mit ${financeRateLabel} Sollzins. Maßgeblich sind die Bedingungen des jeweiligen Kreditangebots.`;
       };
 
       syncScopeButtons();
