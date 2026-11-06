@@ -90,7 +90,8 @@ addition = r'''
 
   <script id="decisionPdfPrintScript">
     (()=>{
-      const RATE = 0.0599;
+      const decisionRateForTerm = years => Number(years) > 10 ? 0.0629 : 0.0599;
+      const decisionRateLabelForTerm = years => Number(years) > 10 ? '6,29 %' : '5,99 %';
       const previousBuild = buildCalculatorPrintSummary;
       buildCalculatorPrintSummary = function(){
         previousBuild();
@@ -98,8 +99,10 @@ addition = r'''
         const ownText = document.getElementById('ownShare').textContent || '0';
         const own = Math.max(0, Number(ownText.replace(/[^\d-]/g,'')) || 0);
         const years = Number(financeTerm) || 10;
-        const ownMonthly = monthlyAnnuity(own, RATE, years);
-        const fullMonthly = monthlyAnnuity(price, RATE, years);
+        const rate = decisionRateForTerm(years);
+        const rateLabel = decisionRateLabelForTerm(years);
+        const ownMonthly = monthlyAnnuity(own, rate, years);
+        const fullMonthly = monthlyAnnuity(price, rate, years);
         const compare = document.querySelector('#printFundingPage .print-finance-compare');
         if(!compare) return;
         compare.innerHTML = `
@@ -109,14 +112,14 @@ addition = r'''
               <h4>Variante A · Eigenanteil finanzieren</h4>
               <div class="decision-finance-row"><span>Finanzierungsbetrag</span><strong>${euro.format(own)}</strong></div>
               <div class="decision-finance-row"><span>Laufzeit</span><strong>${years} Jahre</strong></div>
-              <div class="decision-finance-row"><span>Sollzins</span><strong>5,99 %</strong></div>
+              <div class="decision-finance-row"><span>Sollzins</span><strong>${rateLabel}</strong></div>
               <div class="decision-finance-row rate"><span>Monatsrate</span><strong>ca. ${Math.round(ownMonthly).toLocaleString('de-DE')} €</strong></div>
             </div>
             <div class="decision-finance-card">
               <h4>Variante B · Gesamtkosten finanzieren</h4>
               <div class="decision-finance-row"><span>Finanzierungsbetrag</span><strong>${euro.format(price)}</strong></div>
               <div class="decision-finance-row"><span>Laufzeit</span><strong>${years} Jahre</strong></div>
-              <div class="decision-finance-row"><span>Sollzins</span><strong>5,99 %</strong></div>
+              <div class="decision-finance-row"><span>Sollzins</span><strong>${rateLabel}</strong></div>
               <div class="decision-finance-row rate"><span>Monatsrate</span><strong>ca. ${Math.round(fullMonthly).toLocaleString('de-DE')} €</strong></div>
             </div>
           </div>
